@@ -1,0 +1,12 @@
+{
+  "name": "Justin DeMatteis — JUST INNOVATE.",
+  "short_name": "JUST INNOVATE.",
+  "description": "Justin DeMatteis — web and mobile developer, product builder, ecommerce developer and AI-assisted problem solver.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "browser",
+  "background_color": "#F8F7F4",
+  "theme_color": "#0B1F33",
+  "lang": "en-CA",
+  "categories": ["business", "productivity", "developer"]
+}

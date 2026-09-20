@@ -1,0 +1,35 @@
+# Justin DeMatteis — JUST INNOVATE.
+
+> Justin DeMatteis is a web and mobile developer, product builder, and ecommerce developer based in Ontario, Canada.
+
+## What Justin builds
+
+- Custom web applications and internal business tools
+- Shopify and Shopify POS integrations
+- Ecommerce workflows and Adobe Commerce / Magento work
+- Mobile-first interfaces and product workflows
+- Automation and AI-assisted development systems
+
+## Featured work
+
+### JustConsignIn
+A Shopify-focused consignment management product created from a real store workflow. It connects consignor intake, inventory, Shopify product creation, POS sales, sale attribution, commission tracking, and payouts.
+
+### Wheels Automotive
+Professional B2B ecommerce work involving Adobe Commerce / Magento, frontend implementation, QA, SEO, category and product content, and launch support.
+
+## Development approach
+
+Justin starts with the real workflow and business problem, prototypes the simplest useful solution, connects existing systems where possible, tests against actual use, and keeps refining the product.
+
+AI is used as a development partner for research, architecture, prototyping, coding, debugging, refactoring, documentation, and iteration. Product direction, business understanding, testing, and final decisions remain human-led.
+
+## Primary pages
+
+- Home: https://www.justindematteis.com/
+- Work: https://www.justindematteis.com/work
+- About: https://www.justindematteis.com/about
+- AI + Development: https://www.justindematteis.com/ai-development
+- Experience: https://www.justindematteis.com/experience
+- Blog: https://www.justindematteis.com/blog
+- Contact: https://www.justindematteis.com/contact

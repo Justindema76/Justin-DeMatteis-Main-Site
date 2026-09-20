@@ -1,0 +1,6 @@
+Justin DeMatteis
+Web & Mobile Developer • Product Builder • Problem Solver
+Ontario, Canada
+https://www.justindematteis.com/
+
+Built with React, Vite, Supabase and the JUST INNOVATE. shared website platform.

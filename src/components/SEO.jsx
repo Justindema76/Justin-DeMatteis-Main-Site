@@ -4,13 +4,34 @@ import { useLocation } from 'react-router-dom';
 const BASE = 'https://www.justindematteis.com';
 
 const META = {
-  '/': ['Justin DeMatteis — Developer, Product Builder & AI-Assisted Problem Solver', 'Justin DeMatteis builds web applications, Shopify tools, ecommerce systems and AI-assisted digital products that solve real business problems.'],
-  '/work': ['Work | Justin DeMatteis', 'Selected web, ecommerce, Shopify and product development work by Justin DeMatteis.'],
-  '/about': ['About | Justin DeMatteis', 'Mechanical engineering and manufacturing experience translated into web, mobile and product development.'],
-  '/ai-development': ['AI + Development | Justin DeMatteis', 'How Justin DeMatteis uses AI as part of a practical software-development workflow.'],
-  '/experience': ['Experience | Justin DeMatteis', 'Web, mobile, ecommerce and product-development experience.'],
-  '/blog': ['Development Blog | Justin DeMatteis', 'Development notes, project case studies and lessons from building practical software products.'],
-  '/contact': ['Contact | Justin DeMatteis', 'Contact Justin DeMatteis about development roles, ecommerce work and product collaboration.'],
+  '/': {
+    title: 'Justin DeMatteis — Developer, Product Builder & AI-Assisted Problem Solver',
+    description: 'Justin DeMatteis builds web applications, Shopify tools, ecommerce systems and AI-assisted digital products that solve real business problems.',
+  },
+  '/work': {
+    title: 'Web, Shopify & Ecommerce Work | Justin DeMatteis',
+    description: 'Selected work by Justin DeMatteis across Shopify, ecommerce, custom web applications, internal tools and real business workflows.',
+  },
+  '/about': {
+    title: 'About Justin DeMatteis | Developer & Product Builder',
+    description: 'Justin DeMatteis brings mechanical engineering, CNC programming and tool & die experience into practical web, mobile and product development.',
+  },
+  '/ai-development': {
+    title: 'AI-Assisted Software Development | Justin DeMatteis',
+    description: 'How Justin DeMatteis uses AI for research, architecture, prototyping, coding, debugging and iteration while keeping product decisions human-led.',
+  },
+  '/experience': {
+    title: 'Development Experience & Skills | Justin DeMatteis',
+    description: 'Web, mobile, Shopify, Adobe Commerce, React, JavaScript, TypeScript, Node, PHP, MySQL, Supabase and ecommerce development experience.',
+  },
+  '/blog': {
+    title: 'Development Blog | Justin DeMatteis',
+    description: 'Development notes, project case studies, ecommerce work and lessons from building practical software products.',
+  },
+  '/contact': {
+    title: 'Contact Justin DeMatteis | Web & Ecommerce Developer',
+    description: 'Contact Justin DeMatteis about web development, ecommerce, Shopify, product development, collaboration and selected projects.',
+  },
 };
 
 function upsertMeta(name, content, property = false) {
@@ -24,44 +45,46 @@ function upsertMeta(name, content, property = false) {
   el.setAttribute('content', content);
 }
 
+function setCanonical(href) {
+  let el = document.head.querySelector('link[rel="canonical"]');
+  if (!el) {
+    el = document.createElement('link');
+    el.rel = 'canonical';
+    document.head.appendChild(el);
+  }
+  el.href = href;
+}
+
 export default function SEO() {
   const location = useLocation();
 
   useEffect(() => {
-    const [title, description] = META[location.pathname] || (location.pathname.startsWith('/blog/')
-      ? ['Development Blog | Justin DeMatteis', 'Development articles and project notes from Justin DeMatteis.']
-      : ['Justin DeMatteis', 'Web, mobile and ecommerce development portfolio.']);
+    const meta = META[location.pathname] || (location.pathname.startsWith('/blog/')
+      ? {
+          title: 'Development Blog | Justin DeMatteis',
+          description: 'Development articles and project notes from Justin DeMatteis.',
+        }
+      : {
+          title: 'Justin DeMatteis',
+          description: 'Web, mobile, ecommerce and AI-assisted product development portfolio.',
+        });
 
-    document.title = title;
-    upsertMeta('description', description);
+    const canonical = `${BASE}${location.pathname === '/' ? '/' : location.pathname}`;
+
+    document.title = meta.title;
+    upsertMeta('description', meta.description);
     upsertMeta('robots', 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1');
-    upsertMeta('og:title', title, true);
-    upsertMeta('og:description', description, true);
-    upsertMeta('og:type', 'website', true);
-    upsertMeta('og:url', `${BASE}${location.pathname}`, true);
-
-    let canonical = document.head.querySelector('link[rel="canonical"]');
-    if (!canonical) {
-      canonical = document.createElement('link');
-      canonical.rel = 'canonical';
-      document.head.appendChild(canonical);
-    }
-    canonical.href = `${BASE}${location.pathname}`;
-
-    let schema = document.head.querySelector('#site-schema');
-    if (!schema) {
-      schema = document.createElement('script');
-      schema.id = 'site-schema';
-      schema.type = 'application/ld+json';
-      document.head.appendChild(schema);
-    }
-    schema.textContent = JSON.stringify({
-      '@context':'https://schema.org',
-      '@graph':[
-        {'@type':'Person','@id':`${BASE}/#person`,name:'Justin DeMatteis',url:BASE,jobTitle:'Web & Mobile Developer'},
-        {'@type':'WebSite','@id':`${BASE}/#website`,url:BASE,name:'Justin DeMatteis',author:{'@id':`${BASE}/#person`},inLanguage:'en-CA'}
-      ]
-    });
+    upsertMeta('author', 'Justin DeMatteis');
+    upsertMeta('og:site_name', 'Justin DeMatteis — JUST INNOVATE.', true);
+    upsertMeta('og:locale', 'en_CA', true);
+    upsertMeta('og:title', meta.title, true);
+    upsertMeta('og:description', meta.description, true);
+    upsertMeta('og:type', location.pathname.startsWith('/blog/') ? 'article' : 'website', true);
+    upsertMeta('og:url', canonical, true);
+    upsertMeta('twitter:card', 'summary');
+    upsertMeta('twitter:title', meta.title);
+    upsertMeta('twitter:description', meta.description);
+    setCanonical(canonical);
   }, [location.pathname]);
 
   return null;
