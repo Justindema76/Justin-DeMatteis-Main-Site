@@ -177,7 +177,7 @@ function GenericBlock({ type, p }) {
       <p>{p.text}</p>
       {p.buttonText && <SmartLink className="shared-btn shared-btn-primary" to={p.buttonUrl}>{p.buttonText}</SmartLink>}
     </div>
-    {p.image && <img src={p.image} alt={p.imageAlt || ''}/>}
+    {p.image && <img src={p.image} alt={p.imageAlt || ''} loading="lazy" decoding="async"/>}
   </div></section>;
 
   if (type === 'HeadingBlock') {
@@ -187,10 +187,10 @@ function GenericBlock({ type, p }) {
 
   if (type === 'TextBlock') return <section className="cms-block cms-text"><div className="shared-wrap" style={{textAlign:p.align || 'left'}}><p>{p.text}</p></div></section>;
 
-  if (type === 'ImageBlock') return <section className="cms-block"><div className="shared-wrap">{p.image && <img className="cms-image" src={p.image} alt={p.alt || ''} style={{width:`${p.width || 100}%`}}/>}</div></section>;
+  if (type === 'ImageBlock') return <section className="cms-block"><div className="shared-wrap">{p.image && <img className="cms-image" src={p.image} alt={p.alt || ''} loading="lazy" decoding="async" style={{width:`${p.width || 100}%`}}/>}</div></section>;
 
   if (type === 'ImageTextBlock') return <section className={`cms-image-text-section theme-${p.background || 'white'}`}><div className={`shared-wrap cms-image-text ${p.imagePosition === 'right' ? 'image-right' : ''}`}>
-    <div>{p.image && <img src={p.image} alt={p.alt || ''}/>}</div>
+    <div>{p.image && <img src={p.image} alt={p.alt || ''} loading="lazy" decoding="async"/>}</div>
     <div><h2>{p.heading}</h2><p>{p.text}</p></div>
   </div></section>;
 
