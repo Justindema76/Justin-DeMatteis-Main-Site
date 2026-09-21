@@ -77,7 +77,9 @@ export async function loadSetting(key, fallback) {
       'site_settings',
       `select=value&site_key=eq.${encodeURIComponent(SITE_KEY)}&key=eq.${encodeURIComponent(key)}&limit=1`
     );
-    return { ...fallback, ...(rows[0]?.value || {}) };
+    const raw = rows[0]?.value || {};
+    const value = raw?.content?.[0]?.props || raw;
+    return { ...fallback, ...(value || {}) };
   } catch {
     return fallback;
   }
