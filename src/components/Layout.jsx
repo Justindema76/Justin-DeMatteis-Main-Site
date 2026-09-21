@@ -9,10 +9,19 @@ import {
   styleVars,
 } from '../lib/content';
 
+const WORK_SUBMENU = [
+  { label: 'JustConsignIn', url: '/work/justconsignin' },
+  { label: 'Jill & The Beanstalk', url: '/work/jill-and-the-beanstalk' },
+  { label: 'Wheels Automotive', url: '/work/wheels-automotive' },
+  { label: 'WordPress Websites', url: '/work/wordpress-websites' },
+];
+
 function navItems(config) {
   return Array.from({ length: 7 }, (_, index) => {
     const n = index + 1;
-    return { label: config[`nav${n}Label`], url: config[`nav${n}Url`] };
+    const item = { label: config[`nav${n}Label`], url: config[`nav${n}Url`] };
+    if (item.url === '/work') item.children = WORK_SUBMENU;
+    return item;
   }).filter(item => item.label && item.url);
 }
 
@@ -54,7 +63,25 @@ export default function Layout() {
         </button>
 
         <nav className={menuOpen ? 'nav-links open' : 'nav-links'} aria-label="Main navigation">
-          {links.map(item => <NavLink key={item.url} to={item.url}>{item.label}</NavLink>)}
+          {links.map(item => item.children?.length ? (
+            <div className="nav-dropdown" key={item.url}>
+              <NavLink
+                to={item.url}
+                className={({ isActive }) => `nav-dropdown-parent${isActive || location.pathname.startsWith('/work/') ? ' active' : ''}`}
+              >
+                {item.label}
+                <span className="nav-dropdown-caret" aria-hidden="true">▾</span>
+              </NavLink>
+              <div className="nav-dropdown-menu" aria-label={`${item.label} pages`}>
+                <NavLink to="/work" end>All Work</NavLink>
+                {item.children.map(child => (
+                  <NavLink key={child.url} to={child.url}>{child.label}</NavLink>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <NavLink key={item.url} to={item.url}>{item.label}</NavLink>
+          ))}
         </nav>
       </div>
     </header>
