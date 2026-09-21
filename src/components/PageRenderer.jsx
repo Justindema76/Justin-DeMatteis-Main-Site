@@ -169,6 +169,42 @@ function LargeCta(p) {
   </section>;
 }
 
+function ProjectCard(p) {
+  const HeadingTag = ['h1','h2','h3','h4'].includes(p.headingLevel) ? p.headingLevel : 'h2';
+  const tags = String(p.tags || '').split(',').map(tag => tag.trim()).filter(Boolean);
+
+  return <section id={p.anchorId || undefined} className={`standard-project-card panel-${p.panelPosition || 'left'}`}>
+    <aside className="standard-project-panel">
+      <div className="standard-project-logo">
+        {p.logo ? <img src={p.logo} alt={p.logoAlt || ''} loading="lazy" decoding="async"/> : null}
+      </div>
+      <div>
+        <div className="standard-project-company-label">{p.companyLabel}</div>
+        <div className="standard-project-company-name">{p.companyName}</div>
+        <div className="standard-project-category">{p.category}</div>
+      </div>
+    </aside>
+
+    <div className="standard-project-content">
+      <div className="standard-project-eyebrow">{p.eyebrow}</div>
+      <HeadingTag>{p.heading}</HeadingTag>
+      <p className="standard-project-summary">{p.summary}</p>
+
+      <div className="standard-project-details">
+        <div><span>{p.roleLabel}</span><strong>{p.roleText}</strong></div>
+        <div><span>{p.audienceLabel}</span><strong>{p.audienceText}</strong></div>
+      </div>
+
+      {tags.length > 0 && <div className="standard-project-tags">{tags.map(tag => <span key={tag}>{tag}</span>)}</div>}
+
+      <div className="standard-project-footer">
+        <span>{p.note}</span>
+        {p.buttonText && <SmartLink className="standard-project-button" to={p.buttonUrl || '#'}>{p.buttonText}</SmartLink>}
+      </div>
+    </div>
+  </section>;
+}
+
 function GenericBlock({ type, p }) {
   if (type === 'HeroBlock') return <section className={`cms-hero theme-${p.background || 'light'}`}><div className="shared-wrap cms-hero-grid">
     <div>
@@ -217,6 +253,7 @@ export default function PageRenderer({ data }) {
       if (type === 'ProcessRowsBlock') return <ProcessRows {...p} key={key}/>;
       if (type === 'SkillsGridBlock') return <SkillsGrid {...p} key={key}/>;
       if (type === 'LargeCtaBlock') return <LargeCta {...p} key={key}/>;
+      if (type === 'ProjectCardBlock') return <ProjectCard {...p} key={key}/>;
       return <GenericBlock type={type} p={p} key={key}/>;
     })}
   </main>;
