@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="t d">
+<title id="t">WordPress Client Websites</title><desc id="d">Blue WordPress client websites project mark.</desc>
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#21759B"/><stop offset="1" stop-color="#3858E9"/></linearGradient></defs>
+<rect width="512" height="512" rx="72" fill="url(#g)"/>
+<circle cx="256" cy="212" r="126" fill="#fff"/>
+<circle cx="256" cy="212" r="108" fill="none" stroke="#21759B" stroke-width="14"/>
+<text x="256" y="257" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="150" font-weight="700" fill="#21759B">W</text>
+<text x="256" y="402" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="38" font-weight="900" fill="#fff">CLIENT WEBSITES</text>
+<text x="256" y="439" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="18" font-weight="700" letter-spacing="3" fill="#DDE7FF">WORDPRESS · ELEMENTOR</text>
+</svg>

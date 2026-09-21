@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="t d">
+<title id="t">Jill &amp; The Beanstalk</title><desc id="d">Square green and purple project mark inspired by the Jill and the Beanstalk brand.</desc>
+<rect width="512" height="512" rx="72" fill="#fff"/>
+<path d="M265 60c-34 45-56 95-57 147-1 35 8 72-11 101-14 21-38 31-58 47 43-8 82-24 107-57 30-40 21-89 25-132 4-39 18-75 43-106-18 7-34 18-49 30Z" fill="#9ACA3C" stroke="#365f19" stroke-width="9" stroke-linejoin="round"/>
+<path d="M283 75c24-24 55-32 89-23-14 31-42 49-76 46" fill="#9ACA3C" stroke="#365f19" stroke-width="8"/>
+<path d="M224 207c-18-14-38-15-55-2 12 20 31 29 55 25M267 170c23 3 41 16 52 38-27 7-50 0-67-20" fill="#7caf2b" stroke="#365f19" stroke-width="7"/>
+<ellipse cx="332" cy="150" rx="30" ry="22" transform="rotate(-24 332 150)" fill="#8f4b84" stroke="#5d2454" stroke-width="7"/>
+<path d="M179 200c-18 14-28 35-26 63 1 22 10 42 23 59" fill="none" stroke="#365f19" stroke-width="8" stroke-linecap="round"/>
+<circle cx="162" cy="190" r="17" fill="#9ACA3C" stroke="#365f19" stroke-width="6"/>
+<path d="M153 209l-24 58m33-44 29 16m-44 26-17 35m17-34 24 32" fill="none" stroke="#365f19" stroke-width="8" stroke-linecap="round"/>
+<text x="256" y="375" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="63" font-weight="700" fill="#171717">Jill &amp; The</text>
+<text x="256" y="443" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="58" font-weight="800" fill="#171717">BEANSTALK</text>
+<circle cx="98" cy="366" r="14" fill="#8f4b84"/><circle cx="411" cy="390" r="14" fill="#8f4b84"/>
+</svg>
