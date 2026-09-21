@@ -29,8 +29,8 @@ const META = {
     description: 'WordPress and Elementor client website work by Justin DeMatteis, including responsive builds, forms, SEO, content integration and ongoing support.',
   },
   '/about': {
-    title: 'About Justin DeMatteis | Developer & Product Builder',
-    description: 'Justin DeMatteis brings mechanical engineering, CNC programming and tool & die experience into practical web, mobile and product development.',
+    title: 'About Justin DeMatteis | Developer, Product Builder & Ecommerce',
+    description: 'Justin DeMatteis combines an engineering and manufacturing background with web development, ecommerce, Shopify, Adobe Commerce and AI-assisted product development.',
   },
   '/ai-development': {
     title: 'AI-Assisted Software Development | Justin DeMatteis',
