@@ -19,6 +19,30 @@ const routeMeta = {
     description: 'Selected work by Justin DeMatteis across Shopify, ecommerce, custom web applications, internal tools and real business workflows.',
     type: 'CollectionPage',
   },
+  '/work/justconsignin': {
+    title: 'JustConsignIn Case Study | Shopify Consignment Software | Justin DeMatteis',
+    description: 'Case study: how Justin DeMatteis designed and built JustConsignIn, a Shopify consignment application connecting intake, products, POS sales, commissions and payouts.',
+    type: 'WebPage',
+    projectName: 'JustConsignIn',
+  },
+  '/work/jill-and-the-beanstalk': {
+    title: 'Jill & The Beanstalk Case Study | Shopify SEO & Ecommerce Growth',
+    description: 'Shopify ecommerce, SEO, content, search visibility and growth work by Justin DeMatteis for Jill & The Beanstalk.',
+    type: 'WebPage',
+    projectName: 'Jill & The Beanstalk',
+  },
+  '/work/wheels-automotive': {
+    title: 'Wheels Automotive Case Study | Adobe Commerce & Magento B2B',
+    description: 'Adobe Commerce and Magento B2B ecommerce case study covering frontend work, PageBuilder, QA, SEO, product content and launch support.',
+    type: 'WebPage',
+    projectName: 'Wheels Automotive Dealer Supplies',
+  },
+  '/work/wordpress-websites': {
+    title: 'WordPress Website Projects | Elementor, SEO & Responsive Development',
+    description: 'WordPress and Elementor client website work by Justin DeMatteis, including responsive builds, forms, SEO, content integration and ongoing support.',
+    type: 'WebPage',
+    projectName: 'WordPress Client Websites',
+  },
   '/about': {
     title: 'About Justin DeMatteis | Developer & Product Builder',
     description: 'Justin DeMatteis brings mechanical engineering, CNC programming and tool & die experience into practical web, mobile and product development.',
@@ -108,13 +132,32 @@ function baseGraph(route, meta) {
     },
   ];
 
+  if (meta.projectName) {
+    graph.push({
+      '@type': 'CreativeWork',
+      '@id': `${BASE}${route}#project`,
+      name: meta.projectName,
+      description: meta.description,
+      url: `${BASE}${route}`,
+      creator: { '@id': `${BASE}/#person` },
+      mainEntityOfPage: { '@id': `${BASE}${route}#webpage` },
+      inLanguage: 'en-CA',
+    });
+  }
+
   if (route !== '/') {
+    const crumbs = [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${BASE}/` },
+    ];
+    if (route.startsWith('/work/')) {
+      crumbs.push({ '@type': 'ListItem', position: 2, name: 'Work', item: `${BASE}/work` });
+      crumbs.push({ '@type': 'ListItem', position: 3, name: meta.projectName || meta.title.split('|')[0].trim(), item: `${BASE}${route}` });
+    } else {
+      crumbs.push({ '@type': 'ListItem', position: 2, name: meta.title.split('|')[0].trim(), item: `${BASE}${route}` });
+    }
     graph.push({
       '@type': 'BreadcrumbList',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Home', item: `${BASE}/` },
-        { '@type': 'ListItem', position: 2, name: meta.title.split('|')[0].trim(), item: `${BASE}${route}` },
-      ],
+      itemListElement: crumbs,
     });
   }
 
