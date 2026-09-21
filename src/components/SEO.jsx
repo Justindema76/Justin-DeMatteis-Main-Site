@@ -12,6 +12,22 @@ const META = {
     title: 'Web, Shopify & Ecommerce Work | Justin DeMatteis',
     description: 'Selected work by Justin DeMatteis across Shopify, ecommerce, custom web applications, internal tools and real business workflows.',
   },
+  '/work/justconsignin': {
+    title: 'JustConsignIn Case Study | Shopify Consignment Software | Justin DeMatteis',
+    description: 'Case study: how Justin DeMatteis designed and built JustConsignIn, a Shopify consignment application connecting intake, products, POS sales, commissions and payouts.',
+  },
+  '/work/jill-and-the-beanstalk': {
+    title: 'Jill & The Beanstalk Case Study | Shopify SEO & Ecommerce Growth',
+    description: 'Shopify ecommerce, SEO, content, search visibility and growth work by Justin DeMatteis for Jill & The Beanstalk.',
+  },
+  '/work/wheels-automotive': {
+    title: 'Wheels Automotive Case Study | Adobe Commerce & Magento B2B',
+    description: 'Adobe Commerce and Magento B2B ecommerce case study covering frontend work, PageBuilder, QA, SEO, product content and launch support.',
+  },
+  '/work/wordpress-websites': {
+    title: 'WordPress Website Projects | Elementor, SEO & Responsive Development',
+    description: 'WordPress and Elementor client website work by Justin DeMatteis, including responsive builds, forms, SEO, content integration and ongoing support.',
+  },
   '/about': {
     title: 'About Justin DeMatteis | Developer & Product Builder',
     description: 'Justin DeMatteis brings mechanical engineering, CNC programming and tool & die experience into practical web, mobile and product development.',
