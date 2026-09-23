@@ -213,6 +213,13 @@ const pages = await supabase(
 );
 const pageLastmod = new Map(pages.map(p => [p.path, p.updated_at]));
 
+const workPosts = await supabase(
+  'work_posts',
+  `select=slug,title,work_type,company,excerpt,featured_image,project_url,tags,seo_title,seo_description,og_image,published_at,updated_at&site_key=eq.${encodeURIComponent(SITE_KEY)}&status=eq.published&order=published_at.desc`
+);
+
+const dynamicWorkRoutes = new Set(workPosts.map(post => `/work/${post.slug}`));
+
 const blogs = await supabase(
   'blog_posts',
   `select=slug,title,excerpt,seo_title,seo_description,featured_image,published_at,updated_at&site_key=eq.${encodeURIComponent(SITE_KEY)}&status=eq.published&order=published_at.desc`
@@ -221,6 +228,7 @@ const blogs = await supabase(
 const sitemapEntries = [];
 
 for (const [route, meta] of Object.entries(routeMeta)) {
+  if (dynamicWorkRoutes.has(route)) continue;
   const schema = baseGraph(route, meta);
   const html = sourceHtml.replace(marker, seoBlock(route, meta, schema));
   await writeRoute(route, html);
@@ -228,6 +236,60 @@ for (const [route, meta] of Object.entries(routeMeta)) {
     loc: `${BASE}${route === '/' ? '/' : route}`,
     lastmod: pageLastmod.get(route) || new Date().toISOString(),
     priority: route === '/' ? '1.0' : route === '/work' ? '0.9' : '0.7',
+  });
+}
+
+for (const post of workPosts) {
+  const route = `/work/${post.slug}`;
+  const canonical = `${BASE}${route}`;
+  const meta = {
+    title: post.seo_title || `${post.title} | Justin DeMatteis`,
+    description: post.seo_description || post.excerpt || 'Portfolio case study by Justin DeMatteis.',
+    ogType: 'article',
+  };
+  const image = post.og_image || post.featured_image || undefined;
+  const schema = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      personSchema(),
+      {
+        '@type': 'CreativeWork',
+        '@id': `${canonical}#project`,
+        name: post.title,
+        description: meta.description,
+        url: canonical,
+        image,
+        creator: { '@id': `${BASE}/#person` },
+        about: post.work_type || undefined,
+        keywords: Array.isArray(post.tags) ? post.tags.join(', ') : undefined,
+        datePublished: post.published_at || undefined,
+        dateModified: post.updated_at || post.published_at || undefined,
+        mainEntityOfPage: canonical,
+        inLanguage: 'en-CA',
+        sameAs: post.project_url || undefined,
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: `${BASE}/` },
+          { '@type': 'ListItem', position: 2, name: 'Work', item: `${BASE}/work` },
+          { '@type': 'ListItem', position: 3, name: post.company || post.title, item: canonical },
+        ],
+      },
+    ],
+  };
+  let html = sourceHtml.replace(marker, seoBlock(route, meta, schema));
+  if (image) {
+    html = html.replace(
+      '<meta name="twitter:card" content="summary" />',
+      `<meta property="og:image" content="${esc(image)}" />\n    <meta name="twitter:card" content="summary_large_image" />\n    <meta name="twitter:image" content="${esc(image)}" />`
+    );
+  }
+  await writeRoute(route, html);
+  sitemapEntries.push({
+    loc: canonical,
+    lastmod: post.updated_at || post.published_at || new Date().toISOString(),
+    priority: '0.8',
   });
 }
 
@@ -325,4 +387,4 @@ await fs.writeFile(
   sourceHtml.replace(marker, seoBlock('/404', notFoundMeta, notFoundSchema, 'noindex,nofollow'))
 );
 
-console.log(`SEO generated: ${Object.keys(routeMeta).length} pages, ${blogs.length} blog posts, sitemap, RSS and 404.`);
+console.log(`SEO generated: ${Object.keys(routeMeta).length} static pages, ${workPosts.length} work posts, ${blogs.length} blog posts, sitemap, RSS and 404.`);
