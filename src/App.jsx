@@ -4,6 +4,7 @@ import SEO from './components/SEO';
 import ManagedPage from './pages/ManagedPage';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
+import WorkPost from './pages/WorkPost';
 
 export default function App() {
   return <>
@@ -12,7 +13,7 @@ export default function App() {
       <Route element={<Layout />}>
         <Route path="/" element={<ManagedPage pageId="home" />} />
         <Route path="/work" element={<ManagedPage pageId="work" />} />
-        <Route path="/work/justconsignin" element={<ManagedPage pageId="work-justconsignin" />} />
+        <Route path="/work/justconsignin" element={<WorkPost />} />
         <Route path="/work/jill-and-the-beanstalk" element={<ManagedPage pageId="work-jill" />} />
         <Route path="/work/wheels-automotive" element={<ManagedPage pageId="work-wheels" />} />
         <Route path="/work/wordpress-websites" element={<ManagedPage pageId="work-wordpress" />} />
