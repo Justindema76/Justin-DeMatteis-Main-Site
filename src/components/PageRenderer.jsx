@@ -206,7 +206,7 @@ function ProjectCard(p) {
 }
 
 function GenericBlock({ type, p }) {
-  if (type === 'HeroBlock') return <section className={`cms-hero theme-${p.background || 'light'}`}><div className="shared-wrap cms-hero-grid">
+  if (type === 'HeroBlock') return <section className={`cms-hero hero-heading-${p.headingSize || 'medium'} theme-${p.background || 'light'}`}><div className="shared-wrap cms-hero-grid">
     <div>
       {p.eyebrow && <div className="shared-eyebrow">{p.eyebrow}</div>}
       <h1>{p.heading}</h1>
