@@ -206,15 +206,25 @@ function ProjectCard(p) {
 }
 
 function GenericBlock({ type, p }) {
-  if (type === 'HeroBlock') return <section className={`cms-hero hero-heading-${p.headingSize || 'medium'} theme-${p.background || 'light'}`}><div className="shared-wrap cms-hero-grid">
-    <div>
-      {p.eyebrow && <div className="shared-eyebrow">{p.eyebrow}</div>}
-      <h1>{p.heading}</h1>
-      <p>{p.text}</p>
-      {p.buttonText && <SmartLink className="shared-btn shared-btn-primary" to={p.buttonUrl}>{p.buttonText}</SmartLink>}
-    </div>
-    {p.image && <img src={p.image} alt={p.imageAlt || ''} loading="lazy" decoding="async"/>}
-  </div></section>;
+  if (type === 'HeroBlock') {
+    const primaryButtonText = p.primaryButtonText ?? p.buttonText ?? '';
+    const primaryButtonUrl = p.primaryButtonUrl ?? p.buttonUrl ?? '#';
+    return <section className={`cms-hero showcase-style-hero hero-heading-${p.headingSize || 'medium'} theme-${p.background || 'light'} ${p.image ? 'with-media' : 'without-media'}`}>
+      <div className="shared-wrap cms-hero-grid">
+        <div className="cms-hero-copy">
+          {p.eyebrow && <div className="shared-eyebrow">{p.eyebrow}</div>}
+          <h1>{p.heading}{p.accent ? <> <span>{p.accent}</span></> : null}</h1>
+          {p.text && <p>{p.text}</p>}
+          {(primaryButtonText || p.secondaryButtonText) && <div className="shared-showcase-actions">
+            {primaryButtonText && <SmartLink className="shared-btn shared-btn-primary" to={primaryButtonUrl}>{primaryButtonText}</SmartLink>}
+            {p.secondaryButtonText && <SmartLink className="shared-btn shared-btn-secondary" to={p.secondaryButtonUrl || '#'}>{p.secondaryButtonText}</SmartLink>}
+          </div>}
+          {p.note && <div className="shared-showcase-note">{p.note}</div>}
+        </div>
+        {p.image && <img src={p.image} alt={p.imageAlt || ''} loading="lazy" decoding="async"/>}
+      </div>
+    </section>;
+  }
 
   if (type === 'HeadingBlock') {
     const Tag = ['h2','h3','h4'].includes(p.level) ? p.level : 'h2';
