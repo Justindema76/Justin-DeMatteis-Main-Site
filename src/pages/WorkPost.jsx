@@ -62,7 +62,13 @@ export default function WorkPost() {
     return () => { active = false; };
   }, [slug]);
 
-  const toc = useMemo(() => extractToc(post?.body_html || ''), [post?.body_html]);
+  const toc = useMemo(() => {
+    const items = extractToc(post?.body_html || '');
+    if (Array.isArray(post?.tags) && post.tags.length && !items.some(item => item.id === 'technology')) {
+      items.push({ id: 'technology', label: 'Technology and tools' });
+    }
+    return items;
+  }, [post?.body_html, post?.tags]);
 
   useEffect(() => {
     if (!post) return;
@@ -153,7 +159,8 @@ export default function WorkPost() {
           <div dangerouslySetInnerHTML={{ __html: post.body_html || '' }} />
 
           {tags.length > 0 && <section className="work-post-tech-section">
-            <h2>Technology and tools</h2>
+            <h2 id="technology">Technology and tools</h2>
+            {post.platform && <p>The project uses {post.platform} as part of the production stack and workflow.</p>}
             <div className="work-post-tags">
               {tags.map(tag => <span key={tag}>{tag}</span>)}
             </div>
