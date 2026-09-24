@@ -301,6 +301,15 @@ function GenericBlock({ type, p }) {
   return null;
 }
 
+function defaultBlockBackground(type, p = {}) {
+  if (p.background) return p.background;
+  if (['HeroBlock','ResumeHeroBlock','ShowcaseHeroBlock'].includes(type)) return 'light';
+  if (['ProcessRowsBlock','ResumeAiBlock','CtaBlock'].includes(type)) return 'dark';
+  if (['LargeCtaBlock','ResumeContactBlock'].includes(type)) return 'primary';
+  if (type === 'ProjectCardBlock') return 'page';
+  return 'white';
+}
+
 export default function PageRenderer({ data }) {
   const blocks = Array.isArray(data?.content) ? data.content : [];
 
@@ -309,7 +318,7 @@ export default function PageRenderer({ data }) {
       const type = block?.type || '';
       const p = block?.props || {};
       const key = p.id || `${type}-${index}`;
-      const background = p.background || 'white';
+      const background = defaultBlockBackground(type, p);
       let rendered = null;
 
       if (type === 'ShowcaseHeroBlock') rendered = <ShowcaseHero {...p}/>;
