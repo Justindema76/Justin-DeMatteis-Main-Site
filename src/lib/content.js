@@ -137,6 +137,21 @@ export async function loadWorkPost(slug) {
   return rows[0] || null;
 }
 
+export async function loadAiPost(slug) {
+  const rows = await readPublic(
+    'ai_posts',
+    `select=*&site_key=eq.${encodeURIComponent(SITE_KEY)}&status=eq.published&slug=eq.${encodeURIComponent(slug)}&limit=1`
+  );
+  return rows[0] || null;
+}
+
+export async function loadAiPosts() {
+  return readPublic(
+    'ai_posts',
+    `select=id,slug,title,work_type,company,role,platform,audience,excerpt,featured_image,featured_image_alt,project_url,tags,seo_title,seo_description,status,published_at,updated_at&site_key=eq.${encodeURIComponent(SITE_KEY)}&status=eq.published&order=published_at.desc`
+  );
+}
+
 export async function loadWorkPosts() {
   return readPublic(
     'work_posts',
