@@ -95,6 +95,20 @@ export default function Layout() {
   );
   const brandFirst = header.brandFirst || DEFAULT_HEADER.brandFirst || 'Justin';
   const brandSecond = header.brandSecond || DEFAULT_HEADER.brandSecond || 'DeMatteis';
+  const headerSocialStyle = {
+    '--header-social-icon-color': header.socialIconColor || '#415162',
+    '--header-social-icon-background': header.socialIconBackground || 'var(--site-surface,#fff)',
+    '--header-social-icon-border': header.socialIconBorder || 'var(--site-border,#DCE4EC)',
+    '--header-social-icon-hover-color': header.socialIconHoverColor || '#ffffff',
+    '--header-social-icon-hover-background': header.socialIconHoverBackground || 'var(--site-primary,#2F6BFF)',
+  };
+  const footerSocialStyle = {
+    '--footer-social-icon-color': footer.socialIconColor || '#ffffff',
+    '--footer-social-icon-background': footer.socialIconBackground || 'rgba(255,255,255,.04)',
+    '--footer-social-icon-border': footer.socialIconBorder || 'rgba(255,255,255,.18)',
+    '--footer-social-icon-hover-color': footer.socialIconHoverColor || '#ffffff',
+    '--footer-social-icon-hover-background': footer.socialIconHoverBackground || 'var(--site-primary,#2F6BFF)',
+  };
 
   return <div className="site-shell" style={styleVars(styles)}>
     <header className="site-nav">
@@ -129,7 +143,7 @@ export default function Layout() {
           ) : (
             <NavLink key={item.url} to={item.url} end={item.url === '/'}>{item.label}</NavLink>
           ))}
-          {activeSocial.length > 0 && <div className="nav-social-links" aria-label="Social links">
+          {activeSocial.length > 0 && <div className="nav-social-links" aria-label="Social links" style={headerSocialStyle}>
             {activeSocial.map(network => <a
               key={network.key}
               href={social[network.key].url}
@@ -152,7 +166,7 @@ export default function Layout() {
           <span>{footer.tagline || DEFAULT_FOOTER.tagline}</span>
         </div>
         <div className="footer-right">
-          {activeSocial.length > 0 && <div className="footer-social-links" aria-label="Social links">
+          {activeSocial.length > 0 && <div className="footer-social-links" aria-label="Social links" style={footerSocialStyle}>
             {activeSocial.map(network => <a
               key={network.key}
               href={social[network.key].url}
