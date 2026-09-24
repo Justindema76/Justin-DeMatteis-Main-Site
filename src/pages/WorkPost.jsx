@@ -94,20 +94,20 @@ function StructuredWorkStory({ sections }) {
 
   return <>
     {(sections.overview || sections.overviewSecondary || sections.quote) && <section id="overview" className="work-post-story-section">
-      <h2>Overview</h2>
+      <h2>{sections.overviewHeading || 'Overview'}</h2>
       <Paragraphs text={sections.overview}/>
       <Paragraphs text={sections.overviewSecondary}/>
       {sections.quote && <blockquote>{sections.quote}</blockquote>}
     </section>}
 
     {(sections.problem || points.length > 0) && <section id="problem" className="work-post-story-section">
-      <h2>The business problem</h2>
+      <h2>{sections.problemHeading || 'The business problem'}</h2>
       <Paragraphs text={sections.problem}/>
       {points.length > 0 && <ul>{points.map((point, index) => <li key={index}>{point}</li>)}</ul>}
     </section>}
 
     {(sections.built || sections.connectedWorkflow) && <section id="solution" className="work-post-story-section">
-      <h2>What I built</h2>
+      <h2>{sections.builtHeading || 'What I built'}</h2>
       <Paragraphs text={sections.built}/>
       {sections.connectedWorkflow && <div className="work-post-callout">
         <strong>Connected workflow</strong>
@@ -116,7 +116,7 @@ function StructuredWorkStory({ sections }) {
     </section>}
 
     {(sections.visualsIntro || gallery.length > 0) && <section id="media" className="work-post-story-section">
-      <h2>Product visuals</h2>
+      <h2>{sections.visualsHeading || 'Product visuals'}</h2>
       <Paragraphs text={sections.visualsIntro}/>
       {gallery.length > 0 && <div className={`work-post-gallery ${gallery.length === 1 ? 'single' : ''}`}>
         {gallery.map((item, index) => <figure key={item.url || index}>
@@ -159,7 +159,7 @@ function StructuredWorkStory({ sections }) {
     </section>}
 
     {sections.ongoing && <section id="ongoing" className="work-post-story-section">
-      <h2>Ongoing work</h2>
+      <h2>{sections.ongoingHeading || 'Ongoing work'}</h2>
       <Paragraphs text={sections.ongoing}/>
     </section>}
 
@@ -203,14 +203,14 @@ export default function WorkPost() {
     }
 
     const items = [];
-    if (sections.overview || sections.overviewSecondary || sections.quote) items.push({ id: 'overview', label: 'Overview' });
-    if (sections.problem || sections.problemPoints?.length) items.push({ id: 'problem', label: 'The business problem' });
-    if (sections.built || sections.connectedWorkflow) items.push({ id: 'solution', label: 'What I built' });
-    if (sections.visualsIntro || sections.gallery?.length) items.push({ id: 'media', label: 'Product visuals' });
+    if (sections.overview || sections.overviewSecondary || sections.quote) items.push({ id: 'overview', label: sections.overviewHeading || 'Overview' });
+    if (sections.problem || sections.problemPoints?.length) items.push({ id: 'problem', label: sections.problemHeading || 'The business problem' });
+    if (sections.built || sections.connectedWorkflow) items.push({ id: 'solution', label: sections.builtHeading || 'What I built' });
+    if (sections.visualsIntro || sections.gallery?.length) items.push({ id: 'media', label: sections.visualsHeading || 'Product visuals' });
     if (sections.youtubeHeading || sections.youtubeIntro || sections.youtubeUrl) items.push({ id: 'video', label: sections.youtubeHeading || 'Video demo' });
     if (sections.videos?.length) items.push({ id: 'uploaded-videos', label: 'Project videos' });
     if (sections.workflow?.length) items.push({ id: 'workflow', label: 'The workflow' });
-    if (sections.ongoing) items.push({ id: 'ongoing', label: 'Ongoing work' });
+    if (sections.ongoing) items.push({ id: 'ongoing', label: sections.ongoingHeading || 'Ongoing work' });
     (sections.extras || []).forEach((section, index) => {
       if (section?.heading) items.push({ id: sectionId(section.heading, index), label: section.heading });
     });

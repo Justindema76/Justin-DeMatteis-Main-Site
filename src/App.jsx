@@ -14,7 +14,7 @@ export default function App() {
         <Route path="/" element={<ManagedPage pageId="home" />} />
         <Route path="/work" element={<ManagedPage pageId="work" />} />
         <Route path="/work/jill-and-the-beanstalk" element={<ManagedPage pageId="work-jill" />} />
-        <Route path="/work/wheels-automotive" element={<ManagedPage pageId="work-wheels" />} />
+        <Route path="/work/wheels-automotive" element={<WorkPost />} />
         <Route path="/work/wordpress-websites" element={<ManagedPage pageId="work-wordpress" />} />
         <Route path="/work/:slug" element={<WorkPost />} />
         <Route path="/about" element={<ManagedPage pageId="about" />} />
