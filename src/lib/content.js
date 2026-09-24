@@ -37,12 +37,22 @@ export const DEFAULT_HEADER = {
   nav6Label: '', nav6Url: '',
   nav7Label: '', nav7Url: '',
   buttonText: '', buttonUrl: '',
+  socialIconColor: '#415162',
+  socialIconBackground: 'var(--site-surface,#fff)',
+  socialIconBorder: 'var(--site-border,#DCE4EC)',
+  socialIconHoverColor: '#ffffff',
+  socialIconHoverBackground: 'var(--site-primary,#2F6BFF)',
 };
 
 export const DEFAULT_FOOTER = {
   brand: 'JUST INNOVATE.',
   tagline: 'Justin DeMatteis • Developer • Product Builder • AI-Assisted Problem Solver',
   copyright: 'Justin DeMatteis. All rights reserved.',
+  socialIconColor: '#ffffff',
+  socialIconBackground: 'rgba(255,255,255,.04)',
+  socialIconBorder: 'rgba(255,255,255,.18)',
+  socialIconHoverColor: '#ffffff',
+  socialIconHoverBackground: 'var(--site-primary,#2F6BFF)',
 };
 
 function normalizeStyles(value = {}) {
