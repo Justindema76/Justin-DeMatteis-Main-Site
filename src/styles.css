@@ -451,8 +451,6 @@ button,input,textarea,select{font:inherit}
 .work-post-facts>div:first-child{border-top:0;padding-top:0}
 .work-post-facts span{display:block;color:#8795A4;font-size:.67rem;text-transform:uppercase;letter-spacing:.13em;font-weight:900}
 .work-post-facts strong{display:block;margin-top:4px;color:var(--navy);font-size:.88rem;line-height:1.45}
-.work-post-lead-media{margin:44px 0 0;overflow:hidden;border:1px solid var(--site-border,var(--line));border-radius:24px;background:#fff;box-shadow:0 18px 52px rgba(11,31,51,.09)}
-.work-post-lead-media img{display:block;width:100%;max-height:620px;aspect-ratio:16/9;object-fit:cover}
 .work-post-article-grid{display:grid;grid-template-columns:190px minmax(0,780px);gap:54px;padding:72px 0 0}
 .work-post-toc{align-self:start;position:sticky;top:106px}
 .work-post-toc-title{font-size:.7rem;text-transform:uppercase;letter-spacing:.14em;color:#97A5B3;font-weight:900;margin-bottom:9px}

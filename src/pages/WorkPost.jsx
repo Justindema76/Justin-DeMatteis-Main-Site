@@ -147,9 +147,6 @@ export default function WorkPost() {
     </section>
 
     <div className="work-post-wrap">
-      {post.featured_image && <figure className="work-post-lead-media">
-        <img src={post.featured_image} alt={post.featured_image_alt || post.company || post.title} />
-      </figure>}
       <div className="work-post-article-grid">
         {toc.length > 0 && <aside className="work-post-toc">
           <div className="work-post-toc-title">On this page</div>
