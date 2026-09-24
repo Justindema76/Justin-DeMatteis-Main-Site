@@ -10,7 +10,6 @@ import {
 } from '../lib/content';
 
 const WORK_SUBMENU = [
-  { label: 'JustConsignIn', url: '/work/justconsignin' },
   { label: 'Jill & The Beanstalk', url: '/work/jill-and-the-beanstalk' },
   { label: 'Wheels Automotive', url: '/work/wheels-automotive' },
   { label: 'WordPress Websites', url: '/work/wordpress-websites' },
