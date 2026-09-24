@@ -208,6 +208,7 @@ function ResumeSkills(p) {
           </article>;
         })}
       </div>
+      {d.buttonText && <div className="shared-section-cta"><SmartLink className="shared-btn shared-btn-primary" to={d.buttonUrl || '/skills'}>{d.buttonText}</SmartLink></div>}
     </div>
   </section>;
 }
