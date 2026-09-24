@@ -125,7 +125,7 @@ function ProcessRows(p) {
     <div className="shared-wrap shared-process-grid">
       <div>
         <div className="shared-eyebrow">{p.eyebrow}</div>
-        <h2 className="shared-section-title">{p.heading}</h2>
+        <h2 className={`shared-section-title heading-size-${p.headingSize || 'medium'}`}>{p.heading}</h2>
         <p className="shared-lead">{p.text}</p>
         <div className="shared-process-note">{p.note}</div>
       </div>
@@ -266,7 +266,8 @@ export default function PageRenderer({ data }) {
       if (type === 'ProjectCardBlock') return <ProjectCard {...p} key={key}/>;
 
       if (type === 'ResumeHeroBlock') return <GenericBlock type="HeroBlock" p={p} key={key}/>;
-      if (['ResumeSkillsBlock','ResumeWorkBlock','ResumeProjectsBlock','ResumeEducationBlock'].includes(type)) {
+      if (type === 'ResumeSkillsBlock') return <SkillsGrid {...p} headingSize={p.headingSize || 'small'} key={key}/>;
+      if (['ResumeWorkBlock','ResumeProjectsBlock','ResumeEducationBlock'].includes(type)) {
         return <SkillsGrid {...p} key={key}/>;
       }
       if (type === 'ResumeAiBlock') return <ProcessRows {...p} key={key}/>;
