@@ -303,32 +303,42 @@ function GenericBlock({ type, p }) {
 
 export default function PageRenderer({ data }) {
   const blocks = Array.isArray(data?.content) ? data.content : [];
+
   return <main>
     {blocks.map((block, index) => {
       const type = block?.type || '';
       const p = block?.props || {};
       const key = p.id || `${type}-${index}`;
+      const background = p.background || 'white';
+      let rendered = null;
 
-      if (type === 'ShowcaseHeroBlock') return <ShowcaseHero {...p} key={key}/>;
-      if (type === 'ProofStripBlock') return <ProofStrip {...p} key={key}/>;
-      if (type === 'CaseStudyBlock') return <CaseStudy {...p} key={key}/>;
-      if (type === 'CardGridBlock') return <CardGrid {...p} key={key}/>;
-      if (type === 'StorySplitBlock') return <StorySplit {...p} key={key}/>;
-      if (type === 'ProcessRowsBlock') return <ProcessRows {...p} key={key}/>;
-      if (type === 'SkillsGridBlock') return <SkillsGrid {...p} key={key}/>;
-      if (type === 'LargeCtaBlock') return <LargeCta {...p} key={key}/>;
-      if (type === 'ProjectCardBlock') return <ProjectCard {...p} key={key}/>;
+      if (type === 'ShowcaseHeroBlock') rendered = <ShowcaseHero {...p}/>;
+      else if (type === 'ProofStripBlock') rendered = <ProofStrip {...p}/>;
+      else if (type === 'CaseStudyBlock') rendered = <CaseStudy {...p}/>;
+      else if (type === 'CardGridBlock') rendered = <CardGrid {...p}/>;
+      else if (type === 'StorySplitBlock') rendered = <StorySplit {...p}/>;
+      else if (type === 'ProcessRowsBlock') rendered = <ProcessRows {...p}/>;
+      else if (type === 'SkillsGridBlock') rendered = <SkillsGrid {...p}/>;
+      else if (type === 'LargeCtaBlock') rendered = <LargeCta {...p}/>;
+      else if (type === 'ProjectCardBlock') rendered = <ProjectCard {...p}/>;
+      else if (type === 'ResumeHeroBlock') rendered = <GenericBlock type="HeroBlock" p={p}/>;
+      else if (type === 'ResumeSkillsBlock') rendered = <ResumeSkills {...p}/>;
+      else if (['ResumeWorkBlock','ResumeProjectsBlock','ResumeEducationBlock'].includes(type)) rendered = <SkillsGrid {...p}/>;
+      else if (type === 'ResumeAiBlock') rendered = <ProcessRows {...p}/>;
+      else if (type === 'ResumeAboutBlock') rendered = <StorySplit {...p}/>;
+      else if (type === 'ResumeContactBlock') rendered = <LargeCta {...p}/>;
+      else rendered = <GenericBlock type={type} p={p}/>;
 
-      if (type === 'ResumeHeroBlock') return <GenericBlock type="HeroBlock" p={p} key={key}/>;
-      if (type === 'ResumeSkillsBlock') return <ResumeSkills {...p} key={key}/>;
-      if (['ResumeWorkBlock','ResumeProjectsBlock','ResumeEducationBlock'].includes(type)) {
-        return <SkillsGrid {...p} key={key}/>;
-      }
-      if (type === 'ResumeAiBlock') return <ProcessRows {...p} key={key}/>;
-      if (type === 'ResumeAboutBlock') return <StorySplit {...p} key={key}/>;
-      if (type === 'ResumeContactBlock') return <LargeCta {...p} key={key}/>;
+      if (!rendered) return null;
 
-      return <GenericBlock type={type} p={p} key={key}/>;
+      return <div
+        key={key}
+        className={`page-block-surface theme-${background} block-${type}`}
+        data-block-type={type}
+        data-block-background={background}
+      >
+        {rendered}
+      </div>;
     })}
   </main>;
 }
