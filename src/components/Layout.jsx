@@ -32,7 +32,7 @@ const SOCIAL_NETWORKS = [
 ];
 
 function navItems(config) {
-  return Array.from({ length: 7 }, (_, index) => {
+  const configured = Array.from({ length: 7 }, (_, index) => {
     const n = index + 1;
     const item = { label: config[`nav${n}Label`], url: config[`nav${n}Url`] };
 
@@ -47,7 +47,9 @@ function navItems(config) {
     }
 
     return item;
-  }).filter(item => item.label && item.url);
+  }).filter(item => item.label && item.url && item.url !== '/');
+
+  return [{ label: 'Home', url: '/' }, ...configured];
 }
 
 function SocialIcon({ network }) {
@@ -111,7 +113,8 @@ export default function Layout() {
             <div className="nav-dropdown" key={item.url}>
               <NavLink
                 to={item.url}
-                className={({ isActive }) => `nav-dropdown-parent${isActive || location.pathname.startsWith(`${item.url}/`) ? ' active' : ''}`}
+                end={item.url === '/'}
+                className={({ isActive }) => `nav-dropdown-parent${isActive || (item.url !== '/' && location.pathname.startsWith(`${item.url}/`)) ? ' active' : ''}`}
               >
                 {item.label}
                 <span className="nav-dropdown-caret" aria-hidden="true">▾</span>
@@ -124,8 +127,18 @@ export default function Layout() {
               </div>
             </div>
           ) : (
-            <NavLink key={item.url} to={item.url}>{item.label}</NavLink>
+            <NavLink key={item.url} to={item.url} end={item.url === '/'}>{item.label}</NavLink>
           ))}
+          {activeSocial.length > 0 && <div className="nav-social-links" aria-label="Social links">
+            {activeSocial.map(network => <a
+              key={network.key}
+              href={social[network.key].url}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={network.label}
+              title={network.label}
+            ><SocialIcon network={network.key}/></a>)}
+          </div>}
         </nav>
       </div>
     </header>
