@@ -32,9 +32,11 @@ const SOCIAL_NETWORKS = [
 ];
 
 function navItems(config) {
-  const configured = Array.from({ length: 7 }, (_, index) => {
+  return Array.from({ length: 7 }, (_, index) => {
     const n = index + 1;
-    const item = { label: config[`nav${n}Label`], url: config[`nav${n}Url`] };
+    const rawUrl = config[`nav${n}Url`];
+    const url = rawUrl === '/home' ? '/' : rawUrl;
+    const item = { label: config[`nav${n}Label`], url };
 
     if (item.url === '/work') {
       item.children = WORK_SUBMENU;
@@ -47,14 +49,7 @@ function navItems(config) {
     }
 
     return item;
-  }).filter(item => {
-    if (!item.label || !item.url) return false;
-    if (item.url === '/' || item.url === '/home') return false;
-    if (String(item.label).trim().toLowerCase() === 'home') return false;
-    return true;
-  });
-
-  return [{ label: 'Home', url: '/' }, ...configured];
+  }).filter(item => item.label && item.url);
 }
 
 function SocialIcon({ network }) {
@@ -116,11 +111,14 @@ export default function Layout() {
   };
 
   return <div className="site-shell" style={styleVars(styles)}>
-    <header className="site-nav">
+    <header className={`site-nav site-nav-${header.background || 'white'}`}>
       <div className="shared-wrap nav-inner">
         <Link to="/" className="brand" aria-label={`${brandFirst} ${brandSecond} home`}>
-          <span style={{color: header.brandFirstColor || DEFAULT_HEADER.brandFirstColor}}>{brandFirst}</span>{' '}
-          <em style={{color: header.brandSecondColor || DEFAULT_HEADER.brandSecondColor}}>{brandSecond}</em>
+          {header.logo && <img className="brand-logo" src={header.logo} alt="" />}
+          <span className="brand-text">
+            <span style={{color: header.brandFirstColor || DEFAULT_HEADER.brandFirstColor}}>{brandFirst}</span>{' '}
+            <em style={{color: header.brandSecondColor || DEFAULT_HEADER.brandSecondColor}}>{brandSecond}</em>
+          </span>
         </Link>
 
         <button className="menu-button" type="button" aria-label="Toggle navigation" onClick={() => setMenuOpen(v => !v)}>
