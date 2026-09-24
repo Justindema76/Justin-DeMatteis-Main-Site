@@ -205,83 +205,6 @@ function ProjectCard(p) {
   </section>;
 }
 
-
-function ResumeHero(p) {
-  const HeadingTag = ['h1','h2','h3','h4'].includes(p.headingLevel) ? p.headingLevel : 'h1';
-  return <section id={p.anchorId || undefined} className="shared-showcase-hero resume-home-hero">
-    <div className="shared-wrap shared-showcase-grid resume-home-hero-grid">
-      <div className="shared-showcase-copy">
-        {p.eyebrow && <div className="shared-eyebrow">{p.eyebrow}</div>}
-        {p.heading && <HeadingTag>{p.heading}</HeadingTag>}
-        {p.professionalTitle && <h2 className="resume-professional-title">{p.professionalTitle}</h2>}
-        {p.text && <p>{p.text}</p>}
-        <div className="shared-showcase-actions">
-          {p.primaryButtonText && <SmartLink className="shared-btn shared-btn-primary" to={p.primaryButtonUrl || '#'}>{p.primaryButtonText}</SmartLink>}
-          {p.secondaryButtonText && <SmartLink className="shared-btn shared-btn-secondary" to={p.secondaryButtonUrl || '#'}>{p.secondaryButtonText}</SmartLink>}
-        </div>
-        {p.note && <div className="shared-showcase-note">{p.note}</div>}
-      </div>
-    </div>
-  </section>;
-}
-
-function ResumeGrid(p) {
-  const HeadingTag = ['h1','h2','h3','h4'].includes(p.headingLevel) ? p.headingLevel : 'h2';
-  const ItemTag = ['h1','h2','h3','h4'].includes(p.itemHeadingLevel) ? p.itemHeadingLevel : 'h3';
-  return <section id={p.anchorId || undefined} className="shared-section shared-skills resume-grid-section">
-    <div className="shared-wrap">
-      {p.eyebrow && <div className="shared-eyebrow">{p.eyebrow}</div>}
-      {p.heading && <HeadingTag className="shared-section-title">{p.heading}</HeadingTag>}
-      {p.text && <p className="shared-lead">{p.text}</p>}
-      <div className="shared-skill-grid">
-        {[1,2,3,4,5,6].filter(i => p[`item${i}Title`] || p[`item${i}Text`]).map(i =>
-          <article className="shared-skill-card" key={i}>
-            {p[`item${i}Title`] && <ItemTag>{p[`item${i}Title`]}</ItemTag>}
-            {p[`item${i}Text`] && <p>{p[`item${i}Text`]}</p>}
-          </article>
-        )}
-      </div>
-    </div>
-  </section>;
-}
-
-function ResumeAi(p) {
-  const HeadingTag = ['h1','h2','h3','h4'].includes(p.headingLevel) ? p.headingLevel : 'h2';
-  const RowTag = ['h1','h2','h3','h4'].includes(p.rowHeadingLevel) ? p.rowHeadingLevel : 'h3';
-  return <section id={p.anchorId || undefined} className="shared-section shared-process">
-    <div className="shared-wrap shared-process-grid">
-      <div>
-        {p.eyebrow && <div className="shared-eyebrow">{p.eyebrow}</div>}
-        {p.heading && <HeadingTag className="shared-section-title">{p.heading}</HeadingTag>}
-        {p.text && <p className="shared-lead">{p.text}</p>}
-        {p.note && <div className="shared-process-note">{p.note}</div>}
-      </div>
-      <div className="shared-process-rows">
-        {[1,2,3,4,5].filter(i => p[`row${i}Label`] || p[`row${i}Text`]).map(i =>
-          <div className="shared-process-row" key={i}>
-            {p[`row${i}Label`] && <RowTag>{p[`row${i}Label`]}</RowTag>}
-            {p[`row${i}Text`] && <span>{p[`row${i}Text`]}</span>}
-          </div>
-        )}
-      </div>
-    </div>
-  </section>;
-}
-
-function ResumeContact(p) {
-  const HeadingTag = ['h1','h2','h3','h4'].includes(p.headingLevel) ? p.headingLevel : 'h2';
-  return <section id={p.anchorId || undefined} className="shared-large-cta">
-    <div className="shared-wrap shared-large-cta-box">
-      <div>
-        {p.eyebrow && <div className="shared-eyebrow">{p.eyebrow}</div>}
-        {p.heading && <HeadingTag>{p.heading}</HeadingTag>}
-        {p.text && <p>{p.text}</p>}
-      </div>
-      {p.buttonText && <SmartLink className="shared-btn shared-btn-dark" to={p.buttonUrl || '#'}>{p.buttonText}</SmartLink>}
-    </div>
-  </section>;
-}
-
 function GenericBlock({ type, p }) {
   if (type === 'HeroBlock') {
     const primaryButtonText = p.primaryButtonText ?? p.buttonText ?? '';
@@ -342,10 +265,13 @@ export default function PageRenderer({ data }) {
       if (type === 'LargeCtaBlock') return <LargeCta {...p} key={key}/>;
       if (type === 'ProjectCardBlock') return <ProjectCard {...p} key={key}/>;
 
-      if (type === 'ResumeHeroBlock') return <ResumeHero {...p} key={key}/>;
-      if (['ResumeSkillsBlock','ResumeWorkBlock','ResumeProjectsBlock','ResumeEducationBlock'].includes(type)) return <ResumeGrid {...p} key={key}/>;
-      if (type === 'ResumeAiBlock') return <ResumeAi {...p} key={key}/>;
-      if (type === 'ResumeContactBlock') return <ResumeContact {...p} key={key}/>;
+      if (type === 'ResumeHeroBlock') return <GenericBlock type="HeroBlock" p={p} key={key}/>;
+      if (['ResumeSkillsBlock','ResumeWorkBlock','ResumeProjectsBlock','ResumeEducationBlock'].includes(type)) {
+        return <SkillsGrid {...p} key={key}/>;
+      }
+      if (type === 'ResumeAiBlock') return <ProcessRows {...p} key={key}/>;
+      if (type === 'ResumeAboutBlock') return <StorySplit {...p} key={key}/>;
+      if (type === 'ResumeContactBlock') return <LargeCta {...p} key={key}/>;
 
       return <GenericBlock type={type} p={p} key={key}/>;
     })}

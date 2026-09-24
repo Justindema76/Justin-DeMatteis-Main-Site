@@ -166,7 +166,7 @@ button,input,textarea,select{font:inherit}
 .shared-skills{background:#fff}
 .shared-skill-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:32px}
 .shared-skill-card{border:1px solid var(--site-border,var(--line));border-radius:20px;padding:22px;background:#FBFCFE}
-.shared-skill-card h3,.shared-skill-card h4{margin:0 0 10px;color:var(--navy)}
+.shared-skill-card h4{margin:0 0 10px;color:var(--navy)}
 .shared-skill-card p{margin:0;color:var(--site-muted,var(--muted));font-size:.92rem}
 
 .shared-large-cta{background:linear-gradient(145deg,var(--site-primary,var(--blue)),#2559D7);color:#fff;padding:88px 0}
@@ -534,13 +534,3 @@ button,input,textarea,select{font:inherit}
   .work-post-btn{width:100%}
   .work-post-cta{align-items:flex-start;flex-direction:column}
 }
-
-.resume-home-hero-grid{grid-template-columns:minmax(0,900px);min-height:610px}
-.resume-professional-title{margin:0 0 18px;color:#33495f;font-size:clamp(1.3rem,2.2vw,1.8rem);letter-spacing:-.025em}
-.resume-grid-section{scroll-margin-top:90px}
-.resume-grid-section .shared-skill-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
-.resume-grid-section .shared-skill-card{min-height:170px}
-.shared-process-row h3{margin:0;color:#8EB0FF;font-size:.95rem}
-.shared-large-cta p{margin:10px 0 0;color:#d5dfeb}
-@media(max-width:920px){.resume-grid-section .shared-skill-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:640px){.resume-grid-section .shared-skill-grid{grid-template-columns:1fr}}
