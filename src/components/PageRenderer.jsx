@@ -264,6 +264,14 @@ export default function PageRenderer({ data }) {
       if (type === 'SkillsGridBlock') return <SkillsGrid {...p} key={key}/>;
       if (type === 'LargeCtaBlock') return <LargeCta {...p} key={key}/>;
       if (type === 'ProjectCardBlock') return <ProjectCard {...p} key={key}/>;
+
+      if (type === 'ResumeHeroBlock') return <GenericBlock type="HeroBlock" p={p} key={key}/>;
+      if (['ResumeSkillsBlock','ResumeWorkBlock','ResumeProjectsBlock','ResumeEducationBlock'].includes(type)) {
+        return <SkillsGrid {...p} key={key}/>;
+      }
+      if (type === 'ResumeAboutBlock') return <StorySplit {...p} key={key}/>;
+      if (type === 'ResumeContactBlock') return <LargeCta {...p} key={key}/>;
+
       return <GenericBlock type={type} p={p} key={key}/>;
     })}
   </main>;
