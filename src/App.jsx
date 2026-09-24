@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import Layout from './components/Layout';
 import SEO from './components/SEO';
 import ManagedPage from './pages/ManagedPage';
@@ -17,7 +17,7 @@ export default function App() {
         <Route path="/work/:slug" element={<WorkPost />} />
         <Route path="/about" element={<ManagedPage pageId="about" />} />
         <Route path="/ai-development" element={<ManagedPage pageId="ai-development" />} />
-        <Route path="/experience" element={<ManagedPage pageId="experience" />} />
+        <Route path="/experience" element={<Navigate to="/work" replace />} />
         <Route path="/contact" element={<ManagedPage pageId="contact" />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<BlogPost />} />
