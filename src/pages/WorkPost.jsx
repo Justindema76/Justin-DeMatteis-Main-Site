@@ -26,20 +26,6 @@ function setCanonical(href) {
   el.href = href;
 }
 
-function stripTags(value = '') {
-  return String(value).replace(/<[^>]*>/g, '').replace(/&amp;/g, '&').replace(/&quot;/g, '"').trim();
-}
-
-function extractToc(html = '') {
-  const items = [];
-  const regex = /<h2[^>]*id=["']([^"']+)["'][^>]*>([\s\S]*?)<\/h2>/gi;
-  let match;
-  while ((match = regex.exec(html))) {
-    items.push({ id: match[1], label: stripTags(match[2]) });
-  }
-  return items;
-}
-
 function ProjectLink({ href, children, secondary = false }) {
   if (!href) return null;
   const className = `work-post-btn ${secondary ? 'secondary' : 'primary'}`;
@@ -47,6 +33,21 @@ function ProjectLink({ href, children, secondary = false }) {
     return <a className={className} href={href} target="_blank" rel="noreferrer">{children}</a>;
   }
   return <Link className={className} to={href}>{children}</Link>;
+}
+
+function youtubeId(value = '') {
+  const raw = String(value || '').trim();
+  if (!raw) return '';
+  try {
+    const url = new URL(raw.startsWith('http') ? raw : `https://${raw}`);
+    if (url.hostname.includes('youtu.be')) return url.pathname.split('/').filter(Boolean)[0] || '';
+    const direct = url.searchParams.get('v');
+    if (direct) return direct;
+    const parts = url.pathname.split('/').filter(Boolean);
+    const marker = parts.findIndex(part => ['embed', 'shorts', 'live'].includes(part));
+    if (marker >= 0) return parts[marker + 1] || '';
+  } catch {}
+  return /^[A-Za-z0-9_-]{6,}$/.test(raw) ? raw : '';
 }
 
 function technologyCards(tags = []) {
@@ -65,6 +66,113 @@ function technologyCards(tags = []) {
   return groups.filter(group => group.items.length);
 }
 
+function Paragraphs({ text }) {
+  if (!text) return null;
+  return String(text).split(/\n\s*\n/).filter(Boolean).map((paragraph, index) => <p key={index}>{paragraph}</p>);
+}
+
+function sectionId(value = '', index = 0) {
+  const slug = String(value).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  return slug || `section-${index + 1}`;
+}
+
+function hasStructuredSections(sections) {
+  if (!sections || typeof sections !== 'object') return false;
+  return Object.entries(sections).some(([key, value]) => {
+    if (key === 'extras' || key === 'gallery' || key === 'videos' || key === 'workflow' || key === 'problemPoints') return Array.isArray(value) && value.length > 0;
+    return Boolean(value);
+  });
+}
+
+function StructuredWorkStory({ sections }) {
+  const gallery = Array.isArray(sections.gallery) ? sections.gallery.filter(item => item?.url) : [];
+  const videos = Array.isArray(sections.videos) ? sections.videos.filter(item => item?.url) : [];
+  const workflow = Array.isArray(sections.workflow) ? sections.workflow.filter(item => item?.title || item?.text) : [];
+  const points = Array.isArray(sections.problemPoints) ? sections.problemPoints.filter(Boolean) : [];
+  const extras = Array.isArray(sections.extras) ? sections.extras.filter(item => item?.heading || item?.text) : [];
+  const ytId = youtubeId(sections.youtubeUrl);
+
+  return <>
+    {(sections.overview || sections.overviewSecondary || sections.quote) && <section id="overview" className="work-post-story-section">
+      <h2>Overview</h2>
+      <Paragraphs text={sections.overview}/>
+      <Paragraphs text={sections.overviewSecondary}/>
+      {sections.quote && <blockquote>{sections.quote}</blockquote>}
+    </section>}
+
+    {(sections.problem || points.length > 0) && <section id="problem" className="work-post-story-section">
+      <h2>The business problem</h2>
+      <Paragraphs text={sections.problem}/>
+      {points.length > 0 && <ul>{points.map((point, index) => <li key={index}>{point}</li>)}</ul>}
+    </section>}
+
+    {(sections.built || sections.connectedWorkflow) && <section id="solution" className="work-post-story-section">
+      <h2>What I built</h2>
+      <Paragraphs text={sections.built}/>
+      {sections.connectedWorkflow && <div className="work-post-callout">
+        <strong>Connected workflow</strong>
+        <span>{sections.connectedWorkflow}</span>
+      </div>}
+    </section>}
+
+    {(sections.visualsIntro || gallery.length > 0) && <section id="media" className="work-post-story-section">
+      <h2>Product visuals</h2>
+      <Paragraphs text={sections.visualsIntro}/>
+      {gallery.length > 0 && <div className={`work-post-gallery ${gallery.length === 1 ? 'single' : ''}`}>
+        {gallery.map((item, index) => <figure key={item.url || index}>
+          <img src={item.url} alt={item.alt || ''} loading="lazy" decoding="async"/>
+          {item.caption && <figcaption>{item.caption}</figcaption>}
+        </figure>)}
+      </div>}
+    </section>}
+
+    {(sections.youtubeHeading || sections.youtubeIntro || ytId) && <section id="video" className="work-post-story-section">
+      <h2>{sections.youtubeHeading || 'Video demo'}</h2>
+      <Paragraphs text={sections.youtubeIntro}/>
+      {ytId && <div className="work-post-video">
+        <iframe src={`https://www.youtube.com/embed/${ytId}`} title={sections.youtubeHeading || 'Project video'} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen/>
+      </div>}
+    </section>}
+
+    {videos.length > 0 && <section id="uploaded-videos" className="work-post-story-section">
+      <h2>Project videos</h2>
+      <div className="work-post-uploaded-videos">
+        {videos.map((item, index) => <figure key={item.url || index}>
+          {item.title && <h3>{item.title}</h3>}
+          <video controls preload="metadata" src={item.url}/>
+          {item.caption && <figcaption>{item.caption}</figcaption>}
+        </figure>)}
+      </div>
+    </section>}
+
+    {workflow.length > 0 && <section id="workflow" className="work-post-story-section">
+      <h2>The workflow</h2>
+      <div className="work-post-workflow-steps">
+        {workflow.map((step, index) => <article key={index}>
+          <span>{String(index + 1).padStart(2, '0')}</span>
+          <div>
+            {step.title && <h3>{step.title}</h3>}
+            <Paragraphs text={step.text}/>
+          </div>
+        </article>)}
+      </div>
+    </section>}
+
+    {sections.ongoing && <section id="ongoing" className="work-post-story-section">
+      <h2>Ongoing work</h2>
+      <Paragraphs text={sections.ongoing}/>
+    </section>}
+
+    {extras.map((section, index) => {
+      const id = sectionId(section.heading, index);
+      return <section id={id} className="work-post-story-section" key={id}>
+        {section.heading && <h2>{section.heading}</h2>}
+        <Paragraphs text={section.text}/>
+      </section>;
+    })}
+  </>;
+}
+
 export default function WorkPost() {
   const { slug = '' } = useParams();
   const [post, setPost] = useState(undefined);
@@ -79,13 +187,36 @@ export default function WorkPost() {
     return () => { active = false; };
   }, [slug]);
 
+  const sections = post?.sections && typeof post.sections === 'object' ? post.sections : {};
+  const structured = hasStructuredSections(sections);
+  const tags = Array.isArray(post?.tags) ? post.tags : [];
+
   const toc = useMemo(() => {
-    const items = extractToc(post?.body_html || '');
-    if (Array.isArray(post?.tags) && post.tags.length && !items.some(item => item.id === 'technology')) {
-      items.push({ id: 'technology', label: 'Technology and tools' });
+    if (!post) return [];
+    if (!structured) {
+      const items = [];
+      const regex = /<h2[^>]*id=["']([^"']+)["'][^>]*>([\s\S]*?)<\/h2>/gi;
+      let match;
+      while ((match = regex.exec(post.body_html || ''))) items.push({ id: match[1], label: String(match[2]).replace(/<[^>]*>/g, '').trim() });
+      if (tags.length && !items.some(item => item.id === 'technology')) items.push({ id: 'technology', label: 'Technology and tools' });
+      return items;
     }
+
+    const items = [];
+    if (sections.overview || sections.overviewSecondary || sections.quote) items.push({ id: 'overview', label: 'Overview' });
+    if (sections.problem || sections.problemPoints?.length) items.push({ id: 'problem', label: 'The business problem' });
+    if (sections.built || sections.connectedWorkflow) items.push({ id: 'solution', label: 'What I built' });
+    if (sections.visualsIntro || sections.gallery?.length) items.push({ id: 'media', label: 'Product visuals' });
+    if (sections.youtubeHeading || sections.youtubeIntro || sections.youtubeUrl) items.push({ id: 'video', label: sections.youtubeHeading || 'Video demo' });
+    if (sections.videos?.length) items.push({ id: 'uploaded-videos', label: 'Project videos' });
+    if (sections.workflow?.length) items.push({ id: 'workflow', label: 'The workflow' });
+    if (sections.ongoing) items.push({ id: 'ongoing', label: 'Ongoing work' });
+    (sections.extras || []).forEach((section, index) => {
+      if (section?.heading) items.push({ id: sectionId(section.heading, index), label: section.heading });
+    });
+    if (tags.length) items.push({ id: 'technology', label: 'Technology and tools' });
     return items;
-  }, [post?.body_html, post?.tags]);
+  }, [post, structured, sections, tags.length]);
 
   useEffect(() => {
     if (!post) return;
@@ -123,19 +254,17 @@ export default function WorkPost() {
       image: image || undefined,
       creator: { '@type': 'Person', name: 'Justin DeMatteis', url: BASE },
       about: post.work_type || undefined,
-      keywords: Array.isArray(post.tags) ? post.tags.join(', ') : undefined,
+      keywords: tags.join(', ') || undefined,
       datePublished: post.published_at || undefined,
       dateModified: post.updated_at || post.published_at || undefined,
       inLanguage: 'en-CA',
     });
     document.head.appendChild(script);
     return () => script.remove();
-  }, [post]);
+  }, [post, tags]);
 
   if (post === undefined) return <main className="status-page"><p>Loading work…</p></main>;
   if (!post) return <main className="status-page"><h1>Work post not found.</h1></main>;
-
-  const tags = Array.isArray(post.tags) ? post.tags : [];
 
   return <main className="work-post-page">
     <section className="work-post-hero">
@@ -195,7 +324,9 @@ export default function WorkPost() {
         </aside>}
 
         <article className="work-post-content">
-          <div dangerouslySetInnerHTML={{ __html: post.body_html || '' }} />
+          {structured
+            ? <StructuredWorkStory sections={sections}/>
+            : <div dangerouslySetInnerHTML={{ __html: post.body_html || '' }} />}
 
           {tags.length > 0 && <section className="work-post-tech-section">
             <div className="work-post-eyebrow">Technology</div>
