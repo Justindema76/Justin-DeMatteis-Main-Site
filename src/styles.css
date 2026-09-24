@@ -165,10 +165,16 @@ button,input,textarea,select{font:inherit}
 .shared-process-note{margin-top:26px;border-left:4px solid var(--site-primary,var(--blue));padding-left:18px;color:#D4DEE7;font-size:1.05rem}
 
 .shared-skills{background:#fff}
-.shared-skill-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:32px}
-.shared-skill-card{border:1px solid var(--site-border,var(--line));border-radius:20px;padding:22px;background:#FBFCFE}
+.shared-skill-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:32px}
+.shared-skill-card{min-width:0;border:1px solid var(--site-border,var(--line));border-radius:20px;padding:22px;background:#FBFCFE}
 .shared-skill-card-heading{margin:0 0 10px;color:var(--navy)}
-.shared-skill-card p{margin:0;color:var(--site-muted,var(--muted));font-size:.92rem}
+.shared-skill-card p{margin:0;color:var(--site-muted,var(--muted));font-size:.92rem;line-height:1.55}
+.shared-skill-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.shared-skill-tags span{display:inline-flex;align-items:center;min-height:30px;padding:6px 11px;border:1px solid #D4E1FF;border-radius:999px;background:#EEF4FF;color:#2A59C7;font-size:.76rem;font-weight:850;line-height:1}
+@media(max-width:640px){
+  .shared-skill-grid{grid-template-columns:1fr}
+  .shared-skill-card{padding:20px}
+}
 
 
 /* Resume skills block */
