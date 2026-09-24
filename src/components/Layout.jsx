@@ -54,8 +54,8 @@ export default function Layout() {
   return <div className="site-shell" style={styleVars(styles)}>
     <header className="site-nav">
       <div className="shared-wrap nav-inner">
-        <Link to="/" className="brand" aria-label="Just Innovate home">
-          <span>JUST</span> <em>INNOVATE.</em>
+        <Link to="/" className="brand" aria-label="Justin DeMatteis home">
+          <span>{header.brand || DEFAULT_HEADER.brand}</span>
         </Link>
 
         <button className="menu-button" type="button" aria-label="Toggle navigation" onClick={() => setMenuOpen(v => !v)}>
