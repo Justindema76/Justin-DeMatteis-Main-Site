@@ -682,3 +682,20 @@ button,input,textarea,select{font:inherit}
   background:#fff;
   color:var(--site-text,#1D2935);
 }
+
+.page-block-surface.theme-dark:not(.block-ProjectCardBlock) .shared-showcase-copy>p,
+.page-block-surface.theme-primary:not(.block-ProjectCardBlock) .shared-showcase-copy>p,
+.page-block-surface.theme-dark:not(.block-ProjectCardBlock) .cms-text p,
+.page-block-surface.theme-primary:not(.block-ProjectCardBlock) .cms-text p{
+  color:rgba(255,255,255,.76)!important;
+}
+.page-block-surface.theme-dark:not(.block-ProjectCardBlock) .cms-block h1,
+.page-block-surface.theme-dark:not(.block-ProjectCardBlock) .cms-block h2,
+.page-block-surface.theme-dark:not(.block-ProjectCardBlock) .cms-block h3,
+.page-block-surface.theme-dark:not(.block-ProjectCardBlock) .cms-block h4,
+.page-block-surface.theme-primary:not(.block-ProjectCardBlock) .cms-block h1,
+.page-block-surface.theme-primary:not(.block-ProjectCardBlock) .cms-block h2,
+.page-block-surface.theme-primary:not(.block-ProjectCardBlock) .cms-block h3,
+.page-block-surface.theme-primary:not(.block-ProjectCardBlock) .cms-block h4{
+  color:#fff!important;
+}
