@@ -1,5 +1,12 @@
 import { Link } from 'react-router-dom';
 
+const SHOWCASE_IMAGE = '/images/projects/justconsignin-showcase.svg';
+
+function BlockHeading({ level = 'h2', className = '', children }) {
+  const Tag = ['h1','h2','h3','h4'].includes(level) ? level : 'h2';
+  return <Tag className={`${className} heading-level-${Tag}`.trim()}>{children}</Tag>;
+}
+
 function SmartLink({ to = '#', className = '', children }) {
   if (/^https?:\/\//i.test(to) || /^mailto:/i.test(to)) {
     return <a href={to} className={className} target={/^https?:\/\//i.test(to) ? '_blank' : undefined} rel="noreferrer">{children}</a>;
@@ -9,11 +16,12 @@ function SmartLink({ to = '#', className = '', children }) {
 }
 
 function ShowcaseHero(p) {
+  const image = p.image || SHOWCASE_IMAGE;
   return <section className="shared-showcase-hero">
     <div className="shared-wrap shared-showcase-grid">
       <div className="shared-showcase-copy">
         <div className="shared-eyebrow">{p.eyebrow}</div>
-        <h1>{p.heading} <span>{p.accent}</span></h1>
+        <BlockHeading level={p.headingLevel || 'h1'} className="shared-showcase-heading">{p.heading} {p.accent && <span>{p.accent}</span>}</BlockHeading>
         <p>{p.text}</p>
         <div className="shared-showcase-actions">
           {p.primaryButtonText && <SmartLink className="shared-btn shared-btn-primary" to={p.primaryButtonUrl}>{p.primaryButtonText}</SmartLink>}
@@ -21,18 +29,8 @@ function ShowcaseHero(p) {
         </div>
         {p.note && <div className="shared-showcase-note">{p.note}</div>}
       </div>
-      <div className="shared-profile-card">
-        <div className="shared-browser">
-          <div className="shared-browser-top"><i/><i/><i/></div>
-          <div className="shared-browser-body">
-            <span className="shared-mini-badge">{p.cardBadge}</span>
-            <div className="shared-mock-title">{p.cardTitle}</div>
-            <p>{p.cardText}</p>
-            <div className="shared-mock-flow">
-              <span>{p.flow1}</span><span>{p.flow2}</span><span>{p.flow3}</span><span>{p.flow4}</span>
-            </div>
-          </div>
-        </div>
+      <div className="shared-showcase-image">
+        <img src={image} alt={p.imageAlt || 'JustConsignIn featured project'} loading="eager" decoding="async"/>
       </div>
     </div>
   </section>;
@@ -42,7 +40,7 @@ function ProofStrip(p) {
   return <section className="shared-proof-strip">
     <div className="shared-wrap shared-proof-grid">
       {[[p.item1Title,p.item1Text],[p.item2Title,p.item2Text],[p.item3Title,p.item3Text]].map(([title, copy], i) =>
-        <div className="shared-proof" key={i}><strong>{title}</strong><span>{copy}</span></div>
+        <div className="shared-proof" key={i}><BlockHeading level={p.itemHeadingLevel || 'h3'} className="shared-proof-title">{title}</BlockHeading><span>{copy}</span></div>
       )}
     </div>
   </section>;
@@ -52,12 +50,12 @@ function CaseStudy(p) {
   return <section className="shared-section shared-featured-case">
     <div className="shared-wrap">
       <div className="shared-eyebrow">{p.eyebrow}</div>
-      <h2 className="shared-section-title">{p.sectionHeading}</h2>
+      <BlockHeading level={p.sectionHeadingLevel || 'h2'} className="shared-section-title">{p.sectionHeading}</BlockHeading>
       <p className="shared-lead">{p.sectionText}</p>
       <div className="shared-case-card">
         <div className="shared-case-copy">
           <div className="shared-eyebrow">{p.projectEyebrow}</div>
-          <h3>{p.projectHeading}</h3>
+          <BlockHeading level={p.projectHeadingLevel || 'h3'} className="shared-case-heading">{p.projectHeading}</BlockHeading>
           <p>{p.projectText}</p>
           <div className="shared-tag-row">
             {String(p.tags || '').split(',').map(v => v.trim()).filter(Boolean).map(tag => <span className="shared-tag" key={tag}>{tag}</span>)}
@@ -66,7 +64,7 @@ function CaseStudy(p) {
         </div>
         <div className="shared-case-visual">
           <div className="shared-workflow-card">
-            <h4>{p.workflowTitle}</h4>
+            <BlockHeading level={p.workflowHeadingLevel || 'h4'} className="shared-workflow-heading">{p.workflowTitle}</BlockHeading>
             <div className="shared-workflow-list">
               {[p.step1,p.step2,p.step3,p.step4].map((step, i) => <div className="shared-workflow-item" key={i}><b>{i + 1}</b><span>{step}</span></div>)}
             </div>
@@ -82,14 +80,14 @@ function CardGrid(p) {
     <div className="shared-wrap">
       {(p.eyebrow || p.heading || p.text) && <div className="shared-card-grid-heading">
         {p.eyebrow && <div className="shared-eyebrow">{p.eyebrow}</div>}
-        {p.heading && <h2 className="shared-section-title">{p.heading}</h2>}
+        {p.heading && <BlockHeading level={p.headingLevel || 'h2'} className="shared-section-title">{p.heading}</BlockHeading>}
         {p.text && <p className="shared-lead">{p.text}</p>}
       </div>}
       <div className="shared-work-grid">
         {[1,2,3,4].map(i => <article className={`shared-work-card ${p[`item${i}Style`] || 'white'}`} key={i}>
           <div className="shared-card-icon">{p[`item${i}Icon`]}</div>
           <div className="shared-eyebrow">{p[`item${i}Eyebrow`]}</div>
-          <h3>{p[`item${i}Title`]}</h3>
+          <BlockHeading level={p.itemHeadingLevel || 'h3'} className="shared-work-card-heading">{p[`item${i}Title`]}</BlockHeading>
           <p>{p[`item${i}Text`]}</p>
         </article>)}
       </div>
@@ -102,16 +100,16 @@ function StorySplit(p) {
     <div className="shared-wrap shared-story-grid">
       <aside className="shared-story-card">
         <div className="shared-eyebrow">{p.leftEyebrow}</div>
-        <h3>{p.leftHeading}</h3>
+        <BlockHeading level={p.leftHeadingLevel || 'h3'} className="shared-story-card-heading">{p.leftHeading}</BlockHeading>
         <p>{p.leftText1}</p>
         <p>{p.leftText2}</p>
       </aside>
       <div>
         <div className="shared-eyebrow">{p.rightEyebrow}</div>
-        <h2 className="shared-section-title">{p.rightHeading}</h2>
+        <BlockHeading level={p.rightHeadingLevel || 'h2'} className="shared-section-title">{p.rightHeading}</BlockHeading>
         <div className="shared-story-points">
           {[1,2,3,4].map(i => <div className="shared-story-point" key={i}>
-            <h4>{p[`point${i}Title`]}</h4>
+            <BlockHeading level={p.pointHeadingLevel || 'h4'} className="shared-story-point-heading">{p[`point${i}Title`]}</BlockHeading>
             <p>{p[`point${i}Text`]}</p>
           </div>)}
         </div>
@@ -125,13 +123,13 @@ function ProcessRows(p) {
     <div className="shared-wrap shared-process-grid">
       <div>
         <div className="shared-eyebrow">{p.eyebrow}</div>
-        <h2 className={`shared-section-title heading-size-${p.headingSize || 'medium'}`}>{p.heading}</h2>
+        <BlockHeading level={p.headingLevel || 'h2'} className="shared-section-title">{p.heading}</BlockHeading>
         <p className="shared-lead">{p.text}</p>
         <div className="shared-process-note">{p.note}</div>
       </div>
       <div className="shared-process-rows">
         {[1,2,3,4,5].map(i => <div className="shared-process-row" key={i}>
-          <strong>{p[`row${i}Label`]}</strong>
+          <BlockHeading level={p.rowHeadingLevel || 'h4'} className="shared-process-row-heading">{p[`row${i}Label`]}</BlockHeading>
           <span>{p[`row${i}Text`]}</span>
         </div>)}
       </div>
@@ -143,12 +141,12 @@ function SkillsGrid(p) {
   return <section className="shared-section shared-skills">
     <div className="shared-wrap">
       <div className="shared-eyebrow">{p.eyebrow}</div>
-      <h2 className="shared-section-title">{p.heading}</h2>
+      <BlockHeading level={p.headingLevel || 'h2'} className="shared-section-title">{p.heading}</BlockHeading>
       <p className="shared-lead">{p.text}</p>
       <div className="shared-skill-grid">
         {[1,2,3,4,5,6].filter(i => p[`item${i}Title`] || p[`item${i}Text`]).map(i =>
           <div className="shared-skill-card" key={i}>
-            <h4>{p[`item${i}Title`]}</h4>
+            <BlockHeading level={p.itemHeadingLevel || 'h4'} className="shared-skill-card-heading">{p[`item${i}Title`]}</BlockHeading>
             <p>{p[`item${i}Text`]}</p>
           </div>
         )}
@@ -162,7 +160,7 @@ function LargeCta(p) {
     <div className="shared-wrap shared-large-cta-box">
       <div>
         <div className="shared-eyebrow">{p.eyebrow}</div>
-        <h2>{p.heading}</h2>
+        <BlockHeading level={p.headingLevel || 'h2'} className="shared-large-cta-heading">{p.heading}</BlockHeading>
       </div>
       {p.buttonText && <SmartLink className="shared-btn shared-btn-dark" to={p.buttonUrl}>{p.buttonText}</SmartLink>}
     </div>
@@ -170,7 +168,6 @@ function LargeCta(p) {
 }
 
 function ProjectCard(p) {
-  const HeadingTag = ['h1','h2','h3','h4'].includes(p.headingLevel) ? p.headingLevel : 'h2';
   const tags = String(p.tags || '').split(',').map(tag => tag.trim()).filter(Boolean);
 
   return <section id={p.anchorId || undefined} className={`standard-project-card panel-${p.panelPosition || 'left'}`}>
@@ -187,7 +184,7 @@ function ProjectCard(p) {
 
     <div className="standard-project-content">
       <div className="standard-project-eyebrow">{p.eyebrow}</div>
-      <HeadingTag>{p.heading}</HeadingTag>
+      <BlockHeading level={p.headingLevel || 'h2'} className="standard-project-heading">{p.heading}</BlockHeading>
       <p className="standard-project-summary">{p.summary}</p>
 
       <div className="standard-project-details">
@@ -209,11 +206,11 @@ function GenericBlock({ type, p }) {
   if (type === 'HeroBlock') {
     const primaryButtonText = p.primaryButtonText ?? p.buttonText ?? '';
     const primaryButtonUrl = p.primaryButtonUrl ?? p.buttonUrl ?? '#';
-    return <section className={`cms-hero showcase-style-hero hero-heading-${p.headingSize || 'medium'} theme-${p.background || 'light'} ${p.image ? 'with-media' : 'without-media'}`}>
+    return <section className={`cms-hero showcase-style-hero theme-${p.background || 'light'} ${p.image ? 'with-media' : 'without-media'}`}>
       <div className="shared-wrap cms-hero-grid">
         <div className="cms-hero-copy">
           {p.eyebrow && <div className="shared-eyebrow">{p.eyebrow}</div>}
-          <h1>{p.heading}{p.accent ? <> <span>{p.accent}</span></> : null}</h1>
+          <BlockHeading level={p.headingLevel || 'h1'} className="cms-hero-heading">{p.heading}{p.accent ? <> <span>{p.accent}</span></> : null}</BlockHeading>
           {p.text && <p>{p.text}</p>}
           {(primaryButtonText || p.secondaryButtonText) && <div className="shared-showcase-actions">
             {primaryButtonText && <SmartLink className="shared-btn shared-btn-primary" to={primaryButtonUrl}>{primaryButtonText}</SmartLink>}
@@ -227,7 +224,7 @@ function GenericBlock({ type, p }) {
   }
 
   if (type === 'HeadingBlock') {
-    const Tag = ['h2','h3','h4'].includes(p.level) ? p.level : 'h2';
+    const Tag = ['h1','h2','h3','h4'].includes(p.level) ? p.level : 'h2';
     return <section className="cms-block"><div className="shared-wrap" style={{textAlign:p.align || 'left'}}><Tag>{p.text}</Tag></div></section>;
   }
 
@@ -237,11 +234,11 @@ function GenericBlock({ type, p }) {
 
   if (type === 'ImageTextBlock') return <section className={`cms-image-text-section theme-${p.background || 'white'}`}><div className={`shared-wrap cms-image-text ${p.imagePosition === 'right' ? 'image-right' : ''}`}>
     <div>{p.image && <img src={p.image} alt={p.alt || ''} loading="lazy" decoding="async"/>}</div>
-    <div><h2>{p.heading}</h2><p>{p.text}</p></div>
+    <div><BlockHeading level={p.headingLevel || 'h2'} className="cms-image-text-heading">{p.heading}</BlockHeading><p>{p.text}</p></div>
   </div></section>;
 
   if (type === 'CtaBlock') return <section className={`cms-cta theme-${p.background || 'dark'}`}>
-    <div className="shared-wrap"><h2>{p.heading}</h2><p>{p.text}</p>{p.buttonText && <SmartLink className="shared-btn shared-btn-primary" to={p.buttonUrl}>{p.buttonText}</SmartLink>}</div>
+    <div className="shared-wrap"><BlockHeading level={p.headingLevel || 'h2'} className="cms-cta-heading">{p.heading}</BlockHeading><p>{p.text}</p>{p.buttonText && <SmartLink className="shared-btn shared-btn-primary" to={p.buttonUrl}>{p.buttonText}</SmartLink>}</div>
   </section>;
 
   return null;
@@ -266,7 +263,7 @@ export default function PageRenderer({ data }) {
       if (type === 'ProjectCardBlock') return <ProjectCard {...p} key={key}/>;
 
       if (type === 'ResumeHeroBlock') return <GenericBlock type="HeroBlock" p={p} key={key}/>;
-      if (type === 'ResumeSkillsBlock') return <SkillsGrid {...p} headingSize={p.headingSize || 'small'} key={key}/>;
+      if (type === 'ResumeSkillsBlock') return <SkillsGrid {...p} key={key}/>;
       if (['ResumeWorkBlock','ResumeProjectsBlock','ResumeEducationBlock'].includes(type)) {
         return <SkillsGrid {...p} key={key}/>;
       }
