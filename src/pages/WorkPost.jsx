@@ -268,7 +268,7 @@ export default function WorkPost() {
 
   return <main className="work-post-page">
     <section className="work-post-hero">
-      <div className="work-post-wrap work-post-hero-grid">
+      <div className={`work-post-wrap work-post-hero-grid ${sections.heroImage ? 'has-image' : ''}`}>
         <div className="work-post-hero-copy">
           <div className="work-post-eyebrow">{post.work_type || 'Case Study'} · Case Study</div>
           <h1>{post.title}</h1>
@@ -278,6 +278,9 @@ export default function WorkPost() {
             <ProjectLink href="/work" secondary>Back to Work</ProjectLink>
           </div>
         </div>
+        {sections.heroImage && <figure className="work-post-hero-media">
+          <img src={sections.heroImage} alt={sections.heroImageAlt || post.title || ''}/>
+        </figure>}
       </div>
     </section>
 
