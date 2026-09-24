@@ -47,7 +47,12 @@ function navItems(config) {
     }
 
     return item;
-  }).filter(item => item.label && item.url && item.url !== '/');
+  }).filter(item => {
+    if (!item.label || !item.url) return false;
+    if (item.url === '/' || item.url === '/home') return false;
+    if (String(item.label).trim().toLowerCase() === 'home') return false;
+    return true;
+  });
 
   return [{ label: 'Home', url: '/' }, ...configured];
 }
