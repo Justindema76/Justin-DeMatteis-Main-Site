@@ -61,6 +61,14 @@ function SocialIcon({ network }) {
   return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.6 2h3.2c.3 2.5 1.7 4.3 4.2 5v3.2c-1.6 0-3-.5-4.2-1.3V16c0 4.1-3.3 7.4-7.4 7.4S4 20.1 4 16s3.3-7.4 7.4-7.4c.4 0 .8 0 1.2.1V12a4.1 4.1 0 1 0 2.9 3.9L15.6 2Z"/></svg>;
 }
 
+function ManagedLink({ to, children, className = '' }) {
+  if (!to) return null;
+  if (/^(https?:)?\/\//i.test(to) || to.startsWith('mailto:') || to.startsWith('tel:')) {
+    return <a className={className} href={to} target="_blank" rel="noreferrer">{children}</a>;
+  }
+  return <Link className={className} to={to}>{children}</Link>;
+}
+
 export default function Layout() {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
@@ -109,6 +117,12 @@ export default function Layout() {
     '--footer-social-icon-hover-color': footer.socialIconHoverColor || '#ffffff',
     '--footer-social-icon-hover-background': footer.socialIconHoverBackground || 'var(--site-primary,#2F6BFF)',
   };
+  const footerColumn1 = [1,2,3,4]
+    .map(i => ({ label: footer[`link${i}Label`], url: footer[`link${i}Url`] }))
+    .filter(item => item.label && item.url);
+  const footerColumn2 = [5,6,7,8]
+    .map(i => ({ label: footer[`link${i}Label`], url: footer[`link${i}Url`] }))
+    .filter(item => item.label && item.url);
 
   return <div className="site-shell" style={styleVars(styles)}>
     <header className={`site-nav site-nav-${header.background || 'white'}`}>
@@ -162,13 +176,29 @@ export default function Layout() {
 
     <Outlet />
 
-    <footer className="site-footer">
-      <div className="shared-wrap footer-inner">
+    <footer className={`site-footer site-footer-${footer.background || 'dark'}`}>
+      <div className="shared-wrap footer-grid">
         <div className="footer-brand">
-          <strong>{footer.brand || 'JUST INNOVATE.'}</strong>
+          <ManagedLink to="/" className="footer-brand-link">
+            {footer.logo && <img className="footer-logo" src={footer.logo} alt="" />}
+            <strong>{footer.brand || 'JUST INNOVATE.'}</strong>
+          </ManagedLink>
           <span>{footer.tagline || DEFAULT_FOOTER.tagline}</span>
         </div>
-        <div className="footer-right">
+
+        {footerColumn1.length > 0 && <div className="footer-links">
+          <strong>{footer.column1Title || 'Explore'}</strong>
+          {footerColumn1.map(item => <ManagedLink key={`${item.label}-${item.url}`} to={item.url}>{item.label}</ManagedLink>)}
+        </div>}
+
+        {footerColumn2.length > 0 && <div className="footer-links">
+          <strong>{footer.column2Title || 'Connect'}</strong>
+          {footerColumn2.map(item => <ManagedLink key={`${item.label}-${item.url}`} to={item.url}>{item.label}</ManagedLink>)}
+        </div>}
+
+        <div className="footer-social">
+          <strong>{footer.socialTitle || 'Connect'}</strong>
+          {footer.socialText && <p>{footer.socialText}</p>}
           {activeSocial.length > 0 && <div className="footer-social-links" aria-label="Social links" style={footerSocialStyle}>
             {activeSocial.map(network => <a
               key={network.key}
@@ -179,8 +209,14 @@ export default function Layout() {
               title={network.label}
             ><SocialIcon network={network.key}/></a>)}
           </div>}
-          <div>justindematteis.com • © {new Date().getFullYear()}</div>
         </div>
+      </div>
+      <div className="shared-wrap footer-bottom">
+        <span>© {new Date().getFullYear()} {footer.copyright || DEFAULT_FOOTER.copyright}</span>
+        <span className="footer-legal">
+          {footer.privacyLabel && footer.privacyUrl && <ManagedLink to={footer.privacyUrl}>{footer.privacyLabel}</ManagedLink>}
+          {footer.termsLabel && footer.termsUrl && <ManagedLink to={footer.termsUrl}>{footer.termsLabel}</ManagedLink>}
+        </span>
       </div>
     </footer>
   </div>;
