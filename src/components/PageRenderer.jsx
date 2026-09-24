@@ -142,18 +142,20 @@ function ProcessRows(p) {
 }
 
 function SkillsGrid(p) {
-  return <section className="shared-section shared-skills">
+  return <section className="shared-section shared-skills" id={p.anchorId || undefined}>
     <div className="shared-wrap">
       <div className="shared-eyebrow">{p.eyebrow}</div>
       <BlockHeading level={p.headingLevel || 'h2'} className="shared-section-title">{p.heading}</BlockHeading>
       <p className="shared-lead">{p.text}</p>
       <div className="shared-skill-grid">
-        {[1,2,3,4,5,6].filter(i => p[`item${i}Title`] || p[`item${i}Text`]).map(i =>
-          <div className="shared-skill-card" key={i}>
+        {[1,2,3,4,5,6].filter(i => p[`item${i}Title`] || p[`item${i}Text`]).map(i => {
+          const tags = String(p[`item${i}Tags`] || '').split(',').map(v => v.trim()).filter(Boolean);
+          return <div className="shared-skill-card" key={i}>
             <BlockHeading level={p.itemHeadingLevel || 'h4'} className="shared-skill-card-heading">{p[`item${i}Title`]}</BlockHeading>
             <p>{p[`item${i}Text`]}</p>
-          </div>
-        )}
+            {tags.length > 0 && <div className="shared-skill-tags">{tags.map(tag => <span key={tag}>{tag}</span>)}</div>}
+          </div>;
+        })}
       </div>
     </div>
   </section>;
