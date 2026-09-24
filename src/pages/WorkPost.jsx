@@ -49,6 +49,22 @@ function ProjectLink({ href, children, secondary = false }) {
   return <Link className={className} to={href}>{children}</Link>;
 }
 
+function technologyCards(tags = []) {
+  const groups = [
+    { title: 'Frontend', match: /react|html|css|javascript|typescript|angular|responsive|mobile/i, items: [] },
+    { title: 'Backend & Data', match: /supabase|rest|api|node|express|php|mysql|database|data/i, items: [] },
+    { title: 'Commerce', match: /shopify|pos|adobe commerce|magento|wordpress|ecommerce/i, items: [] },
+    { title: 'Workflow', match: /.*/, items: [] },
+  ];
+
+  for (const tag of tags) {
+    const group = groups.find(item => item.title !== 'Workflow' && item.match.test(tag)) || groups[3];
+    if (!group.items.includes(tag)) group.items.push(tag);
+  }
+
+  return groups.filter(group => group.items.length);
+}
+
 export default function WorkPost() {
   const { slug = '' } = useParams();
   const [post, setPost] = useState(undefined);
@@ -135,18 +151,20 @@ export default function WorkPost() {
           {post.role && <div className="work-post-note">{post.role}</div>}
         </div>
 
-        <aside className="work-post-meta-card">
-          <div className="work-post-facts">
-            {post.company && <div><span>Project</span><strong>{post.company}</strong></div>}
-            {post.role && <div><span>Role</span><strong>{post.role}</strong></div>}
-            {post.platform && <div><span>Platform</span><strong>{post.platform}</strong></div>}
-            {post.audience && <div><span>Built for</span><strong>{post.audience}</strong></div>}
-          </div>
-        </aside>
+        {post.featured_image && <div className="work-post-logo-card">
+          <img src={post.featured_image} alt={post.featured_image_alt || post.company || post.title} />
+        </div>}
       </div>
     </section>
 
     <div className="work-post-wrap">
+      <section className="work-post-fact-cards" aria-label="Project details">
+        {post.company && <article><span>Project</span><strong>{post.company}</strong></article>}
+        {post.role && <article><span>Role</span><strong>{post.role}</strong></article>}
+        {post.platform && <article><span>Platform</span><strong>{post.platform}</strong></article>}
+        {post.audience && <article><span>Built for</span><strong>{post.audience}</strong></article>}
+      </section>
+
       <div className="work-post-article-grid">
         {toc.length > 0 && <aside className="work-post-toc">
           <div className="work-post-toc-title">On this page</div>
@@ -157,10 +175,13 @@ export default function WorkPost() {
           <div dangerouslySetInnerHTML={{ __html: post.body_html || '' }} />
 
           {tags.length > 0 && <section className="work-post-tech-section">
-            <h2 id="technology">Technology and tools</h2>
-            {post.platform && <p>The project uses {post.platform} as part of the production stack and workflow.</p>}
-            <div className="work-post-tags">
-              {tags.map(tag => <span key={tag}>{tag}</span>)}
+            <div className="work-post-eyebrow">Technology</div>
+            <h2 id="technology">What I used to build it.</h2>
+            <div className="work-post-tech-cards">
+              {technologyCards(tags).map(group => <article key={group.title}>
+                <strong>{group.title}</strong>
+                <p>{group.items.join(' · ')}</p>
+              </article>)}
             </div>
           </section>}
 
