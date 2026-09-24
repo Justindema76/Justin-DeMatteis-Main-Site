@@ -26,7 +26,7 @@ export const DEFAULT_STYLES = {
 export const DEFAULT_HEADER = {
   brand: 'JUST INNOVATE.',
   nav1Label: 'Skills', nav1Url: '/#skills',
-  nav2Label: 'Work Experience', nav2Url: '/#work-experience',
+  nav2Label: 'Work Experience', nav2Url: '/work',
   nav3Label: 'AI + Development', nav3Url: '/ai-development',
   nav4Label: 'Contact', nav4Url: '/contact',
   nav5Label: '', nav5Url: '',
