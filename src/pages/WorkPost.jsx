@@ -148,21 +148,44 @@ export default function WorkPost() {
             <ProjectLink href={post.project_url}>Visit {post.company || 'Project'} →</ProjectLink>
             <ProjectLink href="/work" secondary>Back to Work</ProjectLink>
           </div>
-          {post.role && <div className="work-post-note">{post.role}</div>}
         </div>
-
-        {post.featured_image && <div className="work-post-logo-card">
-          <img src={post.featured_image} alt={post.featured_image_alt || post.company || post.title} />
-        </div>}
       </div>
     </section>
 
     <div className="work-post-wrap">
-      <section className="work-post-fact-cards" aria-label="Project details">
-        {post.company && <article><span>Project</span><strong>{post.company}</strong></article>}
-        {post.role && <article><span>Role</span><strong>{post.role}</strong></article>}
-        {post.platform && <article><span>Platform</span><strong>{post.platform}</strong></article>}
-        {post.audience && <article><span>Built for</span><strong>{post.audience}</strong></article>}
+      <section className="work-post-snapshot" aria-label="Project snapshot">
+        <div className="work-post-snapshot-head">
+          <div>
+            <div className="work-post-eyebrow">Project Snapshot</div>
+            <h2>What this project involved.</h2>
+          </div>
+        </div>
+
+        <div className="work-post-fact-cards">
+          {post.company && <article className="project-card project-card-brand">
+            <div className="project-card-brand-row">
+              {post.featured_image && <div className="project-card-logo">
+                <img src={post.featured_image} alt={post.featured_image_alt || post.company || post.title} />
+              </div>}
+              <div>
+                <span>Project</span>
+                <strong>{post.company}</strong>
+              </div>
+            </div>
+          </article>}
+          {post.role && <article className="project-card">
+            <span>Role</span>
+            <strong>{post.role}</strong>
+          </article>}
+          {post.platform && <article className="project-card project-card-soft">
+            <span>Platform</span>
+            <strong>{post.platform}</strong>
+          </article>}
+          {post.audience && <article className="project-card">
+            <span>Built for</span>
+            <strong>{post.audience}</strong>
+          </article>}
+        </div>
       </section>
 
       <div className="work-post-article-grid">
