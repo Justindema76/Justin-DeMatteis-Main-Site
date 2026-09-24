@@ -50,12 +50,15 @@ export default function Layout() {
   }, [location.pathname]);
 
   const links = useMemo(() => navItems(header), [header]);
+  const brandFirst = header.brandFirst || DEFAULT_HEADER.brandFirst || 'Justin';
+  const brandSecond = header.brandSecond || DEFAULT_HEADER.brandSecond || 'DeMatteis';
 
   return <div className="site-shell" style={styleVars(styles)}>
     <header className="site-nav">
       <div className="shared-wrap nav-inner">
-        <Link to="/" className="brand" aria-label="Justin DeMatteis home">
-          <span>{header.brand || DEFAULT_HEADER.brand}</span>
+        <Link to="/" className="brand" aria-label={`${brandFirst} ${brandSecond} home`}>
+          <span style={{color: header.brandFirstColor || DEFAULT_HEADER.brandFirstColor}}>{brandFirst}</span>{' '}
+          <em style={{color: header.brandSecondColor || DEFAULT_HEADER.brandSecondColor}}>{brandSecond}</em>
         </Link>
 
         <button className="menu-button" type="button" aria-label="Toggle navigation" onClick={() => setMenuOpen(v => !v)}>
