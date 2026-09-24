@@ -24,7 +24,11 @@ export const DEFAULT_STYLES = {
 };
 
 export const DEFAULT_HEADER = {
-  brand: 'JUST INNOVATE.',
+  brand: 'Justin DeMatteis',
+  brandFirst: 'Justin',
+  brandSecond: 'DeMatteis',
+  brandFirstColor: '#0B1F33',
+  brandSecondColor: '#2F6BFF',
   nav1Label: 'Skills', nav1Url: '/#skills',
   nav2Label: 'Work Experience', nav2Url: '/work',
   nav3Label: 'AI + Development', nav3Url: '/ai-development',
