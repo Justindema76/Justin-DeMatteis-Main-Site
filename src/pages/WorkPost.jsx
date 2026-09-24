@@ -136,9 +136,6 @@ export default function WorkPost() {
         </div>
 
         <aside className="work-post-meta-card">
-          {post.featured_image && <div className="work-post-logo-box">
-            <img src={post.featured_image} alt={post.featured_image_alt || post.company || post.title} />
-          </div>}
           <div className="work-post-facts">
             {post.company && <div><span>Project</span><strong>{post.company}</strong></div>}
             {post.role && <div><span>Role</span><strong>{post.role}</strong></div>}
@@ -150,6 +147,9 @@ export default function WorkPost() {
     </section>
 
     <div className="work-post-wrap">
+      {post.featured_image && <figure className="work-post-lead-media">
+        <img src={post.featured_image} alt={post.featured_image_alt || post.company || post.title} />
+      </figure>}
       <div className="work-post-article-grid">
         {toc.length > 0 && <aside className="work-post-toc">
           <div className="work-post-toc-title">On this page</div>
