@@ -206,74 +206,6 @@ function ResumeSkills(p) {
   </section>;
 }
 
-function ResumeWork(p) {
-  const defaults = {
-    eyebrow:'RESUME',
-    heading:'Work Experience',
-    headingLevel:'h1',
-    itemHeadingLevel:'h2',
-    text:'Professional ecommerce and development work focused on improving real business systems, storefronts and customer workflows.',
-    item1Logo:'/images/projects/wheels-automotive-mark.svg',
-    item1Label:'Professional Experience',
-    item1Company:'Wheels Automotive Dealer Supplies',
-    item1Kicker:'Adobe Commerce / Magento · B2B Ecommerce',
-    item1Title:'Ecommerce Development, Frontend, QA & SEO',
-    item1Text:'Supporting the launch and ongoing improvement of a large B2B automotive dealer-supply ecommerce platform.',
-    item1Bullet1:'Adobe Commerce / Magento frontend and PageBuilder implementation.',
-    item1Bullet2:'B2B account, login, checkout and payment workflow testing.',
-    item1Bullet3:'Product and category SEO, merchandising content and storefront updates.',
-    item1Bullet4:'QA, issue reproduction and coordination with the implementation vendor.',
-    item1ButtonText:'View Wheels case study →',
-    item1ButtonUrl:'/work/wheels-automotive',
-    item2Logo:'/images/projects/jill-beanstalk-mark.svg',
-    item2Label:'Client Ecommerce',
-    item2Company:'Jill & The Beanstalk',
-    item2Kicker:'Shopify · SEO · Ecommerce Growth',
-    item2Title:'Shopify Management, SEO & Storefront Optimization',
-    item2Text:'Ongoing ecommerce work focused on making the store easier to discover, easier to shop and stronger as an online sales channel.',
-    item2Bullet1:'Shopify storefront improvements, mobile UX and content organization.',
-    item2Bullet2:'Technical and on-page SEO, metadata and search-focused copy.',
-    item2Bullet3:'Product/category content, reviews, onsite search and integrations.',
-    item2Bullet4:'Ongoing troubleshooting, analytics and conversion-focused improvements.',
-    item2ButtonText:'View Jill & The Beanstalk case study →',
-    item2ButtonUrl:'/work/jill-and-the-beanstalk',
-  };
-  const d={...defaults,...p};
-  return <section className="resume-work-section">
-    <div className="shared-wrap">
-      <div className="resume-work-head">
-        <div>
-          <div className="shared-eyebrow">{d.eyebrow}</div>
-          <BlockHeading level={d.headingLevel || 'h1'} className="resume-work-heading">{d.heading}</BlockHeading>
-        </div>
-        <p className="resume-work-intro">{d.text}</p>
-      </div>
-      <div className="resume-work-divider"/>
-      <div className="resume-work-list">
-        {[1,2].filter(i => d[`item${i}Company`] || d[`item${i}Title`]).map(i => {
-          const bullets=[1,2,3,4].map(n=>d[`item${i}Bullet${n}`]).filter(Boolean);
-          return <article className="resume-work-card" key={i}>
-            <aside className="resume-work-company">
-              {d[`item${i}Logo`] && <div className="resume-work-logo"><img src={d[`item${i}Logo`]} alt={d[`item${i}Company`] || ''} loading="lazy" decoding="async"/></div>}
-              <div className="resume-work-company-meta">
-                <div className="resume-work-label">{d[`item${i}Label`]}</div>
-                <strong>{d[`item${i}Company`]}</strong>
-              </div>
-            </aside>
-            <div className="resume-work-content">
-              <div className="resume-work-kicker">{d[`item${i}Kicker`]}</div>
-              <BlockHeading level={d.itemHeadingLevel || 'h2'} className="resume-work-role">{d[`item${i}Title`]}</BlockHeading>
-              <p>{d[`item${i}Text`]}</p>
-              {bullets.length>0 && <ul>{bullets.map((b,n)=><li key={n}>{b}</li>)}</ul>}
-              {d[`item${i}ButtonText`] && <SmartLink className="resume-work-link" to={d[`item${i}ButtonUrl`] || '#'}>{d[`item${i}ButtonText`]}</SmartLink>}
-            </div>
-          </article>;
-        })}
-      </div>
-    </div>
-  </section>;
-}
-
 function LargeCta(p) {
   return <section className="shared-large-cta">
     <div className="shared-wrap shared-large-cta-box">
@@ -383,8 +315,7 @@ export default function PageRenderer({ data }) {
 
       if (type === 'ResumeHeroBlock') return <GenericBlock type="HeroBlock" p={p} key={key}/>;
       if (type === 'ResumeSkillsBlock') return <ResumeSkills {...p} key={key}/>;
-      if (type === 'ResumeWorkBlock') return <ResumeWork {...p} key={key}/>;
-      if (['ResumeProjectsBlock','ResumeEducationBlock'].includes(type)) {
+      if (['ResumeWorkBlock','ResumeProjectsBlock','ResumeEducationBlock'].includes(type)) {
         return <SkillsGrid {...p} key={key}/>;
       }
       if (type === 'ResumeAiBlock') return <ProcessRows {...p} key={key}/>;
