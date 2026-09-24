@@ -570,3 +570,115 @@ button,input,textarea,select{font:inherit}
   .work-post-btn{width:100%}
   .work-post-cta{align-items:flex-start;flex-direction:column}
 }
+
+
+/* Universal per-block backgrounds */
+.page-block-surface{
+  width:100%;
+  display:flow-root;
+}
+.page-block-surface.theme-white{background:#fff}
+.page-block-surface.theme-light{background:var(--site-light-surface,#E8F0FF)}
+.page-block-surface.theme-page{background:var(--site-page-bg,#F8F7F4)}
+.page-block-surface.theme-dark{background:var(--site-dark-surface,#081522)}
+.page-block-surface.theme-primary{background:var(--site-primary,#2F6BFF)}
+
+.page-block-surface:not(.block-ProjectCardBlock)>section{
+  background:transparent!important;
+}
+.page-block-surface:not(.block-ProjectCardBlock)>.cms-hero,
+.page-block-surface:not(.block-ProjectCardBlock)>.cms-block,
+.page-block-surface:not(.block-ProjectCardBlock)>.cms-image-text-section,
+.page-block-surface:not(.block-ProjectCardBlock)>.cms-cta{
+  background:transparent!important;
+}
+
+/* Keep semantic heading levels from blowing up visual card layouts */
+.shared-card-grid-heading .shared-section-title{
+  font-size:clamp(2rem,4vw,3.2rem)!important;
+}
+.shared-work-card-heading{
+  font-size:clamp(1.45rem,2.4vw,2rem)!important;
+}
+
+/* Light block themes */
+.page-block-surface.theme-white:not(.block-ProjectCardBlock) .shared-section-title,
+.page-block-surface.theme-light:not(.block-ProjectCardBlock) .shared-section-title,
+.page-block-surface.theme-page:not(.block-ProjectCardBlock) .shared-section-title,
+.page-block-surface.theme-white:not(.block-ProjectCardBlock) .shared-showcase-heading,
+.page-block-surface.theme-light:not(.block-ProjectCardBlock) .shared-showcase-heading,
+.page-block-surface.theme-page:not(.block-ProjectCardBlock) .shared-showcase-heading,
+.page-block-surface.theme-white:not(.block-ProjectCardBlock) .shared-large-cta-heading,
+.page-block-surface.theme-light:not(.block-ProjectCardBlock) .shared-large-cta-heading,
+.page-block-surface.theme-page:not(.block-ProjectCardBlock) .shared-large-cta-heading,
+.page-block-surface.theme-white:not(.block-ProjectCardBlock) .resume-skills-heading,
+.page-block-surface.theme-light:not(.block-ProjectCardBlock) .resume-skills-heading,
+.page-block-surface.theme-page:not(.block-ProjectCardBlock) .resume-skills-heading,
+.page-block-surface.theme-white:not(.block-ProjectCardBlock) .cms-hero-heading,
+.page-block-surface.theme-light:not(.block-ProjectCardBlock) .cms-hero-heading,
+.page-block-surface.theme-page:not(.block-ProjectCardBlock) .cms-hero-heading,
+.page-block-surface.theme-white:not(.block-ProjectCardBlock) .cms-cta-heading,
+.page-block-surface.theme-light:not(.block-ProjectCardBlock) .cms-cta-heading,
+.page-block-surface.theme-page:not(.block-ProjectCardBlock) .cms-cta-heading{
+  color:var(--site-text,#1D2935)!important;
+}
+.page-block-surface.theme-white:not(.block-ProjectCardBlock) .shared-lead,
+.page-block-surface.theme-light:not(.block-ProjectCardBlock) .shared-lead,
+.page-block-surface.theme-page:not(.block-ProjectCardBlock) .shared-lead,
+.page-block-surface.theme-white:not(.block-ProjectCardBlock) .resume-skills-intro,
+.page-block-surface.theme-light:not(.block-ProjectCardBlock) .resume-skills-intro,
+.page-block-surface.theme-page:not(.block-ProjectCardBlock) .resume-skills-intro{
+  color:var(--site-muted,#66788A)!important;
+}
+.page-block-surface.theme-white>.shared-process,
+.page-block-surface.theme-light>.shared-process,
+.page-block-surface.theme-page>.shared-process{
+  color:var(--site-text,#1D2935)!important;
+}
+.page-block-surface.theme-white .shared-process-row,
+.page-block-surface.theme-light .shared-process-row,
+.page-block-surface.theme-page .shared-process-row{
+  background:var(--site-surface,#fff)!important;
+  border-color:var(--site-border,#DCE4EC)!important;
+  color:var(--site-text,#1D2935)!important;
+}
+.page-block-surface.theme-white .shared-process-note,
+.page-block-surface.theme-light .shared-process-note,
+.page-block-surface.theme-page .shared-process-note{
+  color:var(--site-muted,#66788A)!important;
+}
+
+/* Dark / primary block themes */
+.page-block-surface.theme-dark:not(.block-ProjectCardBlock),
+.page-block-surface.theme-primary:not(.block-ProjectCardBlock){
+  color:#fff;
+}
+.page-block-surface.theme-dark:not(.block-ProjectCardBlock) .shared-section-title,
+.page-block-surface.theme-primary:not(.block-ProjectCardBlock) .shared-section-title,
+.page-block-surface.theme-dark:not(.block-ProjectCardBlock) .shared-showcase-heading,
+.page-block-surface.theme-primary:not(.block-ProjectCardBlock) .shared-showcase-heading,
+.page-block-surface.theme-dark:not(.block-ProjectCardBlock) .shared-large-cta-heading,
+.page-block-surface.theme-primary:not(.block-ProjectCardBlock) .shared-large-cta-heading,
+.page-block-surface.theme-dark:not(.block-ProjectCardBlock) .resume-skills-heading,
+.page-block-surface.theme-primary:not(.block-ProjectCardBlock) .resume-skills-heading,
+.page-block-surface.theme-dark:not(.block-ProjectCardBlock) .cms-hero-heading,
+.page-block-surface.theme-primary:not(.block-ProjectCardBlock) .cms-hero-heading,
+.page-block-surface.theme-dark:not(.block-ProjectCardBlock) .cms-cta-heading,
+.page-block-surface.theme-primary:not(.block-ProjectCardBlock) .cms-cta-heading{
+  color:#fff!important;
+}
+.page-block-surface.theme-dark:not(.block-ProjectCardBlock) .shared-lead,
+.page-block-surface.theme-primary:not(.block-ProjectCardBlock) .shared-lead,
+.page-block-surface.theme-dark:not(.block-ProjectCardBlock) .resume-skills-intro,
+.page-block-surface.theme-primary:not(.block-ProjectCardBlock) .resume-skills-intro,
+.page-block-surface.theme-dark:not(.block-ProjectCardBlock) .cms-hero p,
+.page-block-surface.theme-primary:not(.block-ProjectCardBlock) .cms-hero p,
+.page-block-surface.theme-dark:not(.block-ProjectCardBlock) .cms-cta p,
+.page-block-surface.theme-primary:not(.block-ProjectCardBlock) .cms-cta p{
+  color:rgba(255,255,255,.76)!important;
+}
+.page-block-surface.theme-dark .shared-large-cta .shared-btn-dark,
+.page-block-surface.theme-primary .shared-large-cta .shared-btn-dark{
+  background:#fff;
+  color:var(--site-text,#1D2935);
+}
