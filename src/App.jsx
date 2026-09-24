@@ -5,6 +5,7 @@ import ManagedPage from './pages/ManagedPage';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
 import WorkPost from './pages/WorkPost';
+import AiPost from './pages/AiPost';
 
 export default function App() {
   return <>
@@ -17,6 +18,7 @@ export default function App() {
         <Route path="/work/:slug" element={<WorkPost />} />
         <Route path="/about" element={<ManagedPage pageId="about" />} />
         <Route path="/ai-development" element={<ManagedPage pageId="ai-development" />} />
+        <Route path="/ai-development/:slug" element={<AiPost />} />
         <Route path="/experience" element={<Navigate to="/work" replace />} />
         <Route path="/contact" element={<ManagedPage pageId="contact" />} />
         <Route path="/blog" element={<Blog />} />
