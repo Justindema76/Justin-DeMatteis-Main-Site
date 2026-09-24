@@ -15,11 +15,28 @@ const WORK_SUBMENU = [
   { label: 'WordPress Websites', url: '/work/wordpress-websites' },
 ];
 
+const AI_SUBMENU = [
+  { label: 'JustConsignIn', url: '/ai-development/justconsignin' },
+  { label: 'Website Admin & Visual Site Builder', url: '/ai-development/website-admin-visual-builder' },
+  { label: 'Wheels Design Studio', url: '/ai-development/wheels-design-studio' },
+  { label: 'Social Automation & Media Studio', url: '/ai-development/social-automation-media-studio' },
+];
+
 function navItems(config) {
   return Array.from({ length: 7 }, (_, index) => {
     const n = index + 1;
     const item = { label: config[`nav${n}Label`], url: config[`nav${n}Url`] };
-    if (item.url === '/work') item.children = WORK_SUBMENU;
+
+    if (item.url === '/work') {
+      item.children = WORK_SUBMENU;
+      item.allLabel = 'All Work';
+    }
+
+    if (item.url === '/ai-development') {
+      item.children = AI_SUBMENU;
+      item.allLabel = 'All AI + Development';
+    }
+
     return item;
   }).filter(item => item.label && item.url);
 }
@@ -69,13 +86,13 @@ export default function Layout() {
             <div className="nav-dropdown" key={item.url}>
               <NavLink
                 to={item.url}
-                className={({ isActive }) => `nav-dropdown-parent${isActive || location.pathname.startsWith('/work/') ? ' active' : ''}`}
+                className={({ isActive }) => `nav-dropdown-parent${isActive || location.pathname.startsWith(`${item.url}/`) ? ' active' : ''}`}
               >
                 {item.label}
                 <span className="nav-dropdown-caret" aria-hidden="true">▾</span>
               </NavLink>
               <div className="nav-dropdown-menu" aria-label={`${item.label} pages`}>
-                <NavLink to="/work" end>All Work</NavLink>
+                <NavLink to={item.url} end>{item.allLabel || item.label}</NavLink>
                 {item.children.map(child => (
                   <NavLink key={child.url} to={child.url}>{child.label}</NavLink>
                 ))}
