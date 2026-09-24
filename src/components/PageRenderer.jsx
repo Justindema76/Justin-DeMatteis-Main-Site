@@ -91,6 +91,7 @@ function CardGrid(p) {
           <p>{p[`item${i}Text`]}</p>
         </article>)}
       </div>
+      {p.buttonText && <div className="shared-section-cta"><SmartLink className="shared-btn shared-btn-primary" to={p.buttonUrl || '/work'}>{p.buttonText}</SmartLink></div>}
     </div>
   </section>;
 }
@@ -120,19 +121,22 @@ function StorySplit(p) {
 
 function ProcessRows(p) {
   return <section className="shared-section shared-process">
-    <div className="shared-wrap shared-process-grid">
-      <div>
-        <div className="shared-eyebrow">{p.eyebrow}</div>
-        <BlockHeading level={p.headingLevel || 'h2'} className="shared-section-title">{p.heading}</BlockHeading>
-        <p className="shared-lead">{p.text}</p>
-        <div className="shared-process-note">{p.note}</div>
+    <div className="shared-wrap">
+      <div className="shared-process-grid">
+        <div>
+          <div className="shared-eyebrow">{p.eyebrow}</div>
+          <BlockHeading level={p.headingLevel || 'h2'} className="shared-section-title">{p.heading}</BlockHeading>
+          <p className="shared-lead">{p.text}</p>
+          <div className="shared-process-note">{p.note}</div>
+        </div>
+        <div className="shared-process-rows">
+          {[1,2,3,4,5].map(i => <div className="shared-process-row" key={i}>
+            <BlockHeading level={p.rowHeadingLevel || 'h4'} className="shared-process-row-heading">{p[`row${i}Label`]}</BlockHeading>
+            <span>{p[`row${i}Text`]}</span>
+          </div>)}
+        </div>
       </div>
-      <div className="shared-process-rows">
-        {[1,2,3,4,5].map(i => <div className="shared-process-row" key={i}>
-          <BlockHeading level={p.rowHeadingLevel || 'h4'} className="shared-process-row-heading">{p[`row${i}Label`]}</BlockHeading>
-          <span>{p[`row${i}Text`]}</span>
-        </div>)}
-      </div>
+      {p.buttonText && <div className="shared-section-cta"><SmartLink className="shared-btn shared-btn-primary" to={p.buttonUrl || '/ai-development'}>{p.buttonText}</SmartLink></div>}
     </div>
   </section>;
 }
