@@ -13,6 +13,7 @@ export default function App() {
     <Routes>
       <Route element={<Layout />}>
         <Route path="/" element={<ManagedPage pageId="home" />} />
+        <Route path="/skills" element={<ManagedPage pageId="skills" />} />
         <Route path="/work" element={<ManagedPage pageId="work" />} />
         <Route path="/work/wordpress-websites" element={<ManagedPage pageId="work-wordpress" />} />
         <Route path="/work/:slug" element={<WorkPost />} />
