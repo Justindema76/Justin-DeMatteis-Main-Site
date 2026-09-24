@@ -54,6 +54,7 @@ export default function WorkPost() {
   const [post, setPost] = useState(undefined);
 
   useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
     let active = true;
     setPost(undefined);
     loadWorkPost(slug)
