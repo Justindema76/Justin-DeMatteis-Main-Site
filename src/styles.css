@@ -945,3 +945,46 @@ button,input,textarea,select{font:inherit}
   .product-visual-lightbox-nav.previous{left:calc(50% - 58px)}
   .product-visual-lightbox-nav.next{right:calc(50% - 58px)}
 }
+
+
+/* Service request intake */
+.service-request-section{padding:var(--site-section-space,96px) 0}
+.service-request-grid{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:56px;align-items:start}
+.service-request-intro{position:sticky;top:112px}
+.service-request-intro h2,.service-request-success h2{margin:8px 0 18px;color:var(--site-text,#1D2935);font-size:clamp(2.35rem,4.8vw,4.6rem);line-height:.96;letter-spacing:-.055em}
+.service-request-intro>p,.service-request-success>p{margin:0;max-width:640px;color:var(--site-muted,#66788A);font-size:1.02rem;line-height:1.72}
+.service-request-flow{display:grid;gap:10px;margin-top:30px}
+.service-request-flow span{display:flex;align-items:center;min-height:44px;padding:10px 14px;border:1px solid var(--site-border,#DCE4EC);border-radius:14px;background:var(--site-surface,#fff);color:var(--site-text,#1D2935);font-size:.84rem;font-weight:850}
+.service-request-form{display:grid;gap:18px;padding:28px;border:1px solid var(--site-border,#DCE4EC);border-radius:var(--site-card-radius,24px);background:var(--site-surface,#fff);box-shadow:0 18px 52px rgba(11,31,51,.07)}
+.service-request-field-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.service-request-form label{display:grid;gap:7px}
+.service-request-form label>span{color:var(--site-text,#1D2935);font-size:.78rem;font-weight:900}
+.service-request-form input,.service-request-form select,.service-request-form textarea{width:100%;border:1px solid var(--site-border,#DCE4EC);border-radius:12px;background:#fff;color:var(--site-text,#1D2935);font:inherit;outline:none;transition:border-color .16s ease,box-shadow .16s ease}
+.service-request-form input,.service-request-form select{height:48px;padding:0 13px}
+.service-request-form textarea{min-height:160px;padding:13px;resize:vertical;line-height:1.55}
+.service-request-form input:focus,.service-request-form select:focus,.service-request-form textarea:focus{border-color:var(--site-primary,#2F6BFF);box-shadow:0 0 0 3px color-mix(in srgb,var(--site-primary,#2F6BFF) 16%,transparent)}
+.service-request-consent{grid-template-columns:auto 1fr!important;align-items:center;gap:10px!important}
+.service-request-consent input{width:18px!important;height:18px!important;margin:0}
+.service-request-consent span{font-weight:750!important;color:var(--site-muted,#66788A)!important}
+.service-request-submit{justify-self:start;border:0;cursor:pointer}
+.service-request-submit:disabled{opacity:.65;cursor:wait}
+.service-request-error{padding:12px 14px;border:1px solid #d5a6a6;border-radius:12px;background:#fff2f2;color:#8b2020;font-size:.86rem;font-weight:750}
+.service-request-honeypot{position:absolute!important;left:-10000px!important;width:1px!important;height:1px!important;overflow:hidden!important}
+.service-request-success{padding:38px;border:1px solid var(--site-border,#DCE4EC);border-radius:var(--site-card-radius,24px);background:var(--site-surface,#fff)}
+.service-request-routing-result{display:grid;gap:5px;margin:28px 0;padding:18px;border-radius:16px;background:var(--site-light-surface,#E8F0FF);border:1px solid var(--site-border,#DCE4EC)}
+.service-request-routing-result>span{color:var(--site-primary,#2F6BFF);font-size:.7rem;font-weight:950;text-transform:uppercase;letter-spacing:.1em}
+.service-request-routing-result>strong{color:var(--site-text,#1D2935);font-size:1.2rem}
+.service-request-routing-result>p{margin:2px 0 0;color:var(--site-muted,#66788A);line-height:1.55}
+.page-block-surface.theme-dark .service-request-intro h2,.page-block-surface.theme-primary .service-request-intro h2{color:#fff}
+.page-block-surface.theme-dark .service-request-intro>p,.page-block-surface.theme-primary .service-request-intro>p{color:rgba(255,255,255,.75)}
+.page-block-surface.theme-dark .service-request-flow span,.page-block-surface.theme-primary .service-request-flow span{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.16);color:#fff}
+@media(max-width:860px){
+  .service-request-grid{grid-template-columns:1fr;gap:28px}
+  .service-request-intro{position:static}
+}
+@media(max-width:600px){
+  .service-request-section{padding:64px 0}
+  .service-request-form{padding:20px}
+  .service-request-field-grid{grid-template-columns:1fr}
+  .service-request-intro h2,.service-request-success h2{font-size:2.65rem}
+}
