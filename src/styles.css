@@ -785,14 +785,23 @@ button,input,textarea,select{font:inherit}
 
 
 /* Product visual thumbnail gallery + lightbox */
+.product-visual-gallery-wrap{
+  margin:24px 0 8px;
+}
+.product-visual-gallery-note{
+  margin:0 0 10px;
+  color:var(--site-muted,var(--muted));
+  font-size:.82rem;
+  font-weight:750;
+}
 .product-visual-gallery{
   display:flex;
   flex-wrap:wrap;
   gap:12px;
-  margin:24px 0 8px;
+  margin:0;
 }
 .product-visual-thumbnail{
-  width:132px;
+  width:180px;
   padding:0;
   overflow:hidden;
   border:1px solid var(--site-border,var(--line));
@@ -813,7 +822,7 @@ button,input,textarea,select{font:inherit}
 .product-visual-thumbnail img{
   display:block;
   width:100%!important;
-  height:94px!important;
+  height:118px!important;
   aspect-ratio:auto!important;
   object-fit:cover!important;
   padding:0!important;
