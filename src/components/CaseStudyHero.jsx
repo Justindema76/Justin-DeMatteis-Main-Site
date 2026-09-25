@@ -1,11 +1,19 @@
 import { Link } from 'react-router-dom';
 
-function HeroLink({ href, children, secondary = false }) {
-  if (!href) return null;
-  const className = `work-post-btn ${secondary ? 'secondary' : 'primary'}`;
-  if (/^https?:\/\//i.test(href)) {
-    return <a className={className} href={href} target="_blank" rel="noreferrer">{children}</a>;
+function HeroLink({ href, children, style = 'primary', newTab = false }) {
+  if (!href || !children) return null;
+  const className = `work-post-btn ${style === 'secondary' ? 'secondary' : 'primary'}`;
+  const external = /^(https?:)?\/\//i.test(href);
+
+  if (external || newTab) {
+    return <a
+      className={className}
+      href={href}
+      target={newTab ? '_blank' : undefined}
+      rel={newTab ? 'noreferrer' : undefined}
+    >{children}</a>;
   }
+
   return <Link className={className} to={href}>{children}</Link>;
 }
 
@@ -24,6 +32,16 @@ export default function CaseStudyHero({
   const heroRadius = sections.heroImageRadius || '26';
   const visitLabel = `Visit ${post.company || 'Project'} →`;
   const eyebrowType = post.work_type || (typeLabel === 'AI Project' ? 'AI Development' : 'Case Study');
+  const primaryEnabled = sections.heroPrimaryEnabled !== false;
+  const primaryText = sections.heroPrimaryText || visitLabel;
+  const primaryUrl = sections.heroPrimaryUrl || post.project_url || '';
+  const primaryStyle = sections.heroPrimaryStyle || 'primary';
+  const primaryNewTab = sections.heroPrimaryNewTab !== false;
+  const secondaryEnabled = sections.heroSecondaryEnabled !== false;
+  const secondaryText = sections.heroSecondaryText || backLabel;
+  const secondaryUrl = sections.heroSecondaryUrl || backHref;
+  const secondaryStyle = sections.heroSecondaryStyle || 'secondary';
+  const secondaryNewTab = sections.heroSecondaryNewTab === true;
 
   return <section className="work-post-hero">
     <div
@@ -34,10 +52,10 @@ export default function CaseStudyHero({
         <div className="work-post-eyebrow">{eyebrowType} · {typeLabel}</div>
         <h1>{post.title}</h1>
         {post.excerpt && <p className="work-post-dek">{post.excerpt}</p>}
-        <div className="work-post-actions">
-          <HeroLink href={post.project_url}>{visitLabel}</HeroLink>
-          <HeroLink href={backHref} secondary>{backLabel}</HeroLink>
-        </div>
+        {(primaryEnabled || secondaryEnabled) && <div className="work-post-actions">
+          {primaryEnabled && <HeroLink href={primaryUrl} style={primaryStyle} newTab={primaryNewTab}>{primaryText}</HeroLink>}
+          {secondaryEnabled && <HeroLink href={secondaryUrl} style={secondaryStyle} newTab={secondaryNewTab}>{secondaryText}</HeroLink>}
+        </div>}
       </div>
       {heroImage && <figure className="work-post-hero-media">
         <img
