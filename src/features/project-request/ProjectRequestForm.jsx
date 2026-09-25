@@ -1,4 +1,3 @@
-import { CheckCircle2 } from 'lucide-react';
 import { useState } from 'react';
 import { submitServiceRequest } from '../../lib/serviceRequests';
 
@@ -73,7 +72,7 @@ export default function ProjectRequestForm({ config, onClose }) {
   if (status === 'success') {
     return (
       <div className="project-request-success" role="status">
-        <CheckCircle2 size={30} aria-hidden="true" />
+        <span className="project-request-success-icon" aria-hidden="true">✓</span>
         <h3>{config.successTitle}</h3>
         <p>{config.successMessage}</p>
         {result?.classification?.primary_service_label && (
