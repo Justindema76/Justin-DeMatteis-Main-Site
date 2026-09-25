@@ -389,7 +389,7 @@ export default function WorkPost() {
             </Link>
           )}
         </div>
-      </section>}>
+      </section>}
     </div>
   </main>;
 }
