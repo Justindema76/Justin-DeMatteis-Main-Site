@@ -364,7 +364,7 @@ export default function AiPost() {
             </div>
           </section>}
 
-          {sections.footerCtaEnabled !== false && <section className="work-post-cta">
+          {sections.footerCtaEnabled !== false && <section className={`work-post-cta theme-${sections.footerCtaTheme || 'dark'}`}>
             <div>
               <div className="work-post-eyebrow">{sections.footerCtaEyebrow || 'Live Product'}</div>
               <h2>{sections.footerCtaHeading || `See ${post.company || 'the project'} in action.`}</h2>
