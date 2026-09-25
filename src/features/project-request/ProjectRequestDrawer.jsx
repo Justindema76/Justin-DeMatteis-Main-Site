@@ -1,5 +1,3 @@
-import { X } from 'lucide-react';
-
 export default function ProjectRequestDrawer({ config, open, onClose, drawerRef, children }) {
   return (
     <>
@@ -25,7 +23,7 @@ export default function ProjectRequestDrawer({ config, open, onClose, drawerRef,
             <p>{config.description}</p>
           </div>
           <button className="project-request-close" type="button" onClick={onClose} aria-label="Close project request form">
-            <X size={21} aria-hidden="true" />
+            <span aria-hidden="true">×</span>
           </button>
         </div>
         {children}
