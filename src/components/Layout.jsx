@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
+import ProjectRequestFeature from '../features/project-request/ProjectRequestFeature';
 import {
   DEFAULT_FOOTER,
   DEFAULT_HEADER,
@@ -192,6 +193,8 @@ export default function Layout() {
     </header>
 
     <Outlet />
+
+    <ProjectRequestFeature />
 
     <footer className={`site-footer site-footer-${footer.background || 'dark'}`}>
       <div className="shared-wrap footer-grid">
