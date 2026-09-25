@@ -309,7 +309,7 @@ function GenericBlock({ type, p }) {
       {p.secondaryButtonText && <SmartLink className="shared-btn shared-btn-secondary" to={p.secondaryButtonUrl || '#'}>{p.secondaryButtonText}</SmartLink>}
     </div> : null;
 
-    return <section className={`cms-hero showcase-style-hero theme-${p.background || 'light'} ${p.image ? 'with-media' : 'without-media'}`}>
+    return <section id={p.id || undefined} className={`cms-hero showcase-style-hero theme-${p.background || 'light'} ${p.image ? 'with-media' : 'without-media'}`}>
       <div className="shared-wrap cms-hero-grid">
         <div className="cms-hero-copy">
           {p.eyebrow && <div className="shared-eyebrow">{p.eyebrow}</div>}
