@@ -285,6 +285,7 @@ export default function AiPost() {
       datePublished: post.published_at || undefined,
       dateModified: post.updated_at || post.published_at || undefined,
       inLanguage: 'en-CA',
+      sameAs: sections.githubUrl || undefined,
     });
     document.head.appendChild(script);
     return () => script.remove();
@@ -309,6 +310,12 @@ export default function AiPost() {
             <div className="work-post-eyebrow">Project Snapshot</div>
             <h2>What this project involved.</h2>
           </div>
+          {sections.githubUrl && <a
+            className="work-post-github-link"
+            href={sections.githubUrl}
+            target="_blank"
+            rel="noreferrer"
+          >View GitHub Repository ↗</a>}
         </div>
 
         <div className="work-post-fact-cards">
