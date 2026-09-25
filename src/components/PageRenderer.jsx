@@ -76,6 +76,42 @@ function CaseStudy(p) {
 }
 
 function CardGrid(p) {
+  if (p.variant === 'resume') {
+    const items = [1,2,3,4].filter(i => p[`item${i}Title`] || p[`item${i}Company`] || p[`item${i}Text`]);
+    return <section className="resume-work-preview-section">
+      <div className="shared-wrap">
+        <div className="resume-work-preview-head">
+          <div>
+            {p.eyebrow && <div className="shared-eyebrow">{p.eyebrow}</div>}
+            {p.heading && <BlockHeading level={p.headingLevel || 'h2'} className="resume-work-preview-heading">{p.heading}</BlockHeading>}
+          </div>
+          {p.text && <p className="resume-work-preview-intro">{p.text}</p>}
+        </div>
+
+        <div className="resume-work-preview-list">
+          {items.map((i, index) => {
+            const tags = String(p[`item${i}Tags`] || '').split(',').map(v => v.trim()).filter(Boolean);
+            return <article className="resume-work-preview-card" key={i}>
+              <div className="resume-work-preview-marker" aria-hidden="true">{String(index + 1).padStart(2,'0')}</div>
+              <div className="resume-work-preview-meta">
+                <span className="resume-work-preview-date">{p[`item${i}Date`] || p[`item${i}Eyebrow`]}</span>
+                {p[`item${i}Location`] && <span className="resume-work-preview-location">{p[`item${i}Location`]}</span>}
+              </div>
+              <div className="resume-work-preview-content">
+                <BlockHeading level={p.itemHeadingLevel || 'h3'} className="resume-work-preview-title">{p[`item${i}Title`]}</BlockHeading>
+                {p[`item${i}Company`] && <div className="resume-work-preview-company">{p[`item${i}Company`]}</div>}
+                {p[`item${i}Text`] && <p>{p[`item${i}Text`]}</p>}
+                {tags.length > 0 && <div className="resume-work-preview-tags">{tags.map(tag => <span key={tag}>{tag}</span>)}</div>}
+              </div>
+            </article>;
+          })}
+        </div>
+
+        {p.buttonText && <div className="shared-section-cta"><SmartLink className="shared-btn shared-btn-primary" to={p.buttonUrl || '/work'}>{p.buttonText}</SmartLink></div>}
+      </div>
+    </section>;
+  }
+
   return <section className="shared-card-grid-section">
     <div className="shared-wrap">
       {(p.eyebrow || p.heading || p.text) && <div className="shared-card-grid-heading">
@@ -84,7 +120,7 @@ function CardGrid(p) {
         {p.text && <p className="shared-lead">{p.text}</p>}
       </div>}
       <div className="shared-work-grid">
-        {[1,2,3,4].map(i => <article className={`shared-work-card ${p[`item${i}Style`] || 'white'}`} key={i}>
+        {[1,2,3,4].filter(i => p[`item${i}Title`] || p[`item${i}Text`]).map(i => <article className={`shared-work-card ${p[`item${i}Style`] || 'white'}`} key={i}>
           <div className="shared-card-icon">{p[`item${i}Icon`]}</div>
           <div className="shared-eyebrow">{p[`item${i}Eyebrow`]}</div>
           <BlockHeading level={p.itemHeadingLevel || 'h3'} className="shared-work-card-heading">{p[`item${i}Title`]}</BlockHeading>
