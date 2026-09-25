@@ -1019,3 +1019,12 @@ button,input,textarea,select{font:inherit}
 .hiring-contact-success-icon{display:grid;place-items:center;width:42px;height:42px;margin-bottom:16px;border-radius:50%;background:#E8F5EC;color:#17643a;font-size:24px;font-weight:950}
 @media(max-width:860px){.hiring-contact-grid{grid-template-columns:1fr;gap:28px}.hiring-contact-intro{position:static}}
 @media(max-width:600px){.hiring-contact-section{padding:64px 0}.hiring-contact-form{padding:20px}.hiring-contact-field-grid{grid-template-columns:1fr}.hiring-contact-intro h2,.hiring-contact-success h2{font-size:2.65rem}}
+
+
+/* Contact hero mobile spacing */
+@media(max-width:640px){
+  #justin-contact-hero{
+    padding-top:48px;
+    padding-bottom:58px;
+  }
+}
