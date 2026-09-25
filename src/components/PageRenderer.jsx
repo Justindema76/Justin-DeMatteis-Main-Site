@@ -301,19 +301,25 @@ function GenericBlock({ type, p }) {
   if (type === 'HeroBlock') {
     const primaryButtonText = p.primaryButtonText ?? p.buttonText ?? '';
     const primaryButtonUrl = p.primaryButtonUrl ?? p.buttonUrl ?? '#';
+    const hasActions = Boolean(primaryButtonText || p.secondaryButtonText);
+    const actions = hasActions ? <div className="shared-showcase-actions cms-hero-actions">
+      {primaryButtonText && <SmartLink className="shared-btn shared-btn-primary" to={primaryButtonUrl}>{primaryButtonText}</SmartLink>}
+      {p.secondaryButtonText && <SmartLink className="shared-btn shared-btn-secondary" to={p.secondaryButtonUrl || '#'}>{p.secondaryButtonText}</SmartLink>}
+    </div> : null;
+
     return <section className={`cms-hero showcase-style-hero theme-${p.background || 'light'} ${p.image ? 'with-media' : 'without-media'}`}>
       <div className="shared-wrap cms-hero-grid">
         <div className="cms-hero-copy">
           {p.eyebrow && <div className="shared-eyebrow">{p.eyebrow}</div>}
           <BlockHeading level={p.headingLevel || 'h1'} className="cms-hero-heading">{p.heading}{p.accent ? <> <span>{p.accent}</span></> : null}</BlockHeading>
           {p.text && <p>{p.text}</p>}
-          {(primaryButtonText || p.secondaryButtonText) && <div className="shared-showcase-actions">
-            {primaryButtonText && <SmartLink className="shared-btn shared-btn-primary" to={primaryButtonUrl}>{primaryButtonText}</SmartLink>}
-            {p.secondaryButtonText && <SmartLink className="shared-btn shared-btn-secondary" to={p.secondaryButtonUrl || '#'}>{p.secondaryButtonText}</SmartLink>}
-          </div>}
+          {!p.image && actions}
           {p.note && <div className="shared-showcase-note">{p.note}</div>}
         </div>
-        {p.image && <img src={p.image} alt={p.imageAlt || ''} loading="lazy" decoding="async"/>}
+        {p.image && <div className="cms-hero-media">
+          <img src={p.image} alt={p.imageAlt || ''} loading="lazy" decoding="async"/>
+          {actions}
+        </div>}
       </div>
     </section>;
   }
