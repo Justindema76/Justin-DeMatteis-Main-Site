@@ -389,7 +389,7 @@ export default function AiPost() {
             </Link>
           )}
         </div>
-      </section>}>
+      </section>}
     </div>
   </main>;
 }
