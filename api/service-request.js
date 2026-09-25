@@ -101,6 +101,7 @@ export default async function handler(req, res) {
     };
 
     const saved = await storeServiceRequest(record);
+    await notifyServiceRequest(saved);
 
     return res.status(201).json({
       ok: true,
