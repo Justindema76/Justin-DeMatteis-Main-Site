@@ -6,7 +6,8 @@ function requiredEnv(name) {
 
 export async function storeServiceRequest(record) {
   const supabaseUrl = process.env.SUPABASE_URL || 'https://nowsajdmbpxvlvrhopjg.supabase.co';
-  const serviceRoleKey = requiredEnv('SUPABASE_SERVICE_ROLE_KEY');
+  const serviceRoleKey = process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!serviceRoleKey) throw new Error('Missing required Supabase server secret.');
 
   const response = await fetch(`${supabaseUrl}/rest/v1/service_requests`, {
     method: 'POST',
