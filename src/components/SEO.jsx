@@ -101,7 +101,15 @@ export default function SEO() {
     upsertMeta('twitter:title', meta.title);
     upsertMeta('twitter:description', meta.description);
     setCanonical(canonical);
-  }, [location.pathname]);
+
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'page_view', {
+        page_title: meta.title,
+        page_location: window.location.href,
+        page_path: `${location.pathname}${location.search || ''}`,
+      });
+    }
+  }, [location.pathname, location.search]);
 
   return null;
 }
