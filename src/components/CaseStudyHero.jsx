@@ -18,11 +18,12 @@ export default function CaseStudyHero({
 }) {
   const heroImage = sections.heroImage || '';
   const visitLabel = `Visit ${post.company || 'Project'} →`;
+  const eyebrowType = post.work_type || (typeLabel === 'AI Project' ? 'AI Development' : 'Case Study');
 
   return <section className="work-post-hero">
     <div className={`work-post-wrap work-post-hero-grid ${heroImage ? 'has-image' : ''}`}>
       <div className="work-post-hero-copy">
-        <div className="work-post-eyebrow">{post.work_type || typeLabel} · {typeLabel}</div>
+        <div className="work-post-eyebrow">{eyebrowType} · {typeLabel}</div>
         <h1>{post.title}</h1>
         {post.excerpt && <p className="work-post-dek">{post.excerpt}</p>}
         <div className="work-post-actions">
