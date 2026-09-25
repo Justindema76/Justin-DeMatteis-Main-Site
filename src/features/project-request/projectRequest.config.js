@@ -1,0 +1,23 @@
+export const projectRequestConfig = {
+  enabled: true,
+  id: 'project-request',
+  tabLabel: 'Start a Project',
+  mobileLabel: 'Start a Project',
+  eyebrow: 'Project inquiry',
+  title: 'Tell me what you need.',
+  description: 'Tell me about the problem, the systems involved, and what you want to improve.',
+  submitLabel: 'Send Service Request',
+  submittingLabel: 'Sending request…',
+  successTitle: 'Request received.',
+  successMessage: 'I have your project details and will review the right next step.',
+  nextStepTitle: 'What happens next?',
+  nextStepText: 'Your request is saved, organized by service type, and sent to me for review.',
+  privacyText: 'By submitting, you are asking Justin DeMatteis to contact you about this project request.',
+  errorMessage: 'Unable to submit your request right now.',
+  closeLabel: 'Close',
+  theme: {
+    primary: '#2F6BFF',
+    primaryHover: '#2458D8',
+    primaryDark: '#1748BE',
+  },
+};
