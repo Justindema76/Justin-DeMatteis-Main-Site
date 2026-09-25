@@ -353,9 +353,9 @@ export default function AiPost() {
             ? <StructuredWorkStory sections={sections}/>
             : <div dangerouslySetInnerHTML={{ __html: post.body_html || '' }} />}
 
-          {tags.length > 0 && <section className="work-post-tech-section">
-            <div className="work-post-eyebrow">Technology</div>
-            <h2 id="technology">What I used to build it.</h2>
+          {tags.length > 0 && sections.techEnabled !== false && <section className="work-post-tech-section">
+            <div className="work-post-eyebrow">{sections.techEyebrow || 'Technology'}</div>
+            <h2 id="technology">{sections.techHeading || 'What I used to build it.'}</h2>
             <div className="work-post-tech-cards">
               {technologyCards(tags).map(group => <article key={group.title}>
                 <strong>{group.title}</strong>
@@ -364,31 +364,32 @@ export default function AiPost() {
             </div>
           </section>}
 
-          <section className="work-post-cta">
+          {sections.footerCtaEnabled !== false && <section className="work-post-cta">
             <div>
-              <div className="work-post-eyebrow">Live Product</div>
-              <h2>See {post.company || 'the project'} in action.</h2>
-              <p>This AI Post can continue growing as the product changes.</p>
+              <div className="work-post-eyebrow">{sections.footerCtaEyebrow || 'Live Product'}</div>
+              <h2>{sections.footerCtaHeading || `See ${post.company || 'the project'} in action.`}</h2>
+              <p>{sections.footerCtaText || 'This AI Post can continue growing as the product changes.'}</p>
             </div>
-            <ProjectLink href={post.project_url}>Visit {post.company || 'Project'} →</ProjectLink>
-          </section>
+            <ProjectLink href={sections.footerCtaButtonUrl || post.project_url}>
+              {sections.footerCtaButtonText || `Visit ${post.company || 'Project'} →`}
+            </ProjectLink>
+          </section>}
         </article>
       </div>
 
-      <section className="work-post-related">
-        <div className="work-post-eyebrow">More AI + Development</div>
-        <h2>Other apps and systems</h2>
+      {sections.relatedEnabled !== false && relatedItems.length > 0 && <section className="work-post-related">
+        <div className="work-post-eyebrow">{sections.relatedEyebrow || 'More AI + Development'}</div>
+        <h2>{sections.relatedHeading || 'Other apps and systems'}</h2>
         <div className="work-post-related-grid">
-          {[
-            {slug:'justconsignin',label:'Shopify Application',title:'JustConsignIn',text:'Consignment intake, Shopify products, POS sales and payouts in one workflow.'},
-            {slug:'website-admin-visual-builder',label:'Internal Platform',title:'Website Admin & Visual Site Builder',text:'Reusable blocks, global design controls, drafts and live publishing for multiple websites.'},
-            {slug:'wheels-design-studio',label:'Product Customization',title:'Wheels Design Studio',text:'Browser-based product customization for automotive plate products and production artwork.'},
-            {slug:'social-automation-media-studio',label:'Automation',title:'Social Automation & Media Studio',text:'Connected media and social publishing workflows inside the website admin.'},
-          ].filter(item => item.slug !== post.slug).slice(0,3).map(item =>
-            <Link key={item.slug} to={`/ai-development/${item.slug}`}><span>{item.label}</span><strong>{item.title}</strong><p>{item.text}</p></Link>
+          {relatedItems.map(item =>
+            <Link key={item.slug} to={`/ai-development/${item.slug}`}>
+              <span>{item.work_type || 'Case Study'}</span>
+              <strong>{item.company || item.title}</strong>
+              <p>{item.excerpt || item.title}</p>
+            </Link>
           )}
         </div>
-      </section>
+      </section>}>
     </div>
   </main>;
 }
