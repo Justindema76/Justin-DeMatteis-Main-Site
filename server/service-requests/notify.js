@@ -212,6 +212,7 @@ function buildMessage(settings, record) {
   return {
     recipients,
     subject: `New Service Request — ${business} — ${clean(record.name, 160)}`,
+    replyTo: clean(record.email, 320).toLowerCase(),
     text,
     html,
   };
@@ -280,7 +281,7 @@ async function sendSmtp(settings, mail) {
       `From: "${fromName}" <${fromEmail}>`,
       `To: ${to.join(', ')}`,
       cc.length ? `Cc: ${cc.join(', ')}` : '',
-      `Reply-To: ${clean(recordForReplyTo?.email || '', 320)}`,
+      mail.replyTo ? `Reply-To: ${mail.replyTo}` : '',
       `Subject: ${mail.subject}`,
       `Date: ${new Date().toUTCString()}`,
       'MIME-Version: 1.0',
@@ -312,7 +313,6 @@ async function sendSmtp(settings, mail) {
   }
 }
 
-let recordForReplyTo = null;
 
 async function updateNotificationStatus(id, patch) {
   const secret = serverSecret();
@@ -329,8 +329,6 @@ async function updateNotificationStatus(id, patch) {
 
 export async function notifyServiceRequest(record) {
   if (!record?.id) return;
-  recordForReplyTo = record;
-
   await updateNotificationStatus(record.id, {
     email_notification_attempted_at: new Date().toISOString(),
     email_notification_error: null,
@@ -348,7 +346,5 @@ export async function notifyServiceRequest(record) {
     const message = clean(error?.message || error, 1000) || 'Email notification failed.';
     await updateNotificationStatus(record.id, { email_notification_error: message });
     throw error;
-  } finally {
-    recordForReplyTo = null;
   }
 }
