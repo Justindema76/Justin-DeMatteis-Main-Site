@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { loadWorkPost } from '../lib/content';
+import CaseStudyHero from '../components/CaseStudyHero';
 
 const BASE = 'https://www.justindematteis.com';
 
@@ -267,22 +268,13 @@ export default function WorkPost() {
   if (!post) return <main className="status-page"><h1>Work post not found.</h1></main>;
 
   return <main className="work-post-page">
-    <section className="work-post-hero">
-      <div className={`work-post-wrap work-post-hero-grid ${sections.heroImage ? 'has-image' : ''}`}>
-        <div className="work-post-hero-copy">
-          <div className="work-post-eyebrow">{post.work_type || 'Case Study'} · Case Study</div>
-          <h1>{post.title}</h1>
-          {post.excerpt && <p className="work-post-dek">{post.excerpt}</p>}
-          <div className="work-post-actions">
-            <ProjectLink href={post.project_url}>Visit {post.company || 'Project'} →</ProjectLink>
-            <ProjectLink href="/work" secondary>Back to Work</ProjectLink>
-          </div>
-        </div>
-        {sections.heroImage && <figure className="work-post-hero-media">
-          <img src={sections.heroImage} alt={sections.heroImageAlt || post.title || ''}/>
-        </figure>}
-      </div>
-    </section>
+    <CaseStudyHero
+      post={post}
+      sections={sections}
+      typeLabel="Case Study"
+      backHref="/work"
+      backLabel="Back to Work"
+    />
 
     <div className="work-post-wrap">
       <section className="work-post-snapshot" aria-label="Project snapshot">
