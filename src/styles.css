@@ -782,3 +782,149 @@ button,input,textarea,select{font:inherit}
   .resume-work-preview-card{grid-template-columns:1fr;padding:20px}
   .resume-work-preview-marker,.resume-work-preview-meta,.resume-work-preview-content{grid-column:1}
 }
+
+
+/* Product visual thumbnail gallery + lightbox */
+.product-visual-gallery{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin:24px 0 8px;
+}
+.product-visual-thumbnail{
+  width:132px;
+  padding:0;
+  overflow:hidden;
+  border:1px solid var(--site-border,var(--line));
+  border-radius:var(--site-card-radius,14px);
+  background:var(--site-surface,#fff);
+  box-shadow:0 8px 24px rgba(11,31,51,.06);
+  cursor:pointer;
+  text-align:left;
+  transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease;
+}
+.product-visual-thumbnail:hover,
+.product-visual-thumbnail:focus-visible{
+  transform:translateY(-2px);
+  border-color:var(--site-primary,var(--blue));
+  box-shadow:0 12px 30px rgba(11,31,51,.10);
+  outline:none;
+}
+.product-visual-thumbnail img{
+  display:block;
+  width:100%!important;
+  height:94px!important;
+  aspect-ratio:auto!important;
+  object-fit:cover!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:#fff;
+  box-shadow:none!important;
+}
+.product-visual-thumbnail span{
+  display:block;
+  padding:8px 9px 9px;
+  overflow:hidden;
+  color:var(--site-muted,var(--muted));
+  font-size:.72rem;
+  font-weight:750;
+  line-height:1.25;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.product-visual-lightbox{
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  display:grid;
+  place-items:center;
+  padding:38px 74px;
+  background:rgba(5,15,26,.88);
+  backdrop-filter:blur(8px);
+}
+.product-visual-lightbox-figure{
+  margin:0!important;
+  max-width:min(1200px,88vw);
+  max-height:88vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:10px;
+}
+.product-visual-lightbox .product-visual-lightbox-figure img{
+  display:block;
+  width:auto!important;
+  height:auto!important;
+  max-width:88vw!important;
+  max-height:80vh!important;
+  object-fit:contain!important;
+  padding:0!important;
+  border:0!important;
+  border-radius:var(--site-card-radius,16px)!important;
+  background:transparent!important;
+  box-shadow:0 28px 90px rgba(0,0,0,.45)!important;
+}
+.product-visual-lightbox-figure figcaption{
+  margin:0!important;
+  max-width:900px;
+  color:#fff!important;
+  font-size:.9rem!important;
+  line-height:1.45;
+  text-align:center;
+}
+.product-visual-lightbox-close,
+.product-visual-lightbox-nav{
+  position:absolute;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(255,255,255,.22);
+  background:rgba(255,255,255,.10);
+  color:#fff;
+  cursor:pointer;
+  backdrop-filter:blur(8px);
+}
+.product-visual-lightbox-close{
+  top:22px;
+  right:24px;
+  width:46px;
+  height:46px;
+  border-radius:50%;
+  font-size:2rem;
+  line-height:1;
+}
+.product-visual-lightbox-nav{
+  top:50%;
+  width:48px;
+  height:64px;
+  border-radius:14px;
+  transform:translateY(-50%);
+  font-size:2.4rem;
+  line-height:1;
+}
+.product-visual-lightbox-nav.previous{left:20px}
+.product-visual-lightbox-nav.next{right:20px}
+.product-visual-lightbox-close:hover,
+.product-visual-lightbox-nav:hover,
+.product-visual-lightbox-close:focus-visible,
+.product-visual-lightbox-nav:focus-visible{
+  background:rgba(255,255,255,.20);
+  outline:2px solid rgba(255,255,255,.65);
+  outline-offset:2px;
+}
+@media(max-width:640px){
+  .product-visual-gallery{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:9px;
+  }
+  .product-visual-thumbnail{width:100%}
+  .product-visual-thumbnail img{height:78px!important}
+  .product-visual-thumbnail span{display:none}
+  .product-visual-lightbox{padding:64px 16px 24px}
+  .product-visual-lightbox-figure{max-width:94vw}
+  .product-visual-lightbox .product-visual-lightbox-figure img{max-width:94vw!important;max-height:78vh!important}
+  .product-visual-lightbox-nav{top:auto;bottom:18px;width:48px;height:48px}
+  .product-visual-lightbox-nav.previous{left:calc(50% - 58px)}
+  .product-visual-lightbox-nav.next{right:calc(50% - 58px)}
+}
