@@ -589,10 +589,15 @@ button,input,textarea,select{font:inherit}
 .work-post-tech-cards article{padding:18px;border:1px solid var(--site-border,var(--line));border-radius:var(--site-card-radius,16px);background:var(--site-surface,#fff)}
 .work-post-tech-cards strong{display:block;margin-bottom:7px;color:var(--navy);font-size:.95rem}
 .work-post-tech-cards p{margin:0;color:var(--site-muted,var(--muted));font-size:.88rem;line-height:1.55}
-.work-post-cta{margin-top:66px;background:var(--site-dark-surface,var(--navy));border-radius:var(--site-card-radius,28px);padding:34px;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:24px}
-.work-post-cta .work-post-eyebrow{color:#8EB0FF}
-.work-post-cta h2{margin:4px 0 0;color:#fff;font-size:clamp(calc(var(--site-h2-size,48px) * .68),4vw,var(--site-h2-size,48px))}
-.work-post-cta p{margin:8px 0 0;color:#B9C8D7;font-size:.95rem}
+.work-post-cta{margin-top:66px;border-radius:var(--site-card-radius,28px);padding:34px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.work-post-cta.theme-dark{background:var(--site-dark-surface,var(--navy));color:#fff}
+.work-post-cta.theme-primary{background:var(--site-primary,var(--blue));color:#fff}
+.work-post-cta.theme-light{background:var(--site-light-surface,#E8F0FF);color:var(--site-text,var(--navy))}
+.work-post-cta.theme-white{background:var(--site-surface,#fff);color:var(--site-text,var(--navy));border:1px solid var(--site-border,var(--line))}
+.work-post-cta .work-post-eyebrow{color:var(--site-primary,var(--blue))}
+.work-post-cta.theme-dark .work-post-eyebrow,.work-post-cta.theme-primary .work-post-eyebrow{color:#8EB0FF}
+.work-post-cta h2{margin:4px 0 0;color:inherit;font-size:clamp(calc(var(--site-h2-size,48px) * .68),4vw,var(--site-h2-size,48px))}
+.work-post-cta p{margin:8px 0 0;color:inherit;opacity:.78;font-size:.95rem}
 .work-post-related{padding:78px 0 96px}
 .work-post-related>h2{margin:7px 0 22px;color:var(--site-text,var(--navy));font-size:clamp(calc(var(--site-h2-size,48px) * .7),4vw,var(--site-h2-size,48px));letter-spacing:-.04em}
 .work-post-related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
