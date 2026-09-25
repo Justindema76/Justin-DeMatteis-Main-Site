@@ -235,6 +235,9 @@ button,input,textarea,select{font:inherit}
 .cms-hero-heading{line-height:.97;letter-spacing:-.045em;color:inherit;margin:10px 0 18px}
 .cms-hero.showcase-style-hero .cms-hero-heading span{color:var(--site-primary,var(--blue))}
 .cms-hero.showcase-style-hero .shared-showcase-actions{margin-top:24px}
+.cms-hero-media{min-width:0}
+.cms-hero-media img{display:block;width:100%;height:auto}
+.cms-hero-media .cms-hero-actions{margin-top:16px}
 .cms-hero p{font-size:1.15rem;color:var(--site-muted,var(--muted));max-width:760px}
 .cms-hero.theme-dark p{color:#BDCAD6}
 .cms-hero img{border-radius:24px}
