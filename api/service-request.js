@@ -29,30 +29,6 @@ function validEmail(value) {
 }
 
 
-async function notifyServiceRequest(saved) {
-  if (!saved?.id || !saved?.notification_token) return;
-
-  const supabaseUrl = process.env.SUPABASE_URL || 'https://nowsajdmbpxvlvrhopjg.supabase.co';
-  const publishableKey = process.env.SUPABASE_ANON_KEY || 'sb_publishable_AZbVouJ6gN00dQGdZwPjog_GTQR0J-w';
-
-  const response = await fetch(`${supabaseUrl}/functions/v1/send-site-email`, {
-    method: 'POST',
-    headers: {
-      apikey: publishableKey,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      action: 'service_request',
-      requestId: saved.id,
-      notificationToken: saved.notification_token,
-    }),
-  });
-
-  if (!response.ok) {
-    const payload = await response.json().catch(() => ({}));
-    throw new Error(payload?.error || 'Service request notification failed.');
-  }
-}
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -127,12 +103,6 @@ export default async function handler(req, res) {
     };
 
     const saved = await storeServiceRequest(record);
-
-    try {
-      await notifyServiceRequest(saved);
-    } catch (notificationError) {
-      console.error('Service request saved but email notification failed.', notificationError);
-    }
 
     return res.status(201).json({
       ok: true,
