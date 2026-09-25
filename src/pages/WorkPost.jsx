@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { loadWorkPost, loadWorkPosts } from '../lib/content';
 import CaseStudyHero from '../components/CaseStudyHero';
+import ProductVisualGallery from '../components/ProductVisualGallery';
 
 const BASE = 'https://www.justindematteis.com';
 
@@ -122,12 +123,7 @@ function StructuredWorkStory({ sections }) {
     {(sections.visualsIntro || gallery.length > 0) && <section id="media" className="work-post-story-section">
       <h2>{sections.visualsHeading || 'Product visuals'}</h2>
       <Paragraphs text={sections.visualsIntro}/>
-      {gallery.length > 0 && <div className={`work-post-gallery ${gallery.length === 1 ? 'single' : ''}`}>
-        {gallery.map((item, index) => <figure key={item.url || index}>
-          <img src={item.url} alt={item.alt || ''} loading="lazy" decoding="async"/>
-          {item.caption && <figcaption>{item.caption}</figcaption>}
-        </figure>)}
-      </div>}
+      {gallery.length > 0 && <ProductVisualGallery items={gallery} />}
     </section>}
 
     {(sections.youtubeHeading || sections.youtubeIntro || ytId) && <section id="video" className="work-post-story-section">
