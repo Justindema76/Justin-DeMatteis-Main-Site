@@ -1,31 +1,24 @@
-function requiredEnv(name) {
-  const value = process.env[name];
-  if (!value) throw new Error(`Missing required environment variable: ${name}`);
-  return value;
-}
-
 export async function storeServiceRequest(record) {
   const supabaseUrl = process.env.SUPABASE_URL || 'https://nowsajdmbpxvlvrhopjg.supabase.co';
-  const serviceRoleKey = process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!serviceRoleKey) throw new Error('Missing required Supabase server secret.');
+  const publishableKey = process.env.SUPABASE_ANON_KEY || 'sb_publishable_AZbVouJ6gN00dQGdZwPjog_GTQR0J-w';
 
-  const response = await fetch(`${supabaseUrl}/rest/v1/service_requests`, {
+  const response = await fetch(`${supabaseUrl}/functions/v1/send-site-email`, {
     method: 'POST',
     headers: {
-      apikey: serviceRoleKey,
-      Authorization: `Bearer ${serviceRoleKey}`,
+      apikey: publishableKey,
       'Content-Type': 'application/json',
-      Prefer: 'return=representation',
     },
-    body: JSON.stringify(record),
+    body: JSON.stringify({
+      action: 'service_submit',
+      ...record,
+    }),
   });
 
-  const payload = await response.json().catch(() => null);
+  const payload = await response.json().catch(() => ({}));
 
-  if (!response.ok) {
-    const message = payload?.message || payload?.hint || 'Unable to store service request';
-    throw new Error(message);
+  if (!response.ok || !payload?.ok || !payload?.request) {
+    throw new Error(payload?.error || 'Unable to save service request.');
   }
 
-  return Array.isArray(payload) ? payload[0] : payload;
+  return payload.request;
 }
