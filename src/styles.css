@@ -988,3 +988,34 @@ button,input,textarea,select{font:inherit}
   .service-request-field-grid{grid-template-columns:1fr}
   .service-request-intro h2,.service-request-success h2{font-size:2.65rem}
 }
+
+
+/* Hiring / interview contact */
+.hiring-contact-section{padding:var(--site-section-space,96px) 0}
+.hiring-contact-grid{display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);gap:56px;align-items:start}
+.hiring-contact-intro{position:sticky;top:112px}
+.hiring-contact-intro h2,.hiring-contact-success h2{margin:8px 0 18px;color:var(--site-text,#1D2935);font-size:clamp(2.35rem,4.8vw,4.6rem);line-height:.96;letter-spacing:-.055em}
+.hiring-contact-intro>p,.hiring-contact-success>p{margin:0;max-width:640px;color:var(--site-muted,#66788A);font-size:1.02rem;line-height:1.72}
+.hiring-contact-guard{display:grid;gap:5px;margin-top:28px;padding:16px;border:1px solid var(--site-border,#DCE4EC);border-radius:16px;background:var(--site-light-surface,#E8F0FF)}
+.hiring-contact-guard strong{color:var(--site-text,#1D2935);font-size:.88rem}
+.hiring-contact-guard span{color:var(--site-muted,#66788A);font-size:.83rem;line-height:1.55}
+.hiring-contact-form{display:grid;gap:18px;padding:28px;border:1px solid var(--site-border,#DCE4EC);border-radius:var(--site-card-radius,24px);background:var(--site-surface,#fff);box-shadow:0 18px 52px rgba(11,31,51,.07)}
+.hiring-contact-field-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.hiring-contact-form label{display:grid;gap:7px}
+.hiring-contact-form label>span{color:var(--site-text,#1D2935);font-size:.78rem;font-weight:900}
+.hiring-contact-form input,.hiring-contact-form select,.hiring-contact-form textarea{width:100%;border:1px solid var(--site-border,#DCE4EC);border-radius:12px;background:#fff;color:var(--site-text,#1D2935);font:inherit;outline:none;transition:border-color .16s ease,box-shadow .16s ease}
+.hiring-contact-form input,.hiring-contact-form select{height:48px;padding:0 13px}
+.hiring-contact-form textarea{min-height:160px;padding:13px;resize:vertical;line-height:1.55}
+.hiring-contact-form input:focus,.hiring-contact-form select:focus,.hiring-contact-form textarea:focus{border-color:var(--site-primary,#2F6BFF);box-shadow:0 0 0 3px color-mix(in srgb,var(--site-primary,#2F6BFF) 16%,transparent)}
+.hiring-contact-consent{grid-template-columns:auto 1fr!important;align-items:center;gap:10px!important}
+.hiring-contact-consent input{width:18px!important;height:18px!important;margin:0}
+.hiring-contact-consent span{font-weight:750!important;color:var(--site-muted,#66788A)!important}
+.hiring-contact-submit{justify-self:start;border:0;cursor:pointer}
+.hiring-contact-submit:disabled{opacity:.65;cursor:wait}
+.hiring-contact-error{padding:12px 14px;border:1px solid #d5a6a6;border-radius:12px;background:#fff2f2;color:#8b2020;font-size:.86rem;font-weight:750}
+.hiring-contact-honeypot{position:absolute!important;left:-10000px!important;width:1px!important;height:1px!important;overflow:hidden!important}
+.hiring-contact-privacy{margin:0;color:var(--site-muted,#66788A);font-size:.78rem;line-height:1.5}
+.hiring-contact-success{padding:38px;border:1px solid var(--site-border,#DCE4EC);border-radius:var(--site-card-radius,24px);background:var(--site-surface,#fff)}
+.hiring-contact-success-icon{display:grid;place-items:center;width:42px;height:42px;margin-bottom:16px;border-radius:50%;background:#E8F5EC;color:#17643a;font-size:24px;font-weight:950}
+@media(max-width:860px){.hiring-contact-grid{grid-template-columns:1fr;gap:28px}.hiring-contact-intro{position:static}}
+@media(max-width:600px){.hiring-contact-section{padding:64px 0}.hiring-contact-form{padding:20px}.hiring-contact-field-grid{grid-template-columns:1fr}.hiring-contact-intro h2,.hiring-contact-success h2{font-size:2.65rem}}
