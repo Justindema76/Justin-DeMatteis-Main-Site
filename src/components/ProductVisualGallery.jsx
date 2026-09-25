@@ -38,7 +38,9 @@ export default function ProductVisualGallery({ items = [] }) {
   const active = activeIndex === null ? null : gallery[activeIndex];
 
   return <>
-    <div className="product-visual-gallery" aria-label="Product visuals">
+    <div className="product-visual-gallery-wrap">
+      <div className="product-visual-gallery-note">Click any image to enlarge.</div>
+      <div className="product-visual-gallery" aria-label="Product visuals">
       {gallery.map((item, index) => (
         <button
           className="product-visual-thumbnail"
@@ -56,6 +58,7 @@ export default function ProductVisualGallery({ items = [] }) {
           {item.caption && <span>{item.caption}</span>}
         </button>
       ))}
+      </div>
     </div>
 
     {active && <div
