@@ -97,6 +97,12 @@ button,input,textarea,select{font:inherit}
   visibility:visible;
   transform:translateY(0);
 }
+.nav-dropdown.dismissed .nav-dropdown-menu{
+  opacity:0!important;
+  visibility:hidden!important;
+  transform:translateY(-6px)!important;
+  pointer-events:none!important;
+}
 .nav-dropdown-menu a{
   display:block;
   padding:10px 12px;
