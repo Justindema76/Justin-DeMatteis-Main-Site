@@ -72,6 +72,7 @@ function ManagedLink({ to, children, className = '' }) {
 export default function Layout() {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [dismissedDropdown, setDismissedDropdown] = useState('');
   const [header, setHeader] = useState(DEFAULT_HEADER);
   const [footer, setFooter] = useState(DEFAULT_FOOTER);
   const [styles, setStyles] = useState(DEFAULT_STYLES);
@@ -93,8 +94,17 @@ export default function Layout() {
 
   useEffect(() => {
     setMenuOpen(false);
+    const active = document.activeElement;
+    if (active instanceof HTMLElement) active.blur();
     window.scrollTo({ top: 0, behavior: 'auto' });
   }, [location.pathname]);
+
+  const closeDropdown = url => {
+    setDismissedDropdown(url || '');
+    setMenuOpen(false);
+    const active = document.activeElement;
+    if (active instanceof HTMLElement) active.blur();
+  };
 
   const links = useMemo(() => navItems(header), [header]);
   const activeSocial = useMemo(
@@ -141,19 +151,26 @@ export default function Layout() {
 
         <nav className={menuOpen ? 'nav-links open' : 'nav-links'} aria-label="Main navigation">
           {links.map(item => item.children?.length ? (
-            <div className="nav-dropdown" key={item.url}>
+            <div
+              className={`nav-dropdown${dismissedDropdown === item.url ? ' dismissed' : ''}`}
+              key={item.url}
+              onMouseLeave={() => {
+                if (dismissedDropdown === item.url) setDismissedDropdown('');
+              }}
+            >
               <NavLink
                 to={item.url}
                 end={item.url === '/'}
                 className={({ isActive }) => `nav-dropdown-parent${isActive || (item.url !== '/' && location.pathname.startsWith(`${item.url}/`)) ? ' active' : ''}`}
+                onClick={() => closeDropdown(item.url)}
               >
                 {item.label}
                 <span className="nav-dropdown-caret" aria-hidden="true">▾</span>
               </NavLink>
               <div className="nav-dropdown-menu" aria-label={`${item.label} pages`}>
-                <NavLink to={item.url} end>{item.allLabel || item.label}</NavLink>
+                <NavLink to={item.url} end onClick={() => closeDropdown(item.url)}>{item.allLabel || item.label}</NavLink>
                 {item.children.map(child => (
-                  <NavLink key={child.url} to={child.url}>{child.label}</NavLink>
+                  <NavLink key={child.url} to={child.url} onClick={() => closeDropdown(item.url)}>{child.label}</NavLink>
                 ))}
               </div>
             </div>
