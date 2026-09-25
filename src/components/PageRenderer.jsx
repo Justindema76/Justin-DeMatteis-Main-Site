@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import ServiceRequestForm from './ServiceRequestForm';
+import HiringContactForm from './HiringContactForm';
 
 const SHOWCASE_IMAGE = '/images/projects/justconsignin-showcase.svg';
 
@@ -377,6 +378,7 @@ export default function PageRenderer({ data }) {
       else if (type === 'LargeCtaBlock') rendered = <LargeCta {...p}/>;
       else if (type === 'ProjectCardBlock') rendered = <ProjectCard {...p}/>;
       else if (type === 'ServiceRequestBlock') rendered = <ServiceRequestForm {...p}/>;
+      else if (type === 'HiringContactBlock') rendered = <HiringContactForm {...p}/>;
       else if (type === 'ResumeHeroBlock') rendered = <GenericBlock type="HeroBlock" p={p}/>;
       else if (type === 'ResumeSkillsBlock') rendered = <ResumeSkills {...p}/>;
       else if (['ResumeWorkBlock','ResumeProjectsBlock','ResumeEducationBlock'].includes(type)) rendered = <SkillsGrid {...p}/>;
