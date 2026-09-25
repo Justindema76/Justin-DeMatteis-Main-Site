@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { loadAiPost } from '../lib/content';
+import { loadAiPost, loadAiPosts } from '../lib/content';
 import CaseStudyHero from '../components/CaseStudyHero';
 
 const BASE = 'https://www.justindematteis.com';
@@ -79,10 +79,13 @@ function sectionId(value = '', index = 0) {
 
 function hasStructuredSections(sections) {
   if (!sections || typeof sections !== 'object') return false;
-  return Object.entries(sections).some(([key, value]) => {
-    if (key === 'extras' || key === 'gallery' || key === 'videos' || key === 'workflow' || key === 'problemPoints') return Array.isArray(value) && value.length > 0;
-    return Boolean(value);
-  });
+  const storyKeys = [
+    'overview','overviewSecondary','quote','problem','built','connectedWorkflow',
+    'visualsIntro','youtubeHeading','youtubeIntro','youtubeUrl','ongoing'
+  ];
+  if (storyKeys.some(key => Boolean(sections[key]))) return true;
+  return ['extras','gallery','videos','workflow','problemPoints']
+    .some(key => Array.isArray(sections[key]) && sections[key].length > 0);
 }
 
 function StructuredWorkStory({ sections }) {
@@ -177,14 +180,26 @@ function StructuredWorkStory({ sections }) {
 export default function AiPost() {
   const { slug = '' } = useParams();
   const [post, setPost] = useState(undefined);
+  const [allPosts, setAllPosts] = useState([]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
     let active = true;
     setPost(undefined);
-    loadAiPost(slug)
-      .then(value => { if (active) setPost(value); })
-      .catch(() => { if (active) setPost(null); });
+    Promise.all([
+      loadAiPost(slug),
+      loadAiPosts().catch(() => []),
+    ])
+      .then(([value, list]) => {
+        if (!active) return;
+        setPost(value);
+        setAllPosts(Array.isArray(list) ? list : []);
+      })
+      .catch(() => {
+        if (!active) return;
+        setPost(null);
+        setAllPosts([]);
+      });
     return () => { active = false; };
   }, [slug]);
 
@@ -199,7 +214,7 @@ export default function AiPost() {
       const regex = /<h2[^>]*id=["']([^"']+)["'][^>]*>([\s\S]*?)<\/h2>/gi;
       let match;
       while ((match = regex.exec(post.body_html || ''))) items.push({ id: match[1], label: String(match[2]).replace(/<[^>]*>/g, '').trim() });
-      if (tags.length && !items.some(item => item.id === 'technology')) items.push({ id: 'technology', label: 'Technology and tools' });
+      if (tags.length && sections.techEnabled !== false && !items.some(item => item.id === 'technology')) items.push({ id: 'technology', label: sections.techHeading || 'Technology and tools' });
       return items;
     }
 
@@ -215,9 +230,24 @@ export default function AiPost() {
     (sections.extras || []).forEach((section, index) => {
       if (section?.heading) items.push({ id: sectionId(section.heading, index), label: section.heading });
     });
-    if (tags.length) items.push({ id: 'technology', label: 'Technology and tools' });
+    if (tags.length && sections.techEnabled !== false) items.push({ id: 'technology', label: sections.techHeading || 'Technology and tools' });
     return items;
   }, [post, structured, sections, tags.length]);
+
+  const relatedItems = useMemo(() => {
+    if (!post) return [];
+    const candidates = allPosts.filter(item => item.slug && item.slug !== post.slug);
+    const selected = String(sections.relatedSlugs || '')
+      .split(',')
+      .map(value => value.trim())
+      .filter(Boolean)
+      .slice(0, 3);
+
+    if (!selected.length) return candidates.slice(0, 3);
+    return selected
+      .map(slugValue => candidates.find(item => item.slug === slugValue))
+      .filter(Boolean);
+  }, [allPosts, post, sections.relatedSlugs]);
 
   useEffect(() => {
     if (!post) return;
