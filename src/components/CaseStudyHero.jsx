@@ -17,11 +17,19 @@ export default function CaseStudyHero({
   backLabel = 'Back to Work',
 }) {
   const heroImage = sections.heroImage || '';
+  const heroFit = sections.heroImageFit || 'cover';
+  const heroRatio = sections.heroImageRatio || '4/3';
+  const heroPosition = sections.heroImagePosition || 'center';
+  const heroWidth = sections.heroImageWidth || '42';
+  const heroRadius = sections.heroImageRadius || '26';
   const visitLabel = `Visit ${post.company || 'Project'} →`;
   const eyebrowType = post.work_type || (typeLabel === 'AI Project' ? 'AI Development' : 'Case Study');
 
   return <section className="work-post-hero">
-    <div className={`work-post-wrap work-post-hero-grid ${heroImage ? 'has-image' : ''}`}>
+    <div
+      className={`work-post-wrap work-post-hero-grid ${heroImage ? 'has-image' : ''}`}
+      style={heroImage ? { '--hero-media-width': `${heroWidth}%` } : undefined}
+    >
       <div className="work-post-hero-copy">
         <div className="work-post-eyebrow">{eyebrowType} · {typeLabel}</div>
         <h1>{post.title}</h1>
@@ -32,7 +40,16 @@ export default function CaseStudyHero({
         </div>
       </div>
       {heroImage && <figure className="work-post-hero-media">
-        <img src={heroImage} alt={sections.heroImageAlt || post.title || ''}/>
+        <img
+          src={heroImage}
+          alt={sections.heroImageAlt || post.title || ''}
+          style={{
+            objectFit: heroFit,
+            objectPosition: heroPosition,
+            aspectRatio: heroRatio === 'auto' ? 'auto' : heroRatio,
+            borderRadius: `${Number(heroRadius) || 0}px`,
+          }}
+        />
       </figure>}
     </div>
   </section>;
