@@ -65,9 +65,9 @@ export default function ProjectRequestFeature({ config = projectRequestConfig })
   if (!config.enabled) return null;
 
   const style = {
-    '--project-request-primary': config.theme?.primary || '#2F6BFF',
-    '--project-request-primary-hover': config.theme?.primaryHover || '#2458D8',
-    '--project-request-primary-dark': config.theme?.primaryDark || '#1748BE',
+    '--project-request-primary': config.primary || config.theme?.primary || '#2F6BFF',
+    '--project-request-primary-hover': config.primaryHover || config.theme?.primaryHover || '#2458D8',
+    '--project-request-primary-dark': config.primaryDark || config.theme?.primaryDark || '#1748BE',
   };
 
   return (
