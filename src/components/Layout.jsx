@@ -87,7 +87,7 @@ export default function Layout() {
       loadSetting('global_footer', DEFAULT_FOOTER),
       loadGlobalStyles(),
       loadSetting('social_links', {}),
-      loadSetting('global_project_request', projectRequestConfig),
+      loadSetting('global_project-request', projectRequestConfig),
     ]).then(([headerValue, footerValue, styleValue, socialValue, projectRequestValue]) => {
       setHeader(headerValue);
       setFooter(footerValue);
