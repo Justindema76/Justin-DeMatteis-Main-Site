@@ -110,19 +110,19 @@ export default function ProjectRequestForm({ config, onClose }) {
       </div>
 
       <div className="project-request-field">
-        <label htmlFor="project-request-website">Website <span className="project-request-optional">(optional)</span></label>
+        <label htmlFor="project-request-website">{config.websiteLabel || 'Website'} <span className="project-request-optional">(optional)</span></label>
         <input id="project-request-website" name="website" type="url" value={form.website} onChange={update} placeholder="https://" disabled={status === 'submitting'} />
       </div>
 
       <div className="project-request-field">
-        <label htmlFor="project-request-service">What do you need? <span className="project-request-required">*</span></label>
+        <label htmlFor="project-request-service">{config.serviceLabel || 'Service needed'} <span className="project-request-required">*</span></label>
         <select id="project-request-service" name="service" value={form.service} onChange={update} required disabled={status === 'submitting'}>
           {SERVICES.map(([value, label]) => <option value={value} key={value}>{label}</option>)}
         </select>
       </div>
 
       <div className="project-request-field is-half">
-        <label htmlFor="project-request-budget">Budget range <span className="project-request-optional">(optional)</span></label>
+        <label htmlFor="project-request-budget">{config.budgetLabel || 'Budget range'} <span className="project-request-optional">(optional)</span></label>
         <select id="project-request-budget" name="budget" value={form.budget} onChange={update} disabled={status === 'submitting'}>
           <option value="">Not sure yet</option>
           <option value="under_2500">Under $2,500</option>
@@ -134,7 +134,7 @@ export default function ProjectRequestForm({ config, onClose }) {
       </div>
 
       <div className="project-request-field is-half">
-        <label htmlFor="project-request-timeline">Timeline <span className="project-request-optional">(optional)</span></label>
+        <label htmlFor="project-request-timeline">{config.timelineLabel || 'Timeline'} <span className="project-request-optional">(optional)</span></label>
         <select id="project-request-timeline" name="timeline" value={form.timeline} onChange={update} disabled={status === 'submitting'}>
           <option value="">No fixed timeline</option>
           <option value="asap">As soon as possible</option>
@@ -145,7 +145,7 @@ export default function ProjectRequestForm({ config, onClose }) {
       </div>
 
       <div className="project-request-field">
-        <label htmlFor="project-request-message">Tell me about the problem or project <span className="project-request-required">*</span></label>
+        <label htmlFor="project-request-message">{config.messageLabel || 'Project details'} <span className="project-request-required">*</span></label>
         <textarea
           id="project-request-message"
           name="message"
@@ -154,14 +154,14 @@ export default function ProjectRequestForm({ config, onClose }) {
           required
           minLength="20"
           maxLength="6000"
-          placeholder="What are you doing manually now? What systems are involved? What do you want the finished solution to do?"
+          placeholder={config.messagePlaceholder || 'What are you doing manually now? What systems are involved? What do you want the finished solution to do?'}
           disabled={status === 'submitting'}
         />
       </div>
 
       <label className="project-request-consent">
         <input name="contact_consent" type="checkbox" checked={form.contact_consent} onChange={update} required disabled={status === 'submitting'} />
-        <span>You can contact me about this request.</span>
+        <span>{config.consentLabel || 'You can contact me about this request.'}</span>
       </label>
 
       <div className="project-request-honeypot" aria-hidden="true">
