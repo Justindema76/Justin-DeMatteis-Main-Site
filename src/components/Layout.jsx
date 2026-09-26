@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import ProjectRequestFeature from '../features/project-request/ProjectRequestFeature';
+import { projectRequestConfig } from '../features/project-request/projectRequest.config';
 import {
   DEFAULT_FOOTER,
   DEFAULT_HEADER,
@@ -78,6 +79,7 @@ export default function Layout() {
   const [footer, setFooter] = useState(DEFAULT_FOOTER);
   const [styles, setStyles] = useState(DEFAULT_STYLES);
   const [social, setSocial] = useState({});
+  const [projectRequest, setProjectRequest] = useState(projectRequestConfig);
 
   useEffect(() => {
     Promise.all([
@@ -85,11 +87,13 @@ export default function Layout() {
       loadSetting('global_footer', DEFAULT_FOOTER),
       loadGlobalStyles(),
       loadSetting('social_links', {}),
-    ]).then(([headerValue, footerValue, styleValue, socialValue]) => {
+      loadSetting('global_project_request', projectRequestConfig),
+    ]).then(([headerValue, footerValue, styleValue, socialValue, projectRequestValue]) => {
       setHeader(headerValue);
       setFooter(footerValue);
       setStyles(styleValue);
       setSocial(socialValue || {});
+      setProjectRequest(projectRequestValue || projectRequestConfig);
     });
   }, []);
 
@@ -194,7 +198,7 @@ export default function Layout() {
 
     <Outlet />
 
-    <ProjectRequestFeature />
+    <ProjectRequestFeature config={projectRequest} />
 
     <footer className={`site-footer site-footer-${footer.background || 'dark'}`}>
       <div className="shared-wrap footer-grid">
