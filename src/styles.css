@@ -1028,3 +1028,47 @@ button,input,textarea,select{font:inherit}
     padding-bottom:58px;
   }
 }
+
+
+/* Reusable work-experience project block */
+.work-project-grid {
+  display: grid;
+  gap: 22px;
+}
+.work-project-card {
+  display: grid;
+  grid-template-columns: minmax(150px, 180px) minmax(0, 1fr);
+  gap: 26px;
+  padding: 18px;
+  border: 1px solid var(--border, #dfe5ed);
+  border-radius: 14px;
+  background: var(--surface, #fff);
+}
+.work-project-card-image {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 10px;
+}
+.work-project-card-content h3 {
+  margin: 2px 0 8px;
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  line-height: 1.2;
+}
+.work-project-card-content p {
+  margin-top: 0;
+}
+.work-project-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+@media (max-width: 720px) {
+  .work-project-card {
+    grid-template-columns: 1fr;
+  }
+  .work-project-card-image {
+    max-height: 240px;
+  }
+}
