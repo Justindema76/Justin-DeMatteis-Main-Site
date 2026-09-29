@@ -15,6 +15,7 @@ export default function App() {
         <Route path="/" element={<ManagedPage pageId="home" />} />
         <Route path="/skills" element={<ManagedPage pageId="skills" />} />
         <Route path="/work" element={<ManagedPage pageId="work" />} />
+        <Route path="/work/wordpress-websites/:childSlug" element={<WorkPost />} />
         <Route path="/work/:slug" element={<WorkPost />} />
         <Route path="/about" element={<ManagedPage pageId="about" />} />
         <Route path="/ai-development" element={<ManagedPage pageId="ai-development" />} />
