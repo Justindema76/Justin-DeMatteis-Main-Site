@@ -168,6 +168,7 @@ function StructuredWorkStory({ sections }) {
       return <section id={id} className="work-post-story-section" key={id}>
         {section.heading && <h2>{section.heading}</h2>}
         <Paragraphs text={section.text}/>
+        {section.url && <ProjectLink href={section.url}>Visit Website →</ProjectLink>}
       </section>;
     })}
   </>;
