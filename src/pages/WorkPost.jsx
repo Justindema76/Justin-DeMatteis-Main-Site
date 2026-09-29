@@ -163,14 +163,24 @@ function StructuredWorkStory({ sections }) {
       <Paragraphs text={sections.ongoing}/>
     </section>}
 
-    {extras.map((section, index) => {
-      const id = sectionId(section.heading, index);
-      return <section id={id} className="work-post-story-section" key={id}>
-        {section.heading && <h2>{section.heading}</h2>}
-        <Paragraphs text={section.text}/>
-        {section.url && <ProjectLink href={section.url}>Visit Website →</ProjectLink>}
-      </section>;
-    })}
+    {extras.length > 0 && <section id="selected-projects" className="work-post-story-section work-project-block">
+      <div className="work-project-grid">
+        {extras.map((section, index) => {
+          const id = sectionId(section.heading, index);
+          return <article id={id} className="work-project-card" key={id}>
+            {section.image && <img className="work-project-card-image" src={section.image} alt={section.imageAlt || section.heading || ''}/>}
+            <div className="work-project-card-content">
+              {section.heading && <h3>{section.heading}</h3>}
+              <Paragraphs text={section.text}/>
+              <div className="work-project-card-actions">
+                {section.url && section.showProjectButton !== false && <ProjectLink href={section.url}>{section.buttonText || 'View Project →'}</ProjectLink>}
+                {section.liveUrl && section.showLiveButton !== false && <ProjectLink href={section.liveUrl}>{section.liveButtonText || 'Visit Live Website ↗'}</ProjectLink>}
+              </div>
+            </div>
+          </article>;
+        })}
+      </div>
+    </section>}
   </>;
 }
 
