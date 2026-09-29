@@ -175,7 +175,8 @@ function StructuredWorkStory({ sections }) {
 }
 
 export default function WorkPost() {
-  const { slug = '' } = useParams();
+  const { slug = '', childSlug = '' } = useParams();
+  const postSlug = childSlug ? 'wordpress-websites/' + childSlug : slug;
   const [post, setPost] = useState(undefined);
   const [allPosts, setAllPosts] = useState([]);
 
@@ -184,7 +185,7 @@ export default function WorkPost() {
     let active = true;
     setPost(undefined);
     Promise.all([
-      loadWorkPost(slug),
+      loadWorkPost(postSlug),
       loadWorkPosts().catch(() => []),
     ])
       .then(([value, list]) => {
@@ -198,7 +199,7 @@ export default function WorkPost() {
         setAllPosts([]);
       });
     return () => { active = false; };
-  }, [slug]);
+  }, [postSlug]);
 
   const sections = post?.sections && typeof post.sections === 'object' ? post.sections : {};
   const structured = hasStructuredSections(sections);
