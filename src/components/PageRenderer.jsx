@@ -148,10 +148,16 @@ function StorySplit(p) {
         <div className="shared-eyebrow">{p.rightEyebrow}</div>
         <BlockHeading level={p.rightHeadingLevel || 'h2'} className="shared-section-title">{p.rightHeading}</BlockHeading>
         <div className="shared-story-points">
-          {[1,2,3,4].map(i => <div className="shared-story-point" key={i}>
-            <BlockHeading level={p.pointHeadingLevel || 'h4'} className="shared-story-point-heading">{p[`point${i}Title`]}</BlockHeading>
-            <p>{p[`point${i}Text`]}</p>
-          </div>)}
+          {[1,2,3,4].filter(i => p[`point${i}Title`] || p[`point${i}Text`]).map(i => {
+            const point = <div className="shared-story-point">
+              <BlockHeading level={p.pointHeadingLevel || 'h4'} className="shared-story-point-heading">{p[`point${i}Title`]}</BlockHeading>
+              <p>{p[`point${i}Text`]}</p>
+              {p[`point${i}Url`] && <span className="shared-story-point-link">View case study →</span>}
+            </div>;
+            return p[`point${i}Url`]
+              ? <SmartLink to={p[`point${i}Url`]} className="shared-story-point-link-wrap" key={i}>{point}</SmartLink>
+              : <div key={i}>{point}</div>;
+          })}
         </div>
       </div>
     </div>
