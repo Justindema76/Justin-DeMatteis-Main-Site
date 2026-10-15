@@ -5,6 +5,7 @@ const ROOT = process.cwd();
 const DIST = path.join(ROOT, 'dist');
 const BASE = 'https://www.justindematteis.com';
 const SITE_KEY = 'justindematteis';
+const DEFAULT_OG_IMAGE = `${BASE}/images/site/og-share.jpg`;
 const SUPABASE_URL = 'https://nowsajdmbpxvlvrhopjg.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_AZbVouJ6gN00dQGdZwPjog_GTQR0J-w';
 
@@ -164,7 +165,7 @@ function baseGraph(route, meta) {
   return { '@context': 'https://schema.org', '@graph': graph };
 }
 
-function seoBlock(route, meta, schema, robots = 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1') {
+function seoBlock(route, meta, schema, robots = 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1', image = DEFAULT_OG_IMAGE) {
   const canonical = `${BASE}${route === '/' ? '/' : route}`;
   return `<!-- SEO:START -->
     <title>${esc(meta.title)}</title>
@@ -177,9 +178,13 @@ function seoBlock(route, meta, schema, robots = 'index,follow,max-image-preview:
     <meta property="og:title" content="${esc(meta.title)}" />
     <meta property="og:description" content="${esc(meta.description)}" />
     <meta property="og:url" content="${canonical}" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content="${esc(image)}" />${image === DEFAULT_OG_IMAGE ? `
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="627" />` : ''}
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${esc(meta.title)}" />
     <meta name="twitter:description" content="${esc(meta.description)}" />
+    <meta name="twitter:image" content="${esc(image)}" />
     <script id="route-schema" type="application/ld+json">${JSON.stringify(schema).replaceAll('<', '\\u003c')}</script>
     <!-- SEO:END -->`;
 }
@@ -278,13 +283,7 @@ for (const post of workPosts) {
       },
     ],
   };
-  let html = sourceHtml.replace(marker, seoBlock(route, meta, schema));
-  if (image) {
-    html = html.replace(
-      '<meta name="twitter:card" content="summary" />',
-      `<meta property="og:image" content="${esc(image)}" />\n    <meta name="twitter:card" content="summary_large_image" />\n    <meta name="twitter:image" content="${esc(image)}" />`
-    );
-  }
+  const html = sourceHtml.replace(marker, seoBlock(route, meta, schema, undefined, image || DEFAULT_OG_IMAGE));
   await writeRoute(route, html);
   sitemapEntries.push({
     loc: canonical,
