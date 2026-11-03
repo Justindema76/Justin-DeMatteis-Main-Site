@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { submitHiringContact } from '../lib/hiringContacts';
+import { SalesNotice } from './SalesNotice';
 
 function trackingPayload() {
   if (typeof window === 'undefined') return {};
@@ -19,7 +20,7 @@ export default function HiringContactForm({
   eyebrow = 'Hiring & interviews',
   heading = 'Interested in interviewing or hiring me?',
   text = 'Use this form for job opportunities, interview requests or recruiter contact. Sales and service pitches are filtered.',
-  submitButtonText = 'Contact Justin',
+  submitButtonText = 'Send Message',
   successHeading = 'Message received.',
   successText = 'Thanks. I received your employment-related message and will review it.',
 }) {
@@ -136,8 +137,9 @@ export default function HiringContactForm({
 
         {state.status === 'error' && <div className="hiring-contact-error" role="alert">{state.message}</div>}
 
+        <SalesNotice/>
         <button className="shared-btn shared-btn-primary hiring-contact-submit" type="submit" disabled={state.status === 'submitting'}>
-          {state.status === 'submitting' ? 'Sending…' : submitButtonText}
+          {state.status === 'submitting' ? 'Sending…' : (submitButtonText === 'Contact Justin' ? 'Send Message' : submitButtonText)}
         </button>
         <p className="hiring-contact-privacy">Your email address is not published on this page. Employment-related messages are delivered privately.</p>
       </form>

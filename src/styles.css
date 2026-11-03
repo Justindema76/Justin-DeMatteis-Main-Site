@@ -1072,3 +1072,18 @@ button,input,textarea,select{font:inherit}
     max-height: 240px;
   }
 }
+
+/* Sales-pitch notice (components/SalesNotice.jsx) */
+.sales-notice{margin:6px 0 16px;padding:14px 16px;border-radius:12px;border:1px solid #F3C9C4;border-left:4px solid #D92D20;background:#FFF5F4;color:var(--charcoal)}
+.sales-notice strong{display:block;font-size:.95rem;margin-bottom:4px;color:#912018}
+.sales-notice p{margin:0;font-size:.9rem;line-height:1.5}
+.sales-popup-backdrop{position:fixed;inset:0;z-index:1000;background:rgba(11,31,51,.62);display:grid;place-items:center;padding:16px;animation:salesFade .2s ease-out}
+.sales-popup{width:min(480px,100%);background:#fff;border-radius:20px;padding:30px 28px 26px;text-align:center;box-shadow:var(--shadow-lg);border-top:6px solid #D92D20;animation:salesIn .25s ease-out}
+.sales-popup-icon{font-size:2.4rem;line-height:1}
+.sales-popup h2{margin:10px 0 10px;font-size:1.45rem;color:var(--navy)}
+.sales-popup p{margin:0 0 22px;color:var(--charcoal);line-height:1.55}
+.sales-popup-button{border:0;border-radius:999px;padding:12px 34px;background:var(--navy);color:#fff;font:inherit;font-weight:700;cursor:pointer}
+.sales-popup-button:hover{background:var(--blue)}
+@keyframes salesFade{from{opacity:0}to{opacity:1}}
+@keyframes salesIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.sales-popup,.sales-popup-backdrop{animation:none}}

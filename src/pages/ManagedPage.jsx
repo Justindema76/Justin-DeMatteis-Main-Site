@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { loadPublishedPage } from '../lib/content';
 import PageRenderer from '../components/PageRenderer';
+import { SalesNoticePopup } from '../components/SalesNotice';
 
 export default function ManagedPage({ pageId }) {
   const [page, setPage] = useState(null);
@@ -18,5 +19,8 @@ export default function ManagedPage({ pageId }) {
 
   if (error) return <main className="status-page"><h1>Unable to load this page.</h1><p>{error}</p></main>;
   if (!page) return <main className="status-page"><p>Loading…</p></main>;
-  return <PageRenderer data={page.content}/>;
+  return <>
+    <PageRenderer data={page.content}/>
+    {pageId === 'contact' ? <SalesNoticePopup/> : null}
+  </>;
 }
