@@ -4,6 +4,14 @@ import { useLocation } from 'react-router-dom';
 const BASE = 'https://www.justindematteis.com';
 
 const META = {
+  '/shopify-studio': {
+    title: 'Custom Shopify Stores & Apps for Independent Retailers | Justin DeMatteis',
+    description: 'Custom Shopify store design, features and apps for independent retailers in Ontario and across Canada. Get a free store review.',
+  },
+  '/shopify-studio/jill-and-the-beanstalk': {
+    title: 'Jill & The Beanstalk Shopify Case Study: +90% Online Revenue | Justin DeMatteis',
+    description: 'How a Toronto kids\' shop went from a free theme to a custom Shopify store, reached the first page of Google and grew online revenue 90% with no ad spend.',
+  },
   '/': {
     title: 'Justin DeMatteis — Developer, Product Builder & AI-Assisted Problem Solver',
     description: 'Justin DeMatteis builds web applications, Shopify tools, ecommerce systems and AI-assisted digital products that solve real business problems.',
@@ -75,7 +83,9 @@ export default function SEO() {
   const location = useLocation();
 
   useEffect(() => {
-    const meta = META[location.pathname] || (location.pathname.startsWith('/blog/')
+    const studioPath = location.pathname.startsWith('/shopify-studio/jill-and-the-beanstalk') ? '/shopify-studio/jill-and-the-beanstalk'
+      : location.pathname.startsWith('/shopify-studio') ? '/shopify-studio' : '';
+    const meta = META[location.pathname] || META[studioPath] || (location.pathname.startsWith('/blog/')
       ? {
           title: 'Development Blog | Justin DeMatteis',
           description: 'Development articles and project notes from Justin DeMatteis.',
@@ -85,7 +95,8 @@ export default function SEO() {
           description: 'Web, mobile, ecommerce and AI-assisted product development portfolio.',
         });
 
-    const canonical = `${BASE}${location.pathname === '/' ? '/' : location.pathname}`;
+    const canonicalPath = studioPath || location.pathname;
+    const canonical = `${BASE}${canonicalPath === '/' ? '/' : canonicalPath}`;
 
     document.title = meta.title;
     upsertMeta('description', meta.description);

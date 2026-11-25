@@ -10,6 +10,17 @@ const SUPABASE_URL = 'https://nowsajdmbpxvlvrhopjg.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_AZbVouJ6gN00dQGdZwPjog_GTQR0J-w';
 
 const routeMeta = {
+  '/shopify-studio': {
+    title: 'Custom Shopify Stores & Apps for Independent Retailers | Justin DeMatteis',
+    description: 'Custom Shopify store design, features and apps for independent retailers in Ontario and across Canada. Get a free store review.',
+    type: 'WebPage',
+  },
+  '/shopify-studio/jill-and-the-beanstalk': {
+    title: 'Jill & The Beanstalk Shopify Case Study: +90% Online Revenue | Justin DeMatteis',
+    description: 'How a Toronto kids\' shop went from a free theme to a custom Shopify store, reached the first page of Google and grew online revenue 90% with no ad spend.',
+    type: 'WebPage',
+    projectName: 'Jill & The Beanstalk',
+  },
   '/': {
     title: 'Justin DeMatteis — Developer, Product Builder & AI-Assisted Problem Solver',
     description: 'Justin DeMatteis builds web applications, Shopify tools, ecommerce systems and AI-assisted digital products that solve real business problems.',
@@ -242,6 +253,16 @@ for (const [route, meta] of Object.entries(routeMeta)) {
     lastmod: pageLastmod.get(route) || new Date().toISOString(),
     priority: route === '/' ? '1.0' : route === '/work' ? '0.9' : '0.7',
   });
+}
+
+// Shopify Studio era versions: same content as the main studio/case-study page, so they
+// share its SEO block and canonical URL and stay out of the sitemap.
+const STUDIO_ERAS = ['50s', '60s', '70s', '80s', '80s-memphis', '90s', '2000s', '2010s'];
+for (const base of ['/shopify-studio', '/shopify-studio/jill-and-the-beanstalk']) {
+  const meta = routeMeta[base];
+  for (const era of STUDIO_ERAS) {
+    await writeRoute(`${base}/${era}`, sourceHtml.replace(marker, seoBlock(base, meta, baseGraph(base, meta))));
+  }
 }
 
 for (const post of workPosts) {

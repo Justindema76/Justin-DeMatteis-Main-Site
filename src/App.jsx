@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Layout from './components/Layout';
 import SEO from './components/SEO';
@@ -7,10 +8,17 @@ import BlogPost from './pages/BlogPost';
 import WorkPost from './pages/WorkPost';
 import AiPost from './pages/AiPost';
 
+const ShopifyStudioPage = lazy(() => import('./features/shopify-studio/ShopifyStudioPage'));
+const studio = kind => <Suspense fallback={<div className="ssp-loading" />}><ShopifyStudioPage kind={kind} /></Suspense>;
+
 export default function App() {
   return <>
     <SEO />
     <Routes>
+      <Route path="/shopify-studio" element={studio('studio')} />
+      <Route path="/shopify-studio/jill-and-the-beanstalk" element={studio('case')} />
+      <Route path="/shopify-studio/jill-and-the-beanstalk/:era" element={studio('case')} />
+      <Route path="/shopify-studio/:era" element={studio('studio')} />
       <Route element={<Layout />}>
         <Route path="/" element={<ManagedPage pageId="home" />} />
         <Route path="/skills" element={<ManagedPage pageId="skills" />} />
