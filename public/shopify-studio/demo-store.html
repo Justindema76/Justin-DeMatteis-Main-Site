@@ -297,6 +297,8 @@ body.t-2000s .btn.ghost,body.t-2010s .btn.ghost{color:var(--teal);box-shadow:ins
 body.t-70s .hero .bg{background:url(img/hero-phone-70s-nobag.webp) center 62%/cover no-repeat,#f3e4c8!important}
 body.t-80s .hero .bg{background:url(img/hero-phone-80s-nobag.webp) center 70%/cover no-repeat,#120a2e!important}
 body.t-70s .hero .deco>*:not(.eramark),body.t-80s .hero .deco>*:not(.eramark){display:none!important}
+.pcard .im img.ph,.dept .c img.ph,.gal .main img.ph,.thumbs img.ph{width:100%;height:100%;object-fit:cover;display:block}
+.pcard .im,.gal .main,.thumbs div{overflow:hidden}
 </style></head><body>
 
 <div class="demo"><div class="wrap"><span><b>Demo store</b> · The same Shopify store in every era. Switch with Themes. Not a real shop.</span><a id="backlink" href="/shopify-studio">← Back to Shopify Studio</a></div></div>
@@ -465,13 +467,26 @@ const P=[
  {k:'towel',t:'Checkerboard Tea Towel',v:'Starlite Originals',p:'$14.00',b:'',r:87},
  {k:'plate',t:'Blue Plate Special Dish',v:'Main Street Pottery',p:'$19.00',b:'',r:63}
 ];
-const card=x=>`<a class="pcard" href="#product" data-go="product"><div class="im" style="background:${BG[x.k]}">${x.b?`<span class="badge ${x.b==='New'?'new':''}">${x.b}</span>`:''}${ART[x.k]}</div><div class="tx"><small>${x.v}</small><h3>${x.t}</h3><div class="stars">★★★★★ <span style="color:#5d6266;letter-spacing:0;font-size:13px">(${x.r})</span></div><div class="pr">${x.p}${x.was?`<s>${x.was}</s>`:''}</div></div></a>`;
+// Pictures: admin (Website > Shopify Studio > Demo store pictures) can swap any of these.
+let PHOTOS={},HEROES={};
+const esc=u=>String(u).replace(/["<>]/g,'');
+const pic=k=>PHOTOS[k]?`<img class="ph" src="${esc(PHOTOS[k])}" alt="" loading="lazy">`:ART[k];
+function render(){
+const card=x=>`<a class="pcard" href="#product" data-go="product"><div class="im" style="background:${BG[x.k]}">${x.b?`<span class="badge ${x.b==='New'?'new':''}">${x.b}</span>`:''}${pic(x.k)}</div><div class="tx"><small>${x.v}</small><h3>${x.t}</h3><div class="stars">★★★★★ <span style="color:#5d6266;letter-spacing:0;font-size:13px">(${x.r})</span></div><div class="pr">${x.p}${x.was?`<s>${x.was}</s>`:''}</div></div></a>`;
 document.getElementById('best').innerHTML=P.slice(0,4).map(card).join('');
 document.getElementById('catgrid').innerHTML=P.map(card).join('');
 document.getElementById('related').innerHTML=[P[1],P[2],P[3],P[5]].map(card).join('');
-document.getElementById('depts').innerHTML=[['mug','Kitchen'],['glass','Glassware'],['radio','Radios'],['jukebox','Music'],['apron','Linens']].map(([k,n])=>`<a class="dept" href="#shop" data-go="shop"><div class="c" style="background:${BG[k]}">${ART[k]}</div><b>${n}</b></a>`).join('');
-document.getElementById('pmain').outerHTML=ART.radio;
-document.getElementById('pthumbs').innerHTML=['#fbf1dc','#e2f3f2','#fde3e7','#f3e3c3'].map((c,i)=>`<div class="${i?'':'on'}" style="background:${c}">${ART.radio}</div>`).join('');
+document.getElementById('depts').innerHTML=[['mug','Kitchen'],['glass','Glassware'],['radio','Radios'],['jukebox','Music'],['apron','Linens']].map(([k,n])=>`<a class="dept" href="#shop" data-go="shop"><div class="c" style="background:${BG[k]}">${pic(k)}</div><b>${n}</b></a>`).join('');
+document.getElementById('pmain').innerHTML=pic('radio');
+document.getElementById('pthumbs').innerHTML=['#fbf1dc','#e2f3f2','#fde3e7','#f3e3c3'].map((c,i)=>`<div class="${i?'':'on'}" style="background:${c}">${pic('radio')}</div>`).join('');
+}
+render();
+fetch('https://nowsajdmbpxvlvrhopjg.supabase.co/rest/v1/site_settings?select=value&site_key=eq.justindematteis&key=eq.global_shopify-studio&limit=1',{headers:{apikey:'sb_publishable_AZbVouJ6gN00dQGdZwPjog_GTQR0J-w',Authorization:'Bearer sb_publishable_AZbVouJ6gN00dQGdZwPjog_GTQR0J-w'}})
+ .then(r=>r.json()).then(rows=>{const raw=rows?.[0]?.value||{};const v=raw?.content?.[0]?.props||raw;const d=v.demoImages||{};
+  PHOTOS=Object.fromEntries(Object.entries(d.products||{}).filter(([,u])=>u));HEROES=Object.fromEntries(Object.entries(d.hero||{}).filter(([,u])=>u));
+  render();applyHero();}).catch(()=>{});
+function applyHero(){const t=(document.body.className.match(/t-([\w-]+)/)||[])[1];const u=HEROES[t];const bg=document.querySelector('.hero .bg');const deco=document.querySelector('.hero .deco');
+ if(u){bg.style.setProperty('background',`url("${esc(u)}") center/cover no-repeat`,'important');deco.querySelectorAll(':scope>*:not(.eramark)').forEach(e=>e.style.display='none')}else{bg.style.removeProperty('background')}}
 // page switching
 function go(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('on',p.id===id));document.querySelectorAll('nav.main a').forEach(a=>a.classList.toggle('on',a.dataset.go===id&&a.textContent!=='Gifts'&&a.textContent!=='Sale'));window.scrollTo(0,0);if(window.fixFaint)setTimeout(fixFaint,60)}
 document.addEventListener('click',e=>{const a=e.target.closest('[data-go]');if(a){e.preventDefault();history.replaceState(null,'','#'+a.dataset.go);go(a.dataset.go)}
@@ -494,7 +509,7 @@ const THEMES={"50s": {"label": "1950s", "font": "https://fonts.googleapis.com/cs
 function setTheme(t){if(!THEMES[t])t='50s';document.body.className='t-'+t;document.getElementById('themefont').href=THEMES[t].font;
  document.querySelector('.hero .deco').innerHTML=THEMES[t].deco+'<span class="eramark">'+THEMES[t].mark+'</span>';document.getElementById('themeBtn').textContent='Theme: '+THEMES[t].label+' ▾';
  document.querySelectorAll('[data-theme]').forEach(a=>a.classList.toggle('on',a.dataset.theme===t));
- document.getElementById('backlink').href='/shopify-studio/'+t;setTimeout(fixFaint,500);setTimeout(fixFaint,1500);}
+ document.getElementById('backlink').href='/shopify-studio/'+t;if(typeof applyHero==='function')applyHero();setTimeout(fixFaint,500);setTimeout(fixFaint,1500);}
 document.addEventListener('click',e=>{const a=e.target.closest('[data-theme]');if(a){e.preventDefault();const u=new URL(location);u.searchParams.set('theme',a.dataset.theme);history.replaceState(null,'',u);setTheme(a.dataset.theme);document.getElementById('themes').classList.remove('open')}});
 setTheme(new URLSearchParams(location.search).get('theme')||'50s');
 </script>
