@@ -214,3 +214,8 @@
   .ssp.ssp.ssp.ssp.ssp.ssp:is(.ssp-case-50s,.ssp-case-80s,.ssp-case-2000s) .chero .lead{color:#fff!important;-webkit-text-fill-color:#fff!important}
   .ssp.ssp.ssp.ssp.ssp.ssp .chero .crumb{display:block!important;background:none!important;padding:0!important}
 }
+/* Demo store link in the nav; on phones it lives in the Themes menu */
+.ssp header nav .ss-demo-link{font-size:13px!important;letter-spacing:.06em!important;white-space:nowrap!important}
+.ssp .ss-themes li.ss-demo-item a{display:block;padding:10px 12px;margin-top:4px;border-top:1px solid #e3e6ea;color:#1c2427!important;-webkit-text-fill-color:#1c2427!important;font:700 15px/1.3 system-ui,-apple-system,"Segoe UI",sans-serif;text-transform:none;letter-spacing:0;text-decoration:none}
+@media (min-width:981px){.ssp .ss-themes li.ss-demo-item{display:none}}
+@media (max-width:980px){.ssp header nav .ss-demo-link{display:none!important}}

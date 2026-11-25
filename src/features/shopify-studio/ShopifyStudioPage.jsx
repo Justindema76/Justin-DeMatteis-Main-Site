@@ -235,7 +235,7 @@ export default function ShopifyStudioPage({ kind = 'studio' }) {
     const offForm = wireForm(root, era);
     const onClick = event => {
       const link = event.target.closest('a[href]');
-      if (!link || link.target === '_blank') return;
+      if (!link || link.target === '_blank' || link.hasAttribute('data-hard')) return;
       const href = link.getAttribute('href');
       if (!href.startsWith('/')) return;
       event.preventDefault();
@@ -283,12 +283,14 @@ export default function ShopifyStudioPage({ kind = 'studio' }) {
   return <>
     <style>{page.css}</style>
     <div ref={rootRef} className={`ssp ssp-${pageKey}`} dangerouslySetInnerHTML={{ __html: html }} />
+    {themeSlot && createPortal(<a className="ss-demo-link" href={`/shopify-studio/demo-store?theme=${era}`} data-hard="">Demo store</a>, themeSlot)}
     {themeSlot && settings.showEraSwitcher && enabledEras.length > 1 && createPortal(<span className="ss-themes">
       <a href="#" role="button" aria-expanded={menuOpen} onClick={event => { event.preventDefault(); event.stopPropagation(); setMenuOpen(open => !open); }}>Themes ▾</a>
       {menuOpen && <ul role="menu">
         {enabledEras.map(item => <li key={item.key}>
           <button type="button" role="menuitem" className={item.key === era ? 'on' : ''} onClick={() => switchEra(item.key)}>{item.label}</button>
         </li>)}
+        <li className="ss-demo-item"><a href={`/shopify-studio/demo-store?theme=${era}`} data-hard="">See the demo store →</a></li>
       </ul>}
     </span>, themeSlot)}
   </>;

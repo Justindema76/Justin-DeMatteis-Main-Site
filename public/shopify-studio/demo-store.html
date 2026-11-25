@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Starlite Home &amp; Gift · theme demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link id="themefont" rel="stylesheet" href="">
+<style>
+:root{--teal:#1d9c97;--teal2:#0f5f63;--teal3:#0a3f43;--red:#d42a3c;--red2:#a11e2e;--cream:#fbf1dc;--cream2:#f3e3c3;--pink:#f6b8c5;--chrome:#c9ced3;--ink:#1c2427;--mute:#5d6266;--gold:#e9b44c}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--f-body);color:var(--ink);background:var(--cream);font-size:17px;line-height:1.55}
+a{color:inherit;text-decoration:none}
+img,svg{display:block;max-width:100%}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.script{font-family:var(--f-script)}
+.osw{font-family:var(--f-head);text-transform:var(--tt);letter-spacing:.06em}
+/* demo bar */
+.demo{background:var(--ink);color:#e7e9ea;font-size:14px}
+.demo .wrap{display:flex;justify-content:space-between;align-items:center;min-height:40px;gap:16px}
+.demo a{color:var(--gold);font-weight:600}
+/* announcement */
+.ann{background:var(--red);color:#fff;text-align:center;font-family:var(--f-head);letter-spacing:.08em;text-transform:var(--tt);font-size:14px;padding:8px 12px}
+/* header */
+header{background:var(--teal);position:sticky;top:0;z-index:20;border-bottom:4px solid var(--red);box-shadow:0 4px 0 var(--cream),0 8px 0 var(--chrome)}
+header .wrap{display:flex;align-items:center;gap:28px;min-height:78px}
+.logo{font-family:var(--f-script);font-size:40px;color:#fff;line-height:1;text-shadow:2px 2px 0 var(--red2)}
+.logo small{display:block;font-family:var(--f-head);font-size:11px;letter-spacing:.32em;color:var(--cream);text-shadow:none;margin-top:2px;text-transform:var(--tt)}
+nav.main{display:flex;gap:22px;margin-left:8px}
+nav.main a{font-family:var(--f-head);text-transform:var(--tt);letter-spacing:.08em;color:#fff;font-size:16px;font-weight:600;padding:6px 0;border-bottom:2px solid transparent}
+nav.main a:hover,nav.main a.on{border-color:var(--gold)}
+.hright{margin-left:auto;display:flex;align-items:center;gap:14px}
+.themes{position:relative}
+.themes>button{font-family:var(--f-head);text-transform:var(--tt);letter-spacing:.08em;font-size:14px;font-weight:600;background:var(--cream);color:var(--teal3);border:2px solid var(--gold);border-radius:999px;padding:8px 16px;cursor:pointer}
+.themes ul{display:none;position:absolute;right:0;top:calc(100% + 10px);list-style:none;background:#fff;border-radius:14px;padding:8px;min-width:210px;box-shadow:0 18px 40px -16px rgba(0,0,0,.45);border:2px solid var(--teal)}
+.themes.open ul{display:block}
+.themes li a{display:flex;justify-content:space-between;padding:9px 12px;border-radius:9px;font-weight:600;font-size:15px}
+.themes li a:hover{background:var(--cream)}
+.themes li a.on{background:var(--teal);color:#fff}
+.themes li a span{font-size:12px;color:var(--mute);font-weight:500}
+.icon{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.14);color:#fff;font-size:18px;position:relative}
+.icon b{position:absolute;top:-4px;right:-4px;background:var(--red);color:#fff;font-size:11px;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-head)}
+/* buttons */
+.btn{display:inline-block;font-family:var(--f-head);text-transform:var(--tt);letter-spacing:.08em;font-weight:600;font-size:16px;padding:14px 28px;border-radius:var(--rb);border:0;cursor:pointer;background:var(--red);color:#fff;box-shadow:0 4px 0 var(--red2)}
+.btn:hover{transform:translateY(1px);box-shadow:0 3px 0 var(--red2)}
+.btn.teal{background:var(--teal);box-shadow:0 4px 0 var(--teal3)}
+.btn.ghost{background:transparent;color:var(--teal3);box-shadow:inset 0 0 0 2px var(--teal3)}
+/* page switching */
+.page{display:none}.page.on{display:block}
+/* HOME */
+.hero{position:relative;height:560px;overflow:hidden;background:var(--teal3)}
+.hero .bg{position:absolute;inset:0}.hero .deco{position:absolute;inset:0;pointer-events:none}
+.hero .card{position:absolute;left:max(24px,calc(50% - 576px));top:50%;transform:translateY(-50%);background:var(--cream);border-radius:var(--r);padding:34px 40px;max-width:500px;box-shadow:0 0 0 4px var(--teal),0 0 0 8px var(--cream),0 0 0 12px var(--red),0 30px 60px -20px rgba(0,0,0,.6)}
+.hero .card .script{font-size:34px;color:var(--red);line-height:1}
+.hero .card h1{font-family:var(--f-head);text-transform:var(--tt);font-size:52px;line-height:1;color:var(--teal3);margin:6px 0 14px}
+.hero .card p{color:var(--mute);margin-bottom:22px}
+.hero .card .row{display:flex;gap:12px;flex-wrap:wrap}
+.perks{background:#fff;border-bottom:2px solid var(--cream2)}
+.perks .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:18px 24px}
+.perks div{display:flex;gap:10px;align-items:center;font-weight:600;font-size:15px}
+.perks i{font-style:normal;width:34px;height:34px;border-radius:50%;background:var(--pink);display:grid;place-items:center;flex:none}
+section.block{padding:72px 0}
+.sh{text-align:center;margin-bottom:34px}
+.sh .script{font-size:30px;color:var(--red);line-height:1}
+.sh h2{font-family:var(--f-head);text-transform:var(--tt);font-size:40px;line-height:1.05;color:var(--teal3)}
+.sh p{color:var(--mute);margin-top:8px}
+.depts{display:grid;grid-template-columns:repeat(5,1fr);gap:22px}
+.dept{text-align:center}
+.dept .c{aspect-ratio:1;border-radius:50%;display:grid;place-items:center;border:4px solid #fff;box-shadow:0 0 0 3px var(--teal),0 14px 28px -18px rgba(0,0,0,.5);overflow:hidden}
+.dept .c svg{width:62%}
+.dept b{display:block;font-family:var(--f-head);text-transform:var(--tt);letter-spacing:.06em;margin-top:14px;font-size:17px;color:var(--teal3)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.pcard{background:#fff;border-radius:var(--r);overflow:hidden;border:2px solid var(--cream2);transition:transform .15s,box-shadow .15s;cursor:pointer;display:block}
+.pcard:hover{transform:translateY(-4px);box-shadow:0 18px 30px -18px rgba(0,0,0,.4)}
+.pcard .im{aspect-ratio:1;display:grid;place-items:center;position:relative}
+.pcard .im svg{width:66%}
+.badge{position:absolute;top:12px;left:12px;font-family:var(--f-head);text-transform:var(--tt);letter-spacing:.06em;font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--red);color:#fff}
+.badge.new{background:var(--teal)}
+.pcard .tx{padding:16px 18px 20px}
+.pcard small{display:block;font-family:var(--f-head);text-transform:var(--tt);letter-spacing:.08em;font-size:12px;color:var(--mute)}
+.pcard h3{font-size:18px;font-weight:600;line-height:1.3;margin:4px 0 8px}
+.pcard .pr{font-family:var(--f-head);font-size:20px;color:var(--red);font-weight:600}
+.pcard .pr s{color:var(--mute);font-size:15px;margin-left:6px;font-weight:500}
+.stars{color:var(--gold);letter-spacing:2px;font-size:14px}
+.band{background:var(--teal);color:#fff;position:relative;overflow:hidden}
+.band::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(45deg,rgba(255,255,255,.06) 0 18px,transparent 18px 36px)}
+.band .wrap{position:relative;display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center;padding:60px 24px}
+.band .script{font-size:36px;color:var(--gold);line-height:1}
+.band h2{font-family:var(--f-head);text-transform:var(--tt);font-size:44px;line-height:1.02;margin:6px 0 12px}
+.band p{color:#d7efee;margin-bottom:22px}
+.band .tile{background:var(--cream);border-radius:var(--r);padding:28px;color:var(--ink);box-shadow:0 0 0 4px var(--red),0 0 0 8px var(--cream)}
+.band .tile h3{font-family:var(--f-head);text-transform:var(--tt);color:var(--teal3);font-size:22px;margin-bottom:6px}
+.band .tile form{display:flex;gap:10px;margin-top:14px}
+.band .tile input{flex:1;padding:13px 16px;border-radius:999px;border:2px solid var(--teal);font:inherit;background:#fff}
+.reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.rev{background:#fff;border-radius:var(--r);padding:26px;border:2px solid var(--cream2)}
+.rev p{margin:10px 0 14px;font-size:16.5px}
+.rev b{font-family:var(--f-head);text-transform:var(--tt);letter-spacing:.06em;font-size:14px;color:var(--teal2)}
+/* CATEGORY */
+.crumbs{font-size:14px;color:var(--mute);padding:22px 0 0}
+.crumbs a{color:var(--teal2);font-weight:600}
+.cathead{display:grid;grid-template-columns:1fr auto;align-items:end;gap:20px;padding:18px 0 26px;border-bottom:2px dashed var(--chrome);margin-bottom:28px}
+.cathead .script{font-size:30px;color:var(--red);line-height:1}
+.cathead h1{font-family:var(--f-head);text-transform:var(--tt);font-size:48px;line-height:1;color:var(--teal3)}
+.cathead p{color:var(--mute);margin-top:8px;max-width:620px}
+.sort{display:flex;gap:10px;align-items:center;font-size:15px}
+.sort select{font:inherit;padding:10px 14px;border-radius:999px;border:2px solid var(--teal);background:#fff}
+.catwrap{display:grid;grid-template-columns:240px 1fr;gap:34px;align-items:start;padding-bottom:70px}
+.filters{position:sticky;top:110px;background:#fff;border-radius:var(--r);padding:22px;border:2px solid var(--cream2)}
+.filters h4{font-family:var(--f-head);text-transform:var(--tt);letter-spacing:.08em;font-size:15px;color:var(--teal3);margin:16px 0 10px}
+.filters h4:first-child{margin-top:0}
+.filters label{display:flex;gap:10px;align-items:center;font-size:15px;padding:4px 0}
+.filters input{accent-color:var(--red);width:16px;height:16px}
+.sw{display:flex;gap:8px;flex-wrap:wrap}
+.sw i{width:26px;height:26px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 2px var(--chrome)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.chips span{background:#fff;border:2px solid var(--teal);color:var(--teal3);border-radius:999px;padding:5px 14px;font-size:14px;font-weight:600}
+.chips span.on{background:var(--teal);color:#fff}
+.catwrap .grid{grid-template-columns:repeat(3,1fr)}
+.pager{display:flex;gap:8px;justify-content:center;margin-top:34px}
+.pager a{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-head);background:#fff;border:2px solid var(--cream2);font-weight:600}
+.pager a.on{background:var(--red);color:#fff;border-color:var(--red)}
+/* PRODUCT */
+.pdp{display:grid;grid-template-columns:1.05fr 1fr;gap:50px;align-items:start;padding:24px 0 70px}
+.gal{position:sticky;top:110px}
+.gal .main{background:#fff;border-radius:var(--r);aspect-ratio:1;display:grid;place-items:center;border:2px solid var(--cream2);position:relative}
+.gal .main svg{width:62%}
+.thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px}
+.thumbs div{aspect-ratio:1;border-radius:14px;display:grid;place-items:center;border:2px solid var(--cream2);background:#fff}
+.thumbs div.on{border-color:var(--red)}
+.thumbs svg{width:60%}
+.info small{font-family:var(--f-head);text-transform:var(--tt);letter-spacing:.1em;color:var(--mute);font-size:13px}
+.info h1{font-family:var(--f-head);text-transform:var(--tt);font-size:44px;line-height:1.02;color:var(--teal3);margin:6px 0 10px}
+.info .rate{display:flex;gap:10px;align-items:center;font-size:15px;color:var(--mute)}
+.info .price{font-family:var(--f-head);font-size:34px;color:var(--red);font-weight:600;margin:16px 0 4px}
+.info .price s{font-size:20px;color:var(--mute);margin-left:8px}
+.info .note{font-size:14px;color:var(--mute)}
+.opt{margin-top:22px}
+.opt h4{font-family:var(--f-head);text-transform:var(--tt);letter-spacing:.08em;font-size:14px;margin-bottom:10px}
+.opt .sw i{width:36px;height:36px;cursor:pointer}
+.opt .sw i.on{box-shadow:0 0 0 3px var(--red)}
+.sizes{display:flex;gap:10px}
+.sizes span{padding:9px 18px;border-radius:999px;border:2px solid var(--teal);font-weight:600;font-size:15px;cursor:pointer}
+.sizes span.on{background:var(--teal);color:#fff}
+.buy{display:flex;gap:12px;margin-top:26px;align-items:stretch}
+.qty{display:flex;align-items:center;border:2px solid var(--teal);border-radius:999px;background:#fff}
+.qty button{background:none;border:0;font-size:20px;width:44px;cursor:pointer;color:var(--teal3)}
+.qty span{min-width:26px;text-align:center;font-weight:700}
+.buy .btn{flex:1;text-align:center}
+.ship{margin-top:18px;background:#fff;border-radius:var(--r);border:2px solid var(--cream2);padding:16px 18px;display:grid;gap:8px;font-size:15px}
+.ship div{display:flex;gap:10px}
+.acc{margin-top:22px;border-top:2px dashed var(--chrome)}
+.acc details{border-bottom:2px dashed var(--chrome);padding:14px 0}
+.acc summary{font-family:var(--f-head);text-transform:var(--tt);letter-spacing:.08em;font-weight:600;cursor:pointer;color:var(--teal3);list-style:none;display:flex;justify-content:space-between}
+.acc summary::after{content:"+";color:var(--red);font-size:22px;line-height:1}
+.acc details[open] summary::after{content:"–"}
+.acc p{margin-top:8px;color:var(--mute);font-size:16px}
+/* footer */
+footer{background:var(--teal3);color:#cfe6e5;padding:56px 0 26px;margin-top:0;border-top:6px solid var(--red)}
+footer .cols{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:30px}
+footer .logo{font-size:36px}
+footer h5{font-family:var(--f-head);text-transform:var(--tt);letter-spacing:.1em;color:#fff;font-size:15px;margin-bottom:12px}
+footer li{list-style:none;padding:3px 0;font-size:15px}
+footer .base{border-top:1px solid rgba(255,255,255,.15);margin-top:36px;padding-top:18px;font-size:13px;display:flex;justify-content:space-between}
+@media (max-width:900px){
+  nav.main{display:none}
+  .hero .card{left:16px;right:16px;max-width:none}.hero .card h1{font-size:38px}
+  .perks .wrap,.grid,.catwrap .grid{grid-template-columns:repeat(2,1fr)}
+  .depts{grid-template-columns:repeat(3,1fr)}
+  .band .wrap,.pdp,.catwrap,.reviews,footer .cols{grid-template-columns:1fr}
+  .filters,.gal{position:static}
+}
+body.t-50s{--teal:#1d9c97;--teal2:#0f5f63;--teal3:#0a3f43;--red:#d42a3c;--red2:#a11e2e;--cream:#fbf1dc;--cream2:#f3e3c3;--pink:#f6b8c5;--chrome:#c9ced3;--ink:#1c2427;--mute:#5d6266;--gold:#e9b44c;--f-script:Yellowtail,cursive;--f-head:Oswald,sans-serif;--f-body:Jost,sans-serif;--tt:uppercase;--r:18px;--rb:999px}
+body.t-50s :is(h1,h2,h3,.logo,.cathead h1,.info h1){font-weight:700}
+body.t-50s .hero .bg{position:absolute!important;inset:0!important;background:radial-gradient(circle at 82% 18%,rgba(212,42,60,.45),transparent 40%),radial-gradient(circle at 12% 88%,rgba(39,178,172,.55),transparent 45%),linear-gradient(135deg,#0a3f43,#0f5f63 60%,#0a3f43)!important}
+body.t-50s .hero .bg::after{content:""!important;position:absolute!important;inset:0!important;background:radial-gradient(ellipse 52% 60% at 50% 50%,rgba(10,40,44,.82),rgba(10,40,44,.45) 60%,rgba(10,40,44,.15))!important}
+body.t-60s{--teal:#5b2a86;--teal2:#47206b;--teal3:#331650;--red:#f26b1d;--red2:#c9500f;--cream:#f6e9cf;--cream2:#ecd6ad;--pink:#e94e8a;--chrome:#2a9d9a;--ink:#2a1838;--mute:#6a5a6e;--gold:#f4b223;--f-script:Shrikhand,cursive;--f-head:Shrikhand,cursive;--f-body:"DM Sans",sans-serif;--tt:none;--r:22px;--rb:999px}
+body.t-60s :is(h1,h2,h3,.logo,.cathead h1,.info h1){font-weight:400}
+body.t-60s .hero .bg{position:absolute!important;inset:0!important;background:var(--cream)!important}
+body.t-60s .hero .rays{position:absolute;right:-180px;top:-260px;width:780px;height:780px;border-radius:50%;background:repeating-conic-gradient(from 0deg,#f26b1d 0 7deg,transparent 7deg 14deg,#f4b223 14deg 21deg,transparent 21deg 28deg,#e94e8a 28deg 35deg,transparent 35deg 42deg,#2a9d9a 42deg 49deg,transparent 49deg 56deg);-webkit-mask:radial-gradient(circle,transparent 150px,#000 151px);mask:radial-gradient(circle,transparent 150px,#000 151px);opacity:.9}
+body.t-60s .hero .sun{position:absolute;right:20px;top:-110px;width:280px;height:280px;border-radius:50%;background:#f4b223}
+body.t-60s .hero .waves{position:absolute;left:-40px;bottom:-30px;width:70%;height:200px}
+body.t-60s .hero .flower{position:absolute}
+body.t-70s{--teal:#4a2c1d;--teal2:#3a2216;--teal3:#2a180f;--red:#d1602d;--red2:#a94a20;--cream:#f3e4c8;--cream2:#e6cfa4;--pink:#6f7c3a;--chrome:#6f7c3a;--ink:#3a2216;--mute:#6e5646;--gold:#e3a23a;--f-script:Fraunces,serif;--f-head:Fraunces,serif;--f-body:Karla,sans-serif;--tt:none;--r:16px;--rb:14px}
+body.t-70s :is(h1,h2,h3,.logo,.cathead h1,.info h1){font-weight:900}
+body.t-70s .hero .bg{position:absolute!important;inset:0!important;background:var(--cream)!important}
+body.t-70s .hero .rays{position:absolute;right:-180px;top:-260px;width:780px;height:780px;border-radius:50%;background:repeating-conic-gradient(from 0deg,#f26b1d 0 7deg,transparent 7deg 14deg,#f4b223 14deg 21deg,transparent 21deg 28deg,#e94e8a 28deg 35deg,transparent 35deg 42deg,#2a9d9a 42deg 49deg,transparent 49deg 56deg);-webkit-mask:radial-gradient(circle,transparent 150px,#000 151px);mask:radial-gradient(circle,transparent 150px,#000 151px);opacity:.9}
+body.t-70s .hero .sun{position:absolute;right:20px;top:-110px;width:280px;height:280px;border-radius:50%;background:#f4b223}
+body.t-70s .hero .waves{position:absolute;left:-40px;bottom:-30px;width:70%;height:200px}
+body.t-70s .hero .flower{position:absolute}
+body.t-70s .hero .arc{position:absolute;right:-220px;top:-120px;width:760px;height:760px;border-radius:50%;background:radial-gradient(circle,transparent 210px,#6f7c3a 210px 255px,#e3a23a 255px 300px,#d1602d 300px 345px,#4a2c1d 345px 390px,transparent 390px)}
+body.t-70s .hero .arc2{position:absolute;left:-160px;top:-230px;width:460px;height:460px;border-radius:50%;background:radial-gradient(circle,transparent 120px,#d1602d 120px 150px,#e3a23a 150px 180px,#6f7c3a 180px 210px,transparent 210px)}
+body.t-80s{--teal:#7a3cff;--teal2:#2a1660;--teal3:#120a2e;--red:#ff2e9a;--red2:#c81f78;--cream:#120a2e;--cream2:#2a1660;--pink:#ff2e9a;--chrome:#2fb6ff;--ink:#f1ecff;--mute:#b9b2d8;--gold:#ffb13b;--f-script:"Permanent Marker",cursive;--f-head:Kanit,sans-serif;--f-body:Inter,sans-serif;--tt:uppercase;--r:0;--rb:0}
+body.t-80s :is(h1,h2,h3,.logo,.cathead h1,.info h1){font-weight:900}
+body.t-80s .hero .bg{position:absolute!important;inset:0!important;background:var(--cream)!important}
+body.t-80s .hero .rays{position:absolute;right:-180px;top:-260px;width:780px;height:780px;border-radius:50%;background:repeating-conic-gradient(from 0deg,#f26b1d 0 7deg,transparent 7deg 14deg,#f4b223 14deg 21deg,transparent 21deg 28deg,#e94e8a 28deg 35deg,transparent 35deg 42deg,#2a9d9a 42deg 49deg,transparent 49deg 56deg);-webkit-mask:radial-gradient(circle,transparent 150px,#000 151px);mask:radial-gradient(circle,transparent 150px,#000 151px);opacity:.9}
+body.t-80s .hero .sun{position:absolute;right:20px;top:-110px;width:280px;height:280px;border-radius:50%;background:#f4b223}
+body.t-80s .hero .waves{position:absolute;left:-40px;bottom:-30px;width:70%;height:200px}
+body.t-80s .hero .flower{position:absolute}
+body.t-80s .hero .bg{background:transparent!important}
+body.t-80s .sun80{position:absolute;right:8%;top:40px;width:420px;height:420px;border-radius:50%;background:linear-gradient(#ffb13b,#ff2e9a 70%);-webkit-mask:repeating-linear-gradient(#000 0 26px,transparent 26px 34px);mask:linear-gradient(#000 45%,transparent 45%),repeating-linear-gradient(#000 0 22px,transparent 22px 32px);box-shadow:0 0 80px rgba(255,46,154,.5)}
+body.t-80s .grid80{position:absolute;left:-10%;right:-10%;bottom:-20px;height:300px;opacity:.9;background:repeating-linear-gradient(90deg,rgba(255,46,154,.7) 0 2px,transparent 2px 70px),repeating-linear-gradient(0deg,rgba(255,46,154,.7) 0 2px,transparent 2px 36px);transform:perspective(320px) rotateX(62deg);transform-origin:bottom}
+body.t-80s-memphis{--teal:#00a6a6;--teal2:#008585;--teal3:#151515;--red:#ff6f91;--red2:#e85477;--cream:#f6f2ea;--cream2:#e7e0d2;--pink:#ff6f91;--chrome:#00a6a6;--ink:#151515;--mute:#4a4a4a;--gold:#ffd23f;--f-script:"Space Grotesk",sans-serif;--f-head:"Archivo Black",sans-serif;--f-body:"Space Grotesk",sans-serif;--tt:none;--r:0;--rb:0}
+body.t-80s-memphis :is(h1,h2,h3,.logo,.cathead h1,.info h1){font-weight:400}
+body.t-80s-memphis .hero .bg{position:absolute!important;inset:0!important;background:#f6f2ea!important}
+body.t-80s-memphis .hero .bg::after{display:none!important}
+body.t-80s-memphis .hero .bg{background:var(--cream)!important}
+body.t-80s-memphis .mem{position:absolute;pointer-events:none}
+body.t-80s-memphis .dotgrid{right:4%;top:40px;width:220px;height:200px;background-image:radial-gradient(#151515 2px,transparent 2.4px);background-size:20px 20px;opacity:.55}
+body.t-80s-memphis .hero .bg::after{display:none!important}
+body.t-90s{--teal:#1f9e9a;--teal2:#15706d;--teal3:#151515;--red:#e8336e;--red2:#b8204f;--cream:#f3ead8;--cream2:#e4d7bd;--pink:#6b3fa0;--chrome:#6b3fa0;--ink:#151515;--mute:#4e4a44;--gold:#f5c518;--f-script:"Permanent Marker",cursive;--f-head:Bangers,cursive;--f-body:"Space Grotesk",sans-serif;--tt:uppercase;--r:0;--rb:0}
+body.t-90s :is(h1,h2,h3,.logo,.cathead h1,.info h1){font-weight:400}
+body.t-90s .hero .bg{position:absolute!important;inset:0!important;background:var(--cream)!important}
+body.t-90s .hero .rays{position:absolute;right:-180px;top:-260px;width:780px;height:780px;border-radius:50%;background:repeating-conic-gradient(from 0deg,#f26b1d 0 7deg,transparent 7deg 14deg,#f4b223 14deg 21deg,transparent 21deg 28deg,#e94e8a 28deg 35deg,transparent 35deg 42deg,#2a9d9a 42deg 49deg,transparent 49deg 56deg);-webkit-mask:radial-gradient(circle,transparent 150px,#000 151px);mask:radial-gradient(circle,transparent 150px,#000 151px);opacity:.9}
+body.t-90s .hero .sun{position:absolute;right:20px;top:-110px;width:280px;height:280px;border-radius:50%;background:#f4b223}
+body.t-90s .hero .waves{position:absolute;left:-40px;bottom:-30px;width:70%;height:200px}
+body.t-90s .hero .flower{position:absolute}
+body.t-90s .dots{position:absolute;background-image:radial-gradient(#151515 2.2px,transparent 2.6px);background-size:12px 12px}
+body.t-90s .d1{right:0;top:0;width:44%;height:60%;-webkit-mask:linear-gradient(225deg,#000,transparent 70%);mask:linear-gradient(225deg,#000,transparent 70%)}
+body.t-90s .d2{left:0;bottom:0;width:30%;height:45%;background-image:radial-gradient(#e8336e 2.4px,transparent 2.8px);-webkit-mask:linear-gradient(45deg,#000,transparent 70%);mask:linear-gradient(45deg,#000,transparent 70%)}
+body.t-90s .brush{position:absolute;right:-4%;top:18%;width:48%;height:64%;background:linear-gradient(160deg,#1f9e9a,#6b3fa0);border-radius:40% 12% 46% 18%/30% 40% 20% 50%;transform:rotate(-8deg);opacity:.9}
+body.t-2000s{--teal:#1f4fbf;--teal2:#173c94;--teal3:#0f2a6b;--red:#ff5fae;--red2:#e0408f;--cream:#eef3ff;--cream2:#d6e0fb;--pink:#ff5fae;--chrome:#9db4ff;--ink:#0f1c45;--mute:#56608a;--gold:#c7cfdd;--f-script:Nunito,sans-serif;--f-head:Michroma,sans-serif;--f-body:Nunito,sans-serif;--tt:none;--r:16px;--rb:12px}
+body.t-2000s :is(h1,h2,h3,.logo,.cathead h1,.info h1){font-weight:400}
+body.t-2000s .hero .bg{position:absolute!important;inset:0!important;background:var(--cream)!important}
+body.t-2000s .hero .rays{position:absolute;right:-180px;top:-260px;width:780px;height:780px;border-radius:50%;background:repeating-conic-gradient(from 0deg,#f26b1d 0 7deg,transparent 7deg 14deg,#f4b223 14deg 21deg,transparent 21deg 28deg,#e94e8a 28deg 35deg,transparent 35deg 42deg,#2a9d9a 42deg 49deg,transparent 49deg 56deg);-webkit-mask:radial-gradient(circle,transparent 150px,#000 151px);mask:radial-gradient(circle,transparent 150px,#000 151px);opacity:.9}
+body.t-2000s .hero .sun{position:absolute;right:20px;top:-110px;width:280px;height:280px;border-radius:50%;background:#f4b223}
+body.t-2000s .hero .waves{position:absolute;left:-40px;bottom:-30px;width:70%;height:200px}
+body.t-2000s .hero .flower{position:absolute}
+body.t-2000s .hero .bg{background:transparent!important}
+body.t-2000s .pix{position:absolute;right:0;top:0;width:55%;height:100%;background-image:linear-gradient(rgba(157,180,255,.35) 1px,transparent 1px),linear-gradient(90deg,rgba(157,180,255,.35) 1px,transparent 1px);background-size:22px 22px;-webkit-mask:linear-gradient(270deg,#000,transparent);mask:linear-gradient(270deg,#000,transparent)}
+body.t-2000s .pix2{position:absolute;left:0;bottom:0;width:30%;height:40%;background:repeating-conic-gradient(rgba(31,79,191,.18) 0 25%,transparent 0 50%) 0 0/26px 26px;-webkit-mask:linear-gradient(45deg,#000,transparent 70%);mask:linear-gradient(45deg,#000,transparent 70%)}
+body.t-2000s .bub{position:absolute;border-radius:50%;background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.95),rgba(255,255,255,.15) 30%,rgba(157,180,255,.15) 60%,rgba(255,255,255,.6) 100%);box-shadow:inset 0 0 10px rgba(255,255,255,.8),0 4px 12px rgba(31,79,191,.15)}
+body.t-2000s .spk{position:absolute;background:#fff;clip-path:polygon(50% 0,58% 42%,100% 50%,58% 58%,50% 100%,42% 58%,0 50%,42% 42%);filter:drop-shadow(0 0 6px #9db4ff)}
+body.t-2010s{--teal:#5b2fd6;--teal2:#3f1fa8;--teal3:#1c1440;--red:#e8399a;--red2:#c02680;--cream:#eef0f5;--cream2:#dfe3ee;--pink:#e8399a;--chrome:#1fa2e8;--ink:#14162b;--mute:#5a5f78;--gold:#1fa2e8;--f-script:Pacifico,cursive;--f-head:Montserrat,sans-serif;--f-body:"Open Sans",sans-serif;--tt:none;--r:6px;--rb:6px}
+body.t-2010s :is(h1,h2,h3,.logo,.cathead h1,.info h1){font-weight:800}
+body.t-2010s .hero .bg{background:linear-gradient(160deg,#f4f5fa,#eceef6)!important}
+body.t-2010s .hero .s10{position:absolute;border-radius:40px;transform:rotate(-24deg);filter:blur(.3px)}
+body.t-2010s .hero .s10.a{right:-60px;top:30px;width:300px;height:70px;background:linear-gradient(90deg,#1fa3ff,#7a3cff,#ff2e9a);opacity:.85}
+body.t-2010s .hero .s10.b{right:-40px;top:120px;width:220px;height:34px;background:linear-gradient(90deg,#7a3cff,#ff2e9a);opacity:.7}
+body.t-2010s .hero .s10.c{left:-70px;bottom:40px;width:230px;height:40px;background:linear-gradient(90deg,#1fa3ff,#ff2e9a);opacity:.6}
+body.t-2010s .hero .d10{position:absolute;width:150px;height:150px;background:radial-gradient(circle,#ff2e9a 2.5px,transparent 3px) 0 0/14px 14px;opacity:.35}
+body.t-2010s .hero .d10.a{right:0;bottom:0}
+body.t-2010s .hero .d10.b{left:0;top:0;background-image:radial-gradient(circle,#1fa3ff 2.5px,transparent 3px)}
+/* every theme: white cards with dark text, no glows */
+:is(.pcard,.rev,.filters,.ship,.band .tile,.gal .main,.thumbs div,.chips span,.pager a,.sort select,.qty){color:#1c2427}
+.pcard .tx small{color:#5d6266}
+body.t-80s .hero .card{background:#fff;color:#1a1238}
+body.t-80s .hero .card h1{color:#1a1238}
+body.t-80s .perks{background:#1a1040;color:#fff;border-color:#2a1660}
+body.t-80s .sh h2,body.t-80s .cathead h1,body.t-80s .info h1{color:#fff}
+body.t-80s .crumbs,body.t-80s .cathead p,body.t-80s .sh p,body.t-80s .info .note,body.t-80s .rate{color:#d6d0f2}
+body.t-80s .acc summary{color:#fff}body.t-80s .acc p{color:#d6d0f2}
+body.t-80s .opt h4,body.t-80s .info small{color:#fff}
+body.t-80s .sizes span{color:#fff;border-color:#2fb6ff}body.t-80s .sizes span.on{background:#2fb6ff;color:#120a2e}
+body.t-80s .btn.ghost{color:#fff;box-shadow:inset 0 0 0 2px #fff}
+body.t-80s footer{background:#0a0620}
+.hero .card{z-index:2}
+.hero .eramark{position:absolute;right:3%;bottom:-6%;font-family:var(--f-head);font-weight:900;font-size:clamp(160px,24vw,340px);line-height:1;letter-spacing:-.02em;color:var(--teal);opacity:.16;pointer-events:none;white-space:nowrap}
+body.t-80s .hero .eramark{color:#ff2e9a;opacity:.22}
+@media(max-width:900px){.hero .eramark{font-size:140px;bottom:-2%}}
+.themes>button{background:#fff!important;color:#1c2427!important;border-color:#fff!important}
+body.t-2000s .btn.ghost,body.t-2010s .btn.ghost{color:var(--teal);box-shadow:inset 0 0 0 2px var(--teal)}
+
+</style></head><body>
+
+<div class="demo"><div class="wrap"><span><b>Demo store</b> · The same Shopify store in every era. Switch with Themes. Not a real shop.</span><a id="backlink" href="/shopify-studio">← Back to Shopify Studio</a></div></div>
+<div class="ann">Free shipping on orders over $75 · Gift wrap on every order</div>
+
+<header><div class="wrap">
+  <a class="logo" href="#home" data-go="home">Starlite<small>Home &amp; Gift</small></a>
+  <nav class="main">
+    <a href="#home" data-go="home">Home</a>
+    <a href="#shop" data-go="shop">Kitchen</a>
+    <a href="#shop" data-go="shop">Gifts</a>
+    <a href="#shop" data-go="shop">Sale</a>
+  </nav>
+  <div class="hright">
+    <div class="themes" id="themes">
+      <button type="button" id="themeBtn">Theme: 1950s ▾</button>
+      <ul><li><a href="?theme=50s" data-theme="50s">1950s</a></li><li><a href="?theme=60s" data-theme="60s">1960s</a></li><li><a href="?theme=70s" data-theme="70s">1970s</a></li><li><a href="?theme=80s" data-theme="80s">1980s Neon</a></li><li><a href="?theme=80s-memphis" data-theme="80s-memphis">1980s Memphis</a></li><li><a href="?theme=90s" data-theme="90s">1990s</a></li><li><a href="?theme=2000s" data-theme="2000s">2000s / Y2K</a></li><li><a href="?theme=2010s" data-theme="2010s">2010s</a></li></ul>
+    </div>
+    <span class="icon">⌕</span>
+    <span class="icon">🛒<b>2</b></span>
+  </div>
+</div></header>
+
+<!-- ================= HOME ================= -->
+<main class="page" id="home">
+  <section class="hero">
+    <div class="bg"></div><div class="deco"></div>
+    <div class="card">
+      <span class="script">Fresh from the counter</span>
+      <h1>Kitchen classics, made to last</h1>
+      <p>Diner mugs, malt glasses and table radios, picked by hand and shipped from our little shop on Main Street.</p>
+      <div class="row"><a class="btn" href="#shop" data-go="shop">Shop the kitchen</a><a class="btn ghost" href="#shop" data-go="shop">Gift ideas</a></div>
+    </div>
+  </section>
+  <div class="perks"><div class="wrap">
+    <div><i>🚚</i>Free shipping over $75</div>
+    <div><i>🎁</i>Free gift wrap</div>
+    <div><i>↩</i>30-day easy returns</div>
+    <div><i>★</i>4.9 from 1,200+ reviews</div>
+  </div></div>
+
+  <section class="block"><div class="wrap">
+    <div class="sh"><span class="script">Take a stroll</span><h2>Shop by department</h2></div>
+    <div class="depts" id="depts"></div>
+  </div></section>
+
+  <section class="block" style="padding-top:0"><div class="wrap">
+    <div class="sh"><span class="script">Customer favourites</span><h2>Best sellers this week</h2><p>The things people come back for.</p></div>
+    <div class="grid" id="best"></div>
+    <div style="text-align:center;margin-top:32px"><a class="btn teal" href="#shop" data-go="shop">See everything</a></div>
+  </div></section>
+
+  <section class="band"><div class="wrap">
+    <div><span class="script">Join the club</span><h2>10% off your first order</h2><p>New arrivals, restocks and the odd recipe card. One email a week, never more.</p><a class="btn" href="#shop" data-go="shop">Start shopping</a></div>
+    <div class="tile"><h3>Get the Starlite letter</h3><p>Sign up and your code lands in your inbox.</p><form onsubmit="return false"><input placeholder="you@email.com"><button class="btn">Sign up</button></form></div>
+  </div></section>
+
+  <section class="block"><div class="wrap">
+    <div class="sh"><span class="script">Kind words</span><h2>What customers say</h2></div>
+    <div class="reviews">
+      <div class="rev"><span class="stars">★★★★★</span><p>"The diner mugs are thick and heavy, just like the real thing. Bought four more as gifts."</p><b>Marion · Hamilton</b></div>
+      <div class="rev"><span class="stars">★★★★★</span><p>"Ordered Monday, here Wednesday, wrapped like a present. Lovely little shop."</p><b>Dale · Guelph</b></div>
+      <div class="rev"><span class="stars">★★★★★</span><p>"The radio is the centrepiece of our kitchen now. Everyone asks where it's from."</p><b>Priya · Toronto</b></div>
+    </div>
+  </div></section>
+</main>
+
+<!-- ================= CATEGORY ================= -->
+<main class="page" id="shop"><div class="wrap">
+  <div class="crumbs"><a href="#home" data-go="home">Home</a> / Kitchen &amp; Diner</div>
+  <div class="cathead">
+    <div><span class="script">The counter collection</span><h1>Kitchen &amp; Diner</h1><p>Everything for a kitchen with a little chrome and a lot of personality. 24 products.</p></div>
+    <div class="sort">Sort by <select><option>Best selling</option><option>Price, low to high</option><option>Price, high to low</option><option>Newest</option></select></div>
+  </div>
+  <div class="catwrap">
+    <aside class="filters">
+      <h4>Category</h4>
+      <label><input type="checkbox" checked> Mugs &amp; cups</label>
+      <label><input type="checkbox"> Glassware</label>
+      <label><input type="checkbox"> Radios &amp; clocks</label>
+      <label><input type="checkbox"> Linens</label>
+      <h4>Colour</h4>
+      <div class="sw"><i style="background:#d42a3c"></i><i style="background:#1d9c97"></i><i style="background:#f6b8c5"></i><i style="background:#e9b44c"></i><i style="background:#fbf1dc"></i><i style="background:#1c2427"></i></div>
+      <h4>Price</h4>
+      <label><input type="checkbox"> Under $25</label>
+      <label><input type="checkbox"> $25 to $50</label>
+      <label><input type="checkbox"> $50 and up</label>
+      <h4>Availability</h4>
+      <label><input type="checkbox" checked> In stock</label>
+      <label><input type="checkbox"> On sale</label>
+    </aside>
+    <div>
+      <div class="chips"><span class="on">All</span><span>Gift ideas</span><span>Under $25</span><span>New in</span><span>Staff picks</span></div>
+      <div class="grid" id="catgrid"></div>
+      <div class="pager"><a class="on">1</a><a>2</a><a>3</a><a>→</a></div>
+    </div>
+  </div>
+</div></main>
+
+<!-- ================= PRODUCT ================= -->
+<main class="page" id="product"><div class="wrap">
+  <div class="crumbs"><a href="#home" data-go="home">Home</a> / <a href="#shop" data-go="shop">Kitchen &amp; Diner</a> / Chrome Table Radio</div>
+  <div class="pdp">
+    <div class="gal">
+      <div class="main"><span class="badge new">New</span><span id="pmain"></span></div>
+      <div class="thumbs" id="pthumbs"></div>
+    </div>
+    <div class="info">
+      <small>Starlite Originals</small>
+      <h1>Chrome Table Radio</h1>
+      <div class="rate"><span class="stars">★★★★★</span> 4.9 · 128 reviews</div>
+      <div class="price">$89.00 <s>$109.00</s></div>
+      <div class="note">or 4 payments of $22.25 · taxes included</div>
+      <div class="opt"><h4>Colour: Cherry Red</h4><div class="sw"><i class="on" style="background:#d42a3c"></i><i style="background:#1d9c97"></i><i style="background:#f6b8c5"></i><i style="background:#fbf1dc"></i></div></div>
+      <div class="opt"><h4>Connection</h4><div class="sizes"><span class="on">Bluetooth</span><span>AM / FM</span><span>Both</span></div></div>
+      <div class="buy"><div class="qty"><button>−</button><span>1</span><button>+</button></div><button class="btn">Add to cart · $89</button></div>
+      <div class="ship">
+        <div>🚚 <span><b>Free shipping</b> on this item. Arrives in 2 to 4 days.</span></div>
+        <div>🎁 <span>Add free gift wrap and a handwritten note at checkout.</span></div>
+        <div>✓ <span><b>In stock</b>, 6 left. Ships from Main Street.</span></div>
+      </div>
+      <div class="acc">
+        <details open><summary>About this radio</summary><p>Chrome grille, rounded corners and a big dial you actually turn. Inside it's modern: Bluetooth, a rechargeable battery and room-filling sound.</p></details>
+        <details><summary>Size &amp; details</summary><p>28 × 16 × 12 cm. 1.4 kg. USB-C charging, 12-hour battery.</p></details>
+        <details><summary>Shipping &amp; returns</summary><p>Free shipping over $75. Easy 30-day returns.</p></details>
+      </div>
+    </div>
+  </div>
+  <div class="sh"><span class="script">Goes well with</span><h2>You might also like</h2></div>
+  <div class="grid" id="related" style="padding-bottom:70px"></div>
+</div></main>
+
+<footer><div class="wrap">
+  <div class="cols">
+    <div><div class="logo">Starlite</div><p style="margin-top:10px;font-size:15px;max-width:300px">A little home and gift shop on Main Street. Open 10 to 6, every day but Monday.</p></div>
+    <div><h5>Shop</h5><ul><li>Kitchen</li><li>Gifts</li><li>Sale</li><li>Gift cards</li></ul></div>
+    <div><h5>Help</h5><ul><li>Shipping</li><li>Returns</li><li>Contact us</li></ul></div>
+    <div><h5>Visit</h5><ul><li>123 Main Street</li><li>Instagram</li><li>Facebook</li></ul></div>
+  </div>
+  <div class="base"><span>© Starlite Home &amp; Gift (demo store)</span><span>Theme by Justin DeMatteis · Shopify Studio</span></div>
+</div></footer>
+
+<script>
+// Simple flat product illustrations (stand-ins for product photos)
+const ART={
+ mug:`<svg viewBox="0 0 120 120"><ellipse cx="58" cy="104" rx="36" ry="6" fill="#0002"/><path d="M84 46h8a14 14 0 0 1 0 28h-8" fill="none" stroke="#fff" stroke-width="9"/><path d="M84 46h8a14 14 0 0 1 0 28h-8" fill="none" stroke="#e6dccb" stroke-width="5"/><rect x="26" y="30" width="62" height="72" rx="10" fill="#fff"/><rect x="26" y="52" width="62" height="10" fill="#d42a3c"/><rect x="26" y="66" width="62" height="4" fill="#d42a3c"/><ellipse cx="57" cy="31" rx="31" ry="6" fill="#efe6d6"/><ellipse cx="57" cy="32" rx="25" ry="4" fill="#6b3d1f"/></svg>`,
+ glass:`<svg viewBox="0 0 120 120"><ellipse cx="60" cy="108" rx="22" ry="5" fill="#0002"/><path d="M38 20h44l-8 58H46z" fill="#ffffffb0" stroke="#c9ced3" stroke-width="3"/><path d="M41 40h38l-6 38H47z" fill="#f6b8c5"/><path d="M52 78h16v18H52z" fill="#dfe3e6"/><ellipse cx="60" cy="100" rx="20" ry="5" fill="#c9ced3"/><circle cx="60" cy="34" r="9" fill="#fff"/><circle cx="66" cy="22" r="6" fill="#d42a3c"/><path d="M66 16 74 4" stroke="#1d9c97" stroke-width="3"/><rect x="70" y="2" width="4" height="40" transform="rotate(14 72 22)" fill="#d42a3c"/></svg>`,
+ radio:`<svg viewBox="0 0 120 120"><ellipse cx="60" cy="102" rx="44" ry="6" fill="#0002"/><rect x="14" y="34" width="92" height="64" rx="22" fill="#d42a3c"/><rect x="22" y="44" width="48" height="44" rx="12" fill="#c9ced3"/><g stroke="#8d949a" stroke-width="3">${[0,1,2,3,4,5].map(i=>`<line x1="28" y1="${52+i*6}" x2="64" y2="${52+i*6}"/>`).join('')}</g><circle cx="88" cy="56" r="10" fill="#fbf1dc"/><circle cx="88" cy="56" r="3" fill="#a11e2e"/><circle cx="88" cy="80" r="7" fill="#fbf1dc"/><path d="M40 34 60 14l20 20" fill="none" stroke="#c9ced3" stroke-width="5" stroke-linecap="round"/></svg>`,
+ clock:`<svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="46" fill="#1c2427"/>${[0,1,2,3,4].map(i=>`<circle cx="60" cy="60" r="${40-i*5}" fill="none" stroke="#333d40" stroke-width="1.5"/>`).join('')}<circle cx="60" cy="60" r="16" fill="#e9b44c"/><circle cx="60" cy="60" r="3" fill="#1c2427"/><path d="M60 60V30M60 60l18 10" stroke="#fbf1dc" stroke-width="4" stroke-linecap="round"/></svg>`,
+ apron:`<svg viewBox="0 0 120 120"><ellipse cx="60" cy="110" rx="30" ry="4" fill="#0002"/><path d="M42 18h36v18c12 4 16 10 16 20v40c0 6-4 10-10 10H36c-6 0-10-4-10-10V56c0-10 4-16 16-20z" fill="#fff" stroke="#e6dccb" stroke-width="2"/><path d="M42 18c-6-8-10-10-14-10M78 18c6-8 10-10 14-10" stroke="#d42a3c" stroke-width="3" fill="none"/>${[[44,48],[62,44],[78,54],[50,70],[70,72],[40,90],[60,92],[80,88]].map(([x,y])=>`<g><circle cx="${x}" cy="${y}" r="4.5" fill="#d42a3c"/><circle cx="${x+7}" cy="${y+2}" r="4.5" fill="#d42a3c"/><path d="M${x} ${y-4}q4-8 10-8M${x+7} ${y-2}q0-6 3-10" stroke="#1d9c97" stroke-width="1.6" fill="none"/></g>`).join('')}<rect x="44" y="64" width="32" height="18" rx="3" fill="none" stroke="#1d9c97" stroke-width="2"/></svg>`,
+ lunch:`<svg viewBox="0 0 120 120"><ellipse cx="60" cy="104" rx="42" ry="5" fill="#0002"/><path d="M46 34v-8a6 6 0 0 1 6-6h16a6 6 0 0 1 6 6v8" fill="none" stroke="#c9ced3" stroke-width="5"/><rect x="18" y="34" width="84" height="66" rx="8" fill="#1d9c97"/><rect x="18" y="34" width="84" height="16" rx="6" fill="#0f5f63"/><rect x="28" y="58" width="64" height="34" rx="6" fill="#fbf1dc"/><text x="60" y="81" text-anchor="middle" font-family="Yellowtail" font-size="18" fill="#d42a3c">Lunch!</text></svg>`,
+ soda:`<svg viewBox="0 0 120 120"><ellipse cx="60" cy="108" rx="40" ry="5" fill="#0002"/>${[[30,'#d42a3c'],[60,'#1d9c97'],[90,'#e9b44c']].map(([x,c])=>`<g><rect x="${x-5}" y="14" width="10" height="8" rx="2" fill="#c9ced3"/><path d="M${x-5} 22h10l3 22c4 4 6 8 6 14v44a4 4 0 0 1-4 4H${x-10}a4 4 0 0 1-4-4V58c0-6 2-10 6-14z" fill="${c}"/><rect x="${x-10}" y="64" width="20" height="18" rx="3" fill="#fbf1dc"/></g>`).join('')}</svg>`,
+ towel:`<svg viewBox="0 0 120 120"><ellipse cx="60" cy="108" rx="34" ry="5" fill="#0002"/><rect x="50" y="8" width="20" height="8" rx="4" fill="#c9ced3"/><path d="M30 16h60v84H30z" fill="#fff"/>${Array.from({length:7},(_,r)=>Array.from({length:5},(_,c)=>(r+c)%2?`<rect x="${30+c*12}" y="${16+r*12}" width="12" height="12" fill="#d42a3c"/>`:'').join('')).join('')}<rect x="30" y="16" width="60" height="84" fill="none" stroke="#a11e2e" stroke-width="2"/></svg>`,
+ plate:`<svg viewBox="0 0 120 120"><ellipse cx="60" cy="100" rx="44" ry="7" fill="#0002"/><circle cx="60" cy="58" r="44" fill="#fff"/><circle cx="60" cy="58" r="44" fill="none" stroke="#1d9c97" stroke-width="6"/><circle cx="60" cy="58" r="34" fill="none" stroke="#d42a3c" stroke-width="2" stroke-dasharray="4 5"/><text x="60" y="66" text-anchor="middle" font-family="Yellowtail" font-size="24" fill="#d42a3c">Eat!</text></svg>`,
+ jukebox:`<svg viewBox="0 0 120 120"><ellipse cx="60" cy="110" rx="34" ry="5" fill="#0002"/><path d="M28 106V46a32 32 0 0 1 64 0v60z" fill="#d42a3c"/><path d="M36 106V48a24 24 0 0 1 48 0v58z" fill="#e9b44c"/><rect x="44" y="50" width="32" height="20" rx="4" fill="#fbf1dc"/><g stroke="#a11e2e" stroke-width="3">${[0,1,2,3].map(i=>`<line x1="44" y1="${78+i*6}" x2="76" y2="${78+i*6}"/>`).join('')}</g></svg>`
+};
+const BG={mug:'#fde3e7',glass:'#e2f3f2',radio:'#fbf1dc',clock:'#f3e3c3',apron:'#fde3e7',lunch:'#e2f3f2',soda:'#fbf1dc',towel:'#f3e3c3',plate:'#e2f3f2',jukebox:'#fde3e7'};
+const P=[
+ {k:'radio',t:'Chrome Table Radio',v:'Starlite Originals',p:'$89.00',was:'$109.00',b:'New',r:128},
+ {k:'mug',t:'Diner Counter Mug, Set of 2',v:'Main Street Pottery',p:'$28.00',b:'',r:342},
+ {k:'glass',t:'Malt Shop Glasses, Set of 4',v:'Starlite Originals',p:'$34.00',b:'',r:96},
+ {k:'clock',t:'Vinyl Record Wall Clock',v:'Spin Shop',p:'$42.00',b:'',r:71},
+ {k:'apron',t:'Cherry Print Apron',v:'Starlite Originals',p:'$22.00',was:'$28.00',b:'Sale',r:210},
+ {k:'lunch',t:'Tin Lunch Box',v:'Lunch Club',p:'$24.00',b:'New',r:58},
+ {k:'soda',t:'Glass Soda Bottles, Set of 3',v:'Pop &amp; Co.',p:'$16.00',b:'',r:144},
+ {k:'towel',t:'Checkerboard Tea Towel',v:'Starlite Originals',p:'$14.00',b:'',r:87},
+ {k:'plate',t:'Blue Plate Special Dish',v:'Main Street Pottery',p:'$19.00',b:'',r:63}
+];
+const card=x=>`<a class="pcard" href="#product" data-go="product"><div class="im" style="background:${BG[x.k]}">${x.b?`<span class="badge ${x.b==='New'?'new':''}">${x.b}</span>`:''}${ART[x.k]}</div><div class="tx"><small>${x.v}</small><h3>${x.t}</h3><div class="stars">★★★★★ <span style="color:#5d6266;letter-spacing:0;font-size:13px">(${x.r})</span></div><div class="pr">${x.p}${x.was?`<s>${x.was}</s>`:''}</div></div></a>`;
+document.getElementById('best').innerHTML=P.slice(0,4).map(card).join('');
+document.getElementById('catgrid').innerHTML=P.map(card).join('');
+document.getElementById('related').innerHTML=[P[1],P[2],P[3],P[5]].map(card).join('');
+document.getElementById('depts').innerHTML=[['mug','Kitchen'],['glass','Glassware'],['radio','Radios'],['jukebox','Music'],['apron','Linens']].map(([k,n])=>`<a class="dept" href="#shop" data-go="shop"><div class="c" style="background:${BG[k]}">${ART[k]}</div><b>${n}</b></a>`).join('');
+document.getElementById('pmain').outerHTML=ART.radio;
+document.getElementById('pthumbs').innerHTML=['#fbf1dc','#e2f3f2','#fde3e7','#f3e3c3'].map((c,i)=>`<div class="${i?'':'on'}" style="background:${c}">${ART.radio}</div>`).join('');
+// page switching
+function go(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('on',p.id===id));document.querySelectorAll('nav.main a').forEach(a=>a.classList.toggle('on',a.dataset.go===id&&a.textContent!=='Gifts'&&a.textContent!=='Sale'));window.scrollTo(0,0)}
+document.addEventListener('click',e=>{const a=e.target.closest('[data-go]');if(a){e.preventDefault();history.replaceState(null,'','#'+a.dataset.go);go(a.dataset.go)}
+ const t=document.getElementById('themes');if(e.target.closest('#themeBtn'))t.classList.toggle('open');else if(!e.target.closest('#themes'))t.classList.remove('open');
+ });
+const fromHash=()=>go(['home','shop','product'].includes(location.hash.slice(1))?location.hash.slice(1):'home');
+window.addEventListener('hashchange',fromHash);fromHash();
+
+const THEMES={"50s": {"label": "1950s", "font": "https://fonts.googleapis.com/css2?family=Yellowtail&family=Oswald:wght@500;600;700&family=Jost:wght@400;500;600&family=Josefin+Sans:wght@400;600;700&display=swap", "deco": "<svg style=\"position:absolute;left:6%;top:12%;width:120px;opacity:.9\" viewBox=\"0 0 100 100\"><polygon fill=\"#e9b44c\" points=\"50,0 57,43 100,50 57,57 50,100 43,57 0,50 43,43\"/></svg>\n  <svg style=\"position:absolute;right:9%;bottom:16%;width:150px;opacity:.85\" viewBox=\"0 0 100 100\"><polygon fill=\"#fbf1dc\" points=\"50,0 56,44 100,50 56,56 50,100 44,56 0,50 44,44\"/><circle cx=\"50\" cy=\"50\" r=\"7\" fill=\"#d42a3c\"/></svg>\n  <svg style=\"position:absolute;right:16%;top:16%;width:46px\" viewBox=\"0 0 100 100\"><polygon fill=\"#f6b8c5\" points=\"50,0 57,43 100,50 57,57 50,100 43,57 0,50 43,43\"/></svg>\n  <span style=\"position:absolute;left:-80px;bottom:-60px;width:360px;height:170px;border-radius:170px 170px 30px 170px;background:#d42a3c;opacity:.55;transform:rotate(-14deg)\"></span>\n  <span style=\"position:absolute;right:-60px;top:-40px;width:300px;height:140px;border-radius:30px 140px 140px 140px;background:#27b2ac;opacity:.45;transform:rotate(12deg)\"></span>", "mark": "'50s"}, "60s": {"label": "1960s", "font": "https://fonts.googleapis.com/css2?family=Shrikhand&family=DM+Sans:wght@400;500;700&display=swap", "deco": "<span class=\"rays\"></span><span class=\"sun\"></span>\n  <svg class=\"waves\" viewBox=\"0 0 800 200\" preserveAspectRatio=\"none\"><path d=\"M0 120 C150 40 300 200 450 110 S700 60 800 140 L800 200 L0 200Z\" fill=\"#5b2a86\"/><path d=\"M0 150 C150 80 300 220 450 140 S700 100 800 170 L800 200 L0 200Z\" fill=\"#e94e8a\"/><path d=\"M0 175 C150 120 300 230 450 170 S700 140 800 190 L800 200 L0 200Z\" fill=\"#f4b223\"/></svg>\n  <svg class=\"flower\" style=\"left:2%;top:70%;width:90px\" viewBox=\"0 0 100 100\"><g fill=\"#e94e8a\"><circle cx=\"50\" cy=\"22\" r=\"20\"/><circle cx=\"78\" cy=\"42\" r=\"20\"/><circle cx=\"68\" cy=\"76\" r=\"20\"/><circle cx=\"32\" cy=\"76\" r=\"20\"/><circle cx=\"22\" cy=\"42\" r=\"20\"/></g><circle cx=\"50\" cy=\"52\" r=\"13\" fill=\"#f4b223\"/></svg>\n  <svg class=\"flower\" style=\"left:44%;top:8%;width:56px\" viewBox=\"0 0 100 100\"><g fill=\"#f26b1d\"><circle cx=\"50\" cy=\"22\" r=\"20\"/><circle cx=\"78\" cy=\"42\" r=\"20\"/><circle cx=\"68\" cy=\"76\" r=\"20\"/><circle cx=\"32\" cy=\"76\" r=\"20\"/><circle cx=\"22\" cy=\"42\" r=\"20\"/></g><circle cx=\"50\" cy=\"52\" r=\"13\" fill=\"#f6e9cf\"/></svg>", "mark": "'60s"}, "70s": {"label": "1970s", "font": "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,600,100,1;9..144,900,100,1&family=Karla:wght@400;600;700&display=swap", "deco": "<span class=\"arc\"></span><span class=\"arc2\"></span>\n  <svg style=\"position:absolute;left:46%;top:10%;width:70px\" viewBox=\"0 0 100 100\"><g stroke=\"#4a2c1d\" stroke-width=\"5\" stroke-linecap=\"round\"><line x1=\"50\" y1=\"4\" x2=\"50\" y2=\"96\"/><line x1=\"4\" y1=\"50\" x2=\"96\" y2=\"50\"/><line x1=\"18\" y1=\"18\" x2=\"82\" y2=\"82\"/><line x1=\"82\" y1=\"18\" x2=\"18\" y2=\"82\"/></g><g fill=\"#4a2c1d\"><circle cx=\"50\" cy=\"4\" r=\"6\"/><circle cx=\"50\" cy=\"96\" r=\"6\"/><circle cx=\"4\" cy=\"50\" r=\"6\"/><circle cx=\"96\" cy=\"50\" r=\"6\"/></g></svg>\n  <svg style=\"position:absolute;left:4%;top:62%;width:54px\" viewBox=\"0 0 100 100\"><g stroke=\"#d1602d\" stroke-width=\"6\" stroke-linecap=\"round\"><line x1=\"50\" y1=\"4\" x2=\"50\" y2=\"96\"/><line x1=\"4\" y1=\"50\" x2=\"96\" y2=\"50\"/><line x1=\"18\" y1=\"18\" x2=\"82\" y2=\"82\"/><line x1=\"82\" y1=\"18\" x2=\"18\" y2=\"82\"/></g></svg>", "mark": "'70s"}, "80s": {"label": "1980s Neon", "font": "https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,500;0,700;1,800;1,900&family=Permanent+Marker&family=Inter:wght@400;600&display=swap", "deco": "<span class=\"sun80\"></span><span class=\"grid80\"></span>\n  <svg style=\"position:absolute;left:3%;top:8%;width:260px;opacity:.9\" viewBox=\"0 0 200 120\"><polygon points=\"10,110 100,8 190,110\" fill=\"none\" stroke=\"#ff2e9a\" stroke-width=\"3\" style=\"filter:drop-shadow(0 0 6px #ff2e9a)\"/></svg>\n  <svg style=\"position:absolute;right:6%;top:50%;width:70px\" viewBox=\"0 0 60 100\"><polygon points=\"34,0 6,56 28,56 18,100 54,38 32,38 44,0\" fill=\"none\" stroke=\"#2fb6ff\" stroke-width=\"4\" style=\"filter:drop-shadow(0 0 8px #2fb6ff)\"/></svg>", "mark": "'80s"}, "80s-memphis": {"label": "1980s Memphis", "font": "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Archivo+Black&display=swap", "deco": "<span class=\"mem dotgrid\"></span>\n  <svg class=\"mem\" style=\"left:42%;top:56px;width:110px\" viewBox=\"0 0 110 40\"><path d=\"M4 26 Q18 4 32 26 T60 26 T88 26 T106 20\" fill=\"none\" stroke=\"#ff6f91\" stroke-width=\"7\" stroke-linecap=\"round\"/></svg>\n  <svg class=\"mem\" style=\"right:30%;bottom:70px;width:70px\" viewBox=\"0 0 100 90\"><polygon points=\"50,4 96,86 4,86\" fill=\"#ffd23f\" stroke=\"#151515\" stroke-width=\"5\"/></svg>\n  <svg class=\"mem\" style=\"right:8%;bottom:90px;width:60px\" viewBox=\"0 0 60 60\"><circle cx=\"30\" cy=\"30\" r=\"24\" fill=\"#00a6a6\" stroke=\"#151515\" stroke-width=\"4\"/></svg>\n  <svg class=\"mem\" style=\"right:14%;top:44%;width:150px\" viewBox=\"0 0 150 150\"><rect x=\"20\" y=\"20\" width=\"110\" height=\"110\" fill=\"none\" stroke=\"#151515\" stroke-width=\"4\" transform=\"rotate(12 75 75)\"/><rect x=\"38\" y=\"38\" width=\"74\" height=\"74\" fill=\"#ff6f91\" stroke=\"#151515\" stroke-width=\"4\" transform=\"rotate(-8 75 75)\"/></svg>\n  <svg class=\"mem\" style=\"left:4%;bottom:40px;width:120px\" viewBox=\"0 0 120 40\"><polyline points=\"2,30 18,8 34,30 50,8 66,30 82,8 98,30 114,8\" fill=\"none\" stroke=\"#00a6a6\" stroke-width=\"6\" stroke-linejoin=\"round\"/></svg>", "mark": "'80s"}, "90s": {"label": "1990s", "font": "https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Bangers&family=Space+Grotesk:wght@400;500;700&display=swap", "deco": "<span class=\"dots d1\"></span><span class=\"dots d2\"></span><span class=\"brush\"></span>\n  <svg style=\"position:absolute;left:38%;top:9%;width:120px\" viewBox=\"0 0 120 30\"><polyline points=\"2,24 18,6 34,24 50,6 66,24 82,6 98,24 114,6\" fill=\"none\" stroke=\"#1f9e9a\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>\n  <svg style=\"position:absolute;right:30%;bottom:16%;width:100px\" viewBox=\"0 0 120 30\"><polyline points=\"2,24 18,6 34,24 50,6 66,24 82,6 98,24 114,6\" fill=\"none\" stroke=\"#6b3fa0\" stroke-width=\"6\" stroke-linejoin=\"round\" stroke-linecap=\"round\"/></svg>\n  <svg style=\"position:absolute;right:8%;top:12%;width:110px\" viewBox=\"0 0 100 90\"><polygon points=\"50,4 96,86 4,86\" fill=\"#f5c518\" stroke=\"#151515\" stroke-width=\"5\"/></svg>\n  <svg style=\"position:absolute;right:22%;top:44%;width:70px;transform:rotate(18deg)\" viewBox=\"0 0 100 90\"><polygon points=\"50,4 96,86 4,86\" fill=\"#e8336e\" stroke=\"#151515\" stroke-width=\"5\"/></svg>\n  <svg style=\"position:absolute;left:3%;bottom:10%;width:80px\" viewBox=\"0 0 100 90\"><polygon points=\"50,4 96,86 4,86\" fill=\"#1f9e9a\" stroke=\"#151515\" stroke-width=\"5\"/></svg>", "mark": "'90s"}, "2000s": {"label": "2000s / Y2K", "font": "https://fonts.googleapis.com/css2?family=Michroma&family=Nunito:wght@400;600;800&display=swap", "deco": "<span class=\"pix\"></span><span class=\"pix2\"></span><span class=\"bub\" style=\"left:44%;top:10%;width:70px;height:70px\"></span><span class=\"bub\" style=\"left:56%;top:62%;width:46px;height:46px\"></span><span class=\"bub\" style=\"left:84%;top:8%;width:38px;height:38px\"></span><span class=\"bub\" style=\"left:92%;top:70%;width:64px;height:64px\"></span><span class=\"bub\" style=\"left:70%;top:28%;width:28px;height:28px\"></span><span class=\"bub\" style=\"left:6%;top:78%;width:40px;height:40px\"></span><span class=\"spk\" style=\"left:48%;top:40%;width:22px;height:22px\"></span><span class=\"spk\" style=\"left:78%;top:50%;width:30px;height:30px\"></span><span class=\"spk\" style=\"left:88%;top:30%;width:18px;height:18px\"></span><span class=\"spk\" style=\"left:30%;top:86%;width:16px;height:16px\"></span><span class=\"spk\" style=\"left:64%;top:14%;width:20px;height:20px\"></span>\n  <svg style=\"position:absolute;right:18%;top:30%;width:120px;filter:drop-shadow(0 8px 14px rgba(31,79,191,.35))\" viewBox=\"0 0 100 100\"><defs><linearGradient id=\"c\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0\" stop-color=\"#fff\"/><stop offset=\".5\" stop-color=\"#9db4ff\"/><stop offset=\"1\" stop-color=\"#1f4fbf\"/></linearGradient></defs><polygon points=\"50,3 62,37 98,38 69,59 80,95 50,74 20,95 31,59 2,38 38,37\" fill=\"url(#c)\" stroke=\"#fff\" stroke-width=\"2\"/></svg>\n  <svg style=\"position:absolute;right:8%;top:52%;width:80px\" viewBox=\"0 0 100 100\"><polygon points=\"50,3 62,37 98,38 69,59 80,95 50,74 20,95 31,59 2,38 38,37\" fill=\"#ff5fae\" stroke=\"#fff\" stroke-width=\"3\"/></svg>", "mark": "Y2K"}, "2010s": {"label": "2010s", "font": "https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;0,700;0,800;1,800;1,900&family=Pacifico&family=Open+Sans:wght@400;600;700&display=swap", "deco": "<span class=\"s10 a\"></span><span class=\"s10 b\"></span><span class=\"s10 c\"></span><span class=\"d10 a\"></span><span class=\"d10 b\"></span>", "mark": "'10s"}};
+function setTheme(t){if(!THEMES[t])t='50s';document.body.className='t-'+t;document.getElementById('themefont').href=THEMES[t].font;
+ document.querySelector('.hero .deco').innerHTML=THEMES[t].deco+'<span class="eramark">'+THEMES[t].mark+'</span>';document.getElementById('themeBtn').textContent='Theme: '+THEMES[t].label+' ▾';
+ document.querySelectorAll('[data-theme]').forEach(a=>a.classList.toggle('on',a.dataset.theme===t));
+ document.getElementById('backlink').href='/shopify-studio/'+t;}
+document.addEventListener('click',e=>{const a=e.target.closest('[data-theme]');if(a){e.preventDefault();const u=new URL(location);u.searchParams.set('theme',a.dataset.theme);history.replaceState(null,'',u);setTheme(a.dataset.theme);document.getElementById('themes').classList.remove('open')}});
+setTheme(new URLSearchParams(location.search).get('theme')||'50s');
+</script>
+</body></html>
