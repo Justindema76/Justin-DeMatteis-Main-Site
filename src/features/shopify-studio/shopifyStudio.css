@@ -201,3 +201,9 @@
 .ssp.ssp.ssp.ssp:is(.ssp-case-50s,.ssp-case-80s,.ssp-case-80s-memphis,.ssp-case-90s) .chero .lead,
 .ssp.ssp.ssp.ssp:is(.ssp-case-50s,.ssp-case-80s,.ssp-case-80s-memphis,.ssp-case-90s) .chero .crumb{border-radius:0!important}
 .ssp.ssp.ssp.ssp.ssp-case-2010s .chero .lead{border-radius:6px!important}
+/* Intro bubble only on 60s, 70s and 80s; the others go back to how they were */
+.ssp.ssp.ssp.ssp.ssp:is(.ssp-case-50s,.ssp-case-80s-memphis,.ssp-case-90s,.ssp-case-2000s,.ssp-case-2010s) .chero .lead{display:block!important;background:none!important;padding:0!important;border-radius:0!important;font-weight:500!important}
+.ssp.ssp.ssp.ssp.ssp:is(.ssp-case-50s,.ssp-case-2000s) .chero .lead{color:#e8f4f3!important;-webkit-text-fill-color:#e8f4f3!important}
+.ssp.ssp.ssp.ssp.ssp:is(.ssp-case-80s-memphis,.ssp-case-90s,.ssp-case-2010s) .chero .lead{color:var(--ink)!important;-webkit-text-fill-color:var(--ink)!important}
+.ssp.ssp.ssp.ssp.ssp:is(.ssp-case-50s,.ssp-case-80s-memphis,.ssp-case-90s,.ssp-case-2000s,.ssp-case-2010s) .chero .crumb{display:block!important;background:none!important;padding:0!important}
+.ssp.ssp.ssp.ssp.ssp:is(.ssp-case-50s,.ssp-case-2000s) .chero .crumb,.ssp.ssp.ssp.ssp.ssp:is(.ssp-case-50s,.ssp-case-2000s) .chero .crumb a{color:#fff!important}
