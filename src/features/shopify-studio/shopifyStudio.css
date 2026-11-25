@@ -183,3 +183,16 @@
 /* Tighter gaps between sections */
 .ssp.ssp section{padding-top:64px!important;padding-bottom:64px!important}
 @media (max-width:600px){.ssp.ssp section{padding-top:40px!important;padding-bottom:40px!important}.ssp.ssp .sh{margin-bottom:22px!important}}
+
+/* Case study banner: intro text on a solid panel, bold, so it never fights the background */
+.ssp.ssp.ssp .chero .lead{display:inline-block;padding:14px 18px!important;border-radius:12px;font-weight:600!important;text-shadow:none!important;background:var(--cream)!important;color:var(--ink)!important;-webkit-text-fill-color:var(--ink)!important}
+.ssp.ssp.ssp:is(.ssp-case-50s,.ssp-case-80s,.ssp-case-2000s) .chero .lead{background:rgba(12,10,34,.92)!important;color:#fff!important;-webkit-text-fill-color:#fff!important}
+.ssp.ssp.ssp.ssp-case-60s .chero .lead{color:#3b1660!important;-webkit-text-fill-color:#3b1660!important}
+.ssp.ssp.ssp.ssp-case-70s .chero .lead{color:#4a2c1d!important;-webkit-text-fill-color:#4a2c1d!important}
+.ssp.ssp.ssp .chero .crumb{display:inline-block;padding:4px 10px;border-radius:8px;background:var(--cream);color:var(--ink)!important}
+.ssp.ssp.ssp .chero .crumb a{color:var(--ink)!important}
+.ssp.ssp.ssp:is(.ssp-case-50s,.ssp-case-80s,.ssp-case-2000s) .chero .crumb{background:rgba(12,10,34,.92)}
+.ssp.ssp.ssp:is(.ssp-case-50s,.ssp-case-80s,.ssp-case-2000s) .chero .crumb,.ssp.ssp.ssp:is(.ssp-case-50s,.ssp-case-80s,.ssp-case-2000s) .chero .crumb a{color:#fff!important}
+/* Case banner intro bubble: white on every era */
+.ssp.ssp.ssp.ssp .chero .lead{background:#fff!important}
+.ssp.ssp.ssp.ssp:is(.ssp-case-50s,.ssp-case-80s,.ssp-case-2000s) .chero .lead{color:#1c1c2e!important;-webkit-text-fill-color:#1c1c2e!important}
