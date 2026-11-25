@@ -167,12 +167,12 @@ function wireForm(root, era) {
         email: String(data.get('email') || '').trim(),
         website,
         service: 'shopify_ecommerce',
-        message: `Free Shopify store review request.\nStore: ${website}\nBiggest headache: ${headache}\nSeen on: Shopify Studio (${era} style)`,
+        message: `Free Shopify audit request.\nStore: ${website}\nBiggest headache: ${headache}\nSeen on: Shopify Studio (${era} style)`,
         contact_consent: data.get('contact_consent') === 'on',
         fax_number: String(data.get('fax_number') || ''),
         ...tracking(),
       });
-      form.innerHTML = '<h3>Got it, thank you.</h3><p class="sub">Your store review will be in your inbox within 48 hours.</p>';
+      form.innerHTML = '<h3>Got it, thank you.</h3><p class="sub">Your free audit will be in your inbox within 48 hours.</p>';
     } catch (error) {
       button.disabled = false;
       msg.textContent = error?.message || 'Unable to send right now. Please try again.';
