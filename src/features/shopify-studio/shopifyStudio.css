@@ -153,3 +153,5 @@
 .ssp.ssp .pkg>.btn{white-space:nowrap!important;font-size:14px!important;padding:14px 12px!important;line-height:1.2!important}
 /* 60s: banner writing in purple */
 .ssp.ssp.ssp.ssp-studio-60s .hero .lead{color:#3b1660!important;-webkit-text-fill-color:#3b1660!important;text-shadow:none!important;font-weight:600!important}
+/* 60s phones: background matches the desktop banner colour */
+@media (max-width:600px){.ssp.ssp.ssp.ssp-studio-60s .hero,.ssp.ssp.ssp.ssp-studio-60s .hero>.bg{background:#f6dbb0!important}}
