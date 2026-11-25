@@ -121,3 +121,6 @@
 /* 80s neon: white card headings, brighter 3rd card */
 .ssp.ssp.ssp.ssp:is(.ssp-studio-80s,.ssp-case-80s) .mcard .top :is(h3,.osw,span){color:#fff!important;-webkit-text-fill-color:#fff!important}
 .ssp:is(.ssp-studio-80s,.ssp-case-80s) .mcard:nth-child(3) .top{background:#2fb6ff!important}
+/* 80s neon: lighter purple JustConsignIn card */
+.ssp.ssp:is(.ssp-studio-80s,.ssp-case-80s) .jci{background:linear-gradient(160deg,#7a3cff,#5a2bd6)!important}
+.ssp.ssp:is(.ssp-studio-80s,.ssp-case-80s) .jci li{background:rgba(255,255,255,.16)!important}
