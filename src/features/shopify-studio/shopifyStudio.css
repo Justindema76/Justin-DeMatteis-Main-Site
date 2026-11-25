@@ -117,3 +117,7 @@
   .ssp.ssp .res{grid-template-columns:minmax(0,1fr)!important}
   .ssp.ssp .res>div{min-width:0;box-sizing:border-box;max-width:100%}
 }
+
+/* 80s neon: white card headings, brighter 3rd card */
+.ssp.ssp.ssp.ssp:is(.ssp-studio-80s,.ssp-case-80s) .mcard .top :is(h3,.osw,span){color:#fff!important;-webkit-text-fill-color:#fff!important}
+.ssp:is(.ssp-studio-80s,.ssp-case-80s) .mcard:nth-child(3) .top{background:#2fb6ff!important}
