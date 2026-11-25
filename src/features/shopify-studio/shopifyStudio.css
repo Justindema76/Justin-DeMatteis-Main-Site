@@ -15,3 +15,19 @@
 .ss-era-switch li button.on{background:#fff;color:#111}
 @media (max-width:600px){.ss-era-switch{bottom:80px;left:12px}.ss-era-toggle{padding:8px 13px;font-size:13px}}
 .ssp section,.ssp [id]{scroll-margin-top:96px}
+
+/* White cards and white form on every era */
+.ssp .tick,.ssp .mcard,.ssp .oa,.ssp .feat,.ssp .pkg:not(.pop),.ssp .faq,.ssp .grp,.ssp .rule,.ssp .howc,.ssp .ba2>div,.ssp .res>div:not(.main),.ssp .quote,.ssp .badgecard,.ssp .wins div,.ssp .step{background:#fff!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+.ssp .audit form,.ssp form[data-ss-review]{background:#fff!important}
+.ssp form[data-ss-review] input:not([type=checkbox]),.ssp form[data-ss-review] select{background:#fff!important}
+/* 80s neon: dark text on the now-white cards and form */
+:is(.ssp-studio-80s,.ssp-case-80s) :is(.tick,.mcard,.oa,.pkg:not(.pop),.faq,.feat,.step,form[data-ss-review]) :is(p,li,h3,h4,b,span:not(.osw):not(.badge):not(.ic),summary,label,div:not(.score):not(.score div):not(.top)){color:#1a1238!important;-webkit-text-fill-color:#1a1238!important}
+:is(.ssp-studio-80s,.ssp-case-80s) :is(.score div,.score div *){-webkit-text-fill-color:initial!important}
+:is(.ssp-studio-80s,.ssp-case-80s) form[data-ss-review] :is(input,select){color:#1a1238!important;border-color:#7a3cff!important}
+:is(.ssp-studio-80s,.ssp-case-80s) .mcard .top *{color:#fff!important;-webkit-text-fill-color:#fff!important}
+.ssp .pkg .pr b{white-space:nowrap}
+/* Smaller review quote and goal line on every era */
+.ssp .quote p{font-size:21px!important;line-height:1.45!important}
+.ssp .quote div[style*="font-size:24px"]{font-size:18px!important}
+.ssp .goal blockquote{font-size:28px!important}
+@media (max-width:700px){.ssp .quote p{font-size:18px!important}.ssp .goal blockquote{font-size:22px!important}}
