@@ -191,6 +191,9 @@ export default function ShopifyStudioPage({ kind = 'studio' }) {
   const [page, setPage] = useState({ html: '', css: '' });
   const [menuOpen, setMenuOpen] = useState(false);
   const [themeSlot, setThemeSlot] = useState(null);
+  const [burgerSlot, setBurgerSlot] = useState(null);
+  const [navLinks, setNavLinks] = useState([]);
+  const [burgerOpen, setBurgerOpen] = useState(false);
 
   useEffect(() => {
     let live = true;
@@ -259,11 +262,21 @@ export default function ShopifyStudioPage({ kind = 'studio' }) {
       nav.insertBefore(slot, nav.querySelector('.btn') || null);
     }
     setThemeSlot(slot);
+    // Phone menu: hamburger in the header with the same links
+    let burger = null;
+    const headerWrap = root.querySelector('header .wrap');
+    if (headerWrap && nav) {
+      burger = document.createElement('span');
+      burger.className = 'ss-burger-slot';
+      headerWrap.appendChild(burger);
+      setNavLinks([...nav.querySelectorAll(':scope > a')].map(a => ({ href: a.getAttribute('href'), label: a.textContent.trim(), cta: a.classList.contains('btn') })));
+    }
+    setBurgerSlot(burger);
     const fixTimer = setTimeout(() => { stripGlows(root); fixFaintText(root); }, 400);
     const hash = window.location.hash.slice(1);
     if (hash) requestAnimationFrame(() => document.getElementById(hash)?.scrollIntoView());
     else window.scrollTo(0, 0);
-    return () => { offSlider(); offForm(); root.removeEventListener('click', onClick); slot?.remove(); setThemeSlot(null); clearTimeout(fixTimer); };
+    return () => { offSlider(); offForm(); root.removeEventListener('click', onClick); slot?.remove(); setThemeSlot(null); burger?.remove(); setBurgerSlot(null); setBurgerOpen(false); clearTimeout(fixTimer); };
   }, [html, era, navigate]);
 
   useEffect(() => {
@@ -275,6 +288,7 @@ export default function ShopifyStudioPage({ kind = 'studio' }) {
 
   function switchEra(key) {
     setMenuOpen(false);
+    setBurgerOpen(false);
     navigate(kind === 'case' ? `/shopify-studio/jill-and-the-beanstalk/${key}` : `/shopify-studio/${key}`);
   }
 
@@ -283,9 +297,20 @@ export default function ShopifyStudioPage({ kind = 'studio' }) {
   return <>
     <style>{page.css}</style>
     <div ref={rootRef} className={`ssp ssp-${pageKey}`} dangerouslySetInnerHTML={{ __html: html }} />
+    {burgerSlot && createPortal(<>
+      <button type="button" className="ss-burger" aria-label="Menu" aria-expanded={burgerOpen} onClick={() => setBurgerOpen(open => !open)}>{burgerOpen ? '✕' : '☰'}</button>
+      {burgerOpen && <div className="ss-burger-panel" onClick={event => { if (event.target.closest('a')) setBurgerOpen(false); }}>
+        {navLinks.filter(link => !link.cta).map(link => <a key={link.href + link.label} href={link.href}>{link.label}</a>)}
+        <a href={`/shopify-studio/demo-store?theme=${era}`} data-hard="">Demo store</a>
+        <div className="ss-burger-themes"><b>🎨 Try a theme</b>
+          <div>{enabledEras.map(item => <button type="button" key={item.key} className={item.key === era ? 'on' : ''} onClick={() => switchEra(item.key)}>{item.label}</button>)}</div>
+        </div>
+        {navLinks.filter(link => link.cta).map(link => <a key={link.href} className="ss-burger-cta" href={link.href}>{link.label}</a>)}
+      </div>}
+    </>, burgerSlot)}
     {themeSlot && createPortal(<a className="ss-demo-link" href={`/shopify-studio/demo-store?theme=${era}`} data-hard="">Demo store</a>, themeSlot)}
     {themeSlot && settings.showEraSwitcher && enabledEras.length > 1 && createPortal(<span className="ss-themes">
-      <a href="#" role="button" aria-expanded={menuOpen} onClick={event => { event.preventDefault(); event.stopPropagation(); setMenuOpen(open => !open); }}>Themes ▾</a>
+      <a href="#" role="button" aria-expanded={menuOpen} onClick={event => { event.preventDefault(); event.stopPropagation(); setMenuOpen(open => !open); }}>🎨 Try a theme ▾</a>
       {menuOpen && <ul role="menu">
         {enabledEras.map(item => <li key={item.key}>
           <button type="button" role="menuitem" className={item.key === era ? 'on' : ''} onClick={() => switchEra(item.key)}>{item.label}</button>
