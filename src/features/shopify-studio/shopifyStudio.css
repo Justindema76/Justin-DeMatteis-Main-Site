@@ -207,3 +207,10 @@
 .ssp.ssp.ssp.ssp.ssp:is(.ssp-case-80s-memphis,.ssp-case-90s,.ssp-case-2010s) .chero .lead{color:var(--ink)!important;-webkit-text-fill-color:var(--ink)!important}
 .ssp.ssp.ssp.ssp.ssp:is(.ssp-case-50s,.ssp-case-80s-memphis,.ssp-case-90s,.ssp-case-2000s,.ssp-case-2010s) .chero .crumb{display:block!important;background:none!important;padding:0!important}
 .ssp.ssp.ssp.ssp.ssp:is(.ssp-case-50s,.ssp-case-2000s) .chero .crumb,.ssp.ssp.ssp.ssp.ssp:is(.ssp-case-50s,.ssp-case-2000s) .chero .crumb a{color:#fff!important}
+/* Phones: case study banner works like the studio banner. Shapes fade out before the writing, no bubble. */
+@media (max-width:600px){
+  .ssp.ssp .chero .mdeco{-webkit-mask-image:linear-gradient(#000 0,#000 22%,transparent 40%);mask-image:linear-gradient(#000 0,#000 22%,transparent 40%)}
+  .ssp.ssp.ssp.ssp.ssp.ssp .chero .lead{display:block!important;background:none!important;padding:0!important;border-radius:0!important}
+  .ssp.ssp.ssp.ssp.ssp.ssp:is(.ssp-case-50s,.ssp-case-80s,.ssp-case-2000s) .chero .lead{color:#fff!important;-webkit-text-fill-color:#fff!important}
+  .ssp.ssp.ssp.ssp.ssp.ssp .chero .crumb{display:block!important;background:none!important;padding:0!important}
+}

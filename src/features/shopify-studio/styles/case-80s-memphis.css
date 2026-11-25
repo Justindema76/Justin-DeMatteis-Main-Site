@@ -505,3 +505,4 @@
 .ssp-case-80s-memphis .chero>.wrap{position:relative;z-index:2}
 .ssp-case-80s-memphis .chero .bg{position:absolute!important;inset:0!important;z-index:0}
 .ssp-case-80s-memphis .chero .bg::after{display:none!important}
+.ssp-case-80s-memphis .chero .mdeco{position:absolute;inset:0;pointer-events:none;z-index:1}

@@ -493,3 +493,4 @@
 .ssp-case-70s .chero>.wrap{position:relative;z-index:2}
 .ssp-case-70s .chero .bg{position:absolute!important;inset:0!important;z-index:0}
 .ssp-case-70s .chero .bg::after{display:none!important}
+.ssp-case-70s .chero .mdeco{position:absolute;inset:0;pointer-events:none;z-index:1}
