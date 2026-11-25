@@ -54,6 +54,22 @@ function navItems(config) {
   }).filter(item => item.label && item.url);
 }
 
+// Shopify Studio always shows in the main menu (before Contact) unless the header
+// settings already link to it.
+const STUDIO_NAV = {
+  label: 'Shopify Studio',
+  url: '/shopify-studio',
+  allLabel: 'Shopify Studio',
+  children: [{ label: 'Jill & The Beanstalk case study', url: '/shopify-studio/jill-and-the-beanstalk' }],
+};
+
+function withStudio(items) {
+  if (items.some(item => item.url?.startsWith('/shopify-studio'))) return items;
+  const contact = items.findIndex(item => item.url === '/contact');
+  const at = contact === -1 ? items.length : contact;
+  return [...items.slice(0, at), STUDIO_NAV, ...items.slice(at)];
+}
+
 function SocialIcon({ network }) {
   if (network === 'linkedin') return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 8.3H3.2V21h3.4V8.3ZM4.9 3A2 2 0 1 0 4.9 7a2 2 0 0 0 0-4ZM21 13.7c0-3.8-2-5.6-4.7-5.6-2.2 0-3.2 1.2-3.7 2v-1.8H9.2V21h3.4v-6.3c0-1.7.3-3.3 2.4-3.3 2 0 2 1.9 2 3.4V21H21v-7.3Z"/></svg>;
   if (network === 'github') return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.5 2 2 6.6 2 12.2c0 4.5 2.9 8.3 6.8 9.6.5.1.7-.2.7-.5v-1.9c-2.8.6-3.4-1.2-3.4-1.2-.4-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 0 1.5 1.1 1.5 1.1.9 1.6 2.4 1.1 3 .9.1-.7.3-1.1.6-1.3-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.8 1a9.2 9.2 0 0 1 5 0c2-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.8v2.7c0 .3.2.6.7.5A10.2 10.2 0 0 0 22 12.2C22 6.6 17.5 2 12 2Z"/></svg>;
@@ -111,7 +127,7 @@ export default function Layout() {
     if (active instanceof HTMLElement) active.blur();
   };
 
-  const links = useMemo(() => navItems(header), [header]);
+  const links = useMemo(() => withStudio(navItems(header)), [header]);
   const activeSocial = useMemo(
     () => SOCIAL_NETWORKS.filter(network => social?.[network.key]?.url && social?.[network.key]?.enabled !== false),
     [social]
