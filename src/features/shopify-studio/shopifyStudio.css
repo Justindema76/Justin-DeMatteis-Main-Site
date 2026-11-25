@@ -125,3 +125,31 @@
 .ssp.ssp:is(.ssp-studio-80s,.ssp-case-80s) .jci{background:linear-gradient(160deg,#7a3cff,#5a2bd6)!important}
 /* 80s neon: the two white package cards get solid blue buttons */
 .ssp.ssp:is(.ssp-studio-80s) .pkg:not(.pop) .btn{background:#2fb6ff!important;color:#fff!important;-webkit-text-fill-color:#fff!important;border-color:#2fb6ff!important}
+
+/* 80s neon: no outer glow anywhere */
+.ssp.ssp:is(.ssp-studio-80s,.ssp-case-80s) *:not(.btn){text-shadow:none!important}
+.ssp.ssp:is(.ssp-studio-80s,.ssp-case-80s) :is(header,.mcard,.feat,.score div,.pkg,.step .n,.audit,.rule i,.sign,.tick,.jci,.quote,.badgecard,.bwin,.res>div,.ba2>div,form,.oa,.faq,.si,.tags span,.tagsrow span){box-shadow:none!important}
+.ssp.ssp:is(.ssp-studio-80s,.ssp-case-80s) :is(.signwrap,.spark,.sign){filter:none!important}
+.ssp.ssp:is(.ssp-studio-80s,.ssp-case-80s) .hero svg{filter:none!important}
+.ssp.ssp:is(.ssp-studio-80s,.ssp-case-80s) .hero svg *{filter:none!important}
+.ssp.ssp:is(.ssp-studio-80s,.ssp-case-80s) .btn{text-shadow:none!important;box-shadow:5px 5px 0 var(--chrome)!important}
+.ssp.ssp:is(.ssp-studio-80s,.ssp-case-80s) .btn:not(.red){box-shadow:none!important}
+/* Phones: background shapes fade out before the intro text */
+@media (max-width:600px){
+  .ssp.ssp .hero .mdeco{-webkit-mask-image:linear-gradient(#000 0,#000 28%,transparent 46%);mask-image:linear-gradient(#000 0,#000 28%,transparent 46%)}
+  .ssp.ssp .hero .lead{text-shadow:none!important}
+}
+
+/* Package buttons all sit on the same line */
+.ssp.ssp .pk{align-items:stretch!important}
+.ssp.ssp .pkg{display:flex!important;flex-direction:column!important}
+.ssp.ssp .pkg>.btn{margin-top:auto!important;align-self:stretch;text-align:center}
+.ssp.ssp .pkg.pop{transform:none!important}
+/* Phones: the two banner buttons side by side */
+@media (max-width:600px){
+  .ssp.ssp .hero .ctas{flex-wrap:nowrap!important;gap:10px!important}
+  .ssp.ssp .hero .ctas .btn{flex:1 1 0!important;padding:12px 10px!important;font-size:13px!important;white-space:normal!important;text-align:center;justify-content:center}
+}
+.ssp.ssp .pkg>.btn{white-space:nowrap!important;font-size:14px!important;padding:14px 12px!important;line-height:1.2!important}
+/* 60s: banner writing in purple */
+.ssp.ssp.ssp.ssp-studio-60s .hero .lead{color:#3b1660!important;-webkit-text-fill-color:#3b1660!important;text-shadow:none!important;font-weight:600!important}

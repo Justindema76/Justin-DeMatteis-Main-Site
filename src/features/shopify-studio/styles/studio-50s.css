@@ -245,3 +245,8 @@
 .ssp-studio-50s .pains-cta{display:flex;gap:16px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:34px;font-weight:600;font-size:16.5px}
 @media(max-width:980px){.ssp-studio-50s .tix.pains{grid-template-columns:1fr 1fr!important}}
 @media(max-width:600px){.ssp-studio-50s .tix.pains{grid-template-columns:1fr!important}}
+@media (max-width:600px){.ssp-studio-50s .hero .bg{position:absolute!important;inset:0!important;background:radial-gradient(circle at 82% 18%,rgba(212,42,60,.45),transparent 40%),radial-gradient(circle at 12% 88%,rgba(39,178,172,.55),transparent 45%),linear-gradient(135deg,#0a3f43,#0f5f63 60%,#0a3f43)!important}
+.ssp-studio-50s .hero .bg::after{content:""!important;position:absolute!important;inset:0!important;background:radial-gradient(ellipse 52% 60% at 50% 50%,rgba(10,40,44,.82),rgba(10,40,44,.45) 60%,rgba(10,40,44,.15))!important}
+.ssp-studio-50s .hero .bg::after{display:none!important}}
+.ssp-studio-50s .hero .mdeco{position:absolute;inset:0;pointer-events:none;display:none}
+@media (max-width:600px){.ssp-studio-50s .hero .mdeco{display:block}}

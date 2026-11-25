@@ -47,6 +47,68 @@ function tracking() {
   };
 }
 
+
+// Any text that is too faint against its own solid background gets darker or lighter
+// (same colour, different shade) until it reads. Skips text over pictures and gradient text.
+function parseRgb(value) {
+  const m = String(value || '').match(/[\d.]+/g) || [];
+  return [Number(m[0] || 0), Number(m[1] || 0), Number(m[2] || 0), m[3] === undefined ? 1 : Number(m[3])];
+}
+function luminance([r, g, b]) {
+  const f = c => { c /= 255; return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4; };
+  return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b);
+}
+function contrast(a, b) { const x = luminance(a), y = luminance(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); }
+function shade([r, g, b], t) { // t<0 darker, t>0 lighter
+  return t < 0 ? [r * (1 + t), g * (1 + t), b * (1 + t)].map(Math.round) : [r + (255 - r) * t, g + (255 - g) * t, b + (255 - b) * t].map(Math.round);
+}
+function fixFaintText(root) {
+  const win = root.ownerDocument.defaultView;
+  root.querySelectorAll('h1,h2,h3,h4,h5,p,span,b,strong,em,small,li,a,label,summary,div').forEach(el => {
+    if (!el.offsetWidth || ![...el.childNodes].some(n => n.nodeType === 3 && n.textContent.trim())) return;
+    if (el.closest('.hero, .chero')) return; // banners sit on pictures/shapes, handled in CSS
+    const cs = win.getComputedStyle(el);
+    if (/rgba\(0, 0, 0, 0\)/.test(cs.webkitTextFillColor || '')) return;
+    const text = parseRgb(cs.webkitTextFillColor || cs.color);
+    let node = el, bg = null;
+    while (node && node !== root.parentElement) {
+      const ncs = win.getComputedStyle(node);
+      if (ncs.backgroundImage && ncs.backgroundImage !== 'none') return;
+      const c = parseRgb(ncs.backgroundColor);
+      if (c[3] > 0.6) { bg = c; break; }
+      node = node.parentElement;
+    }
+    if (!bg || contrast(text, bg) >= 4.5) return;
+    const dir = luminance(bg) > 0.4 ? -1 : 1;
+    let best = text;
+    for (let t = 0.08; t <= 1; t += 0.08) { best = shade(text, dir * t); if (contrast(best, bg) >= 4.5) break; }
+    const css = `rgb(${best.join(',')})`;
+    el.style.setProperty('color', css, 'important');
+    el.style.setProperty('-webkit-text-fill-color', css, 'important');
+  });
+}
+
+
+// No glows: drop any blurred text-shadow / box-shadow and drop-shadow filters on the page.
+function stripGlows(root) {
+  const win = root.ownerDocument.defaultView;
+  const blurred = part => { const nums = part.replace(/rgba?\([^)]*\)|#[0-9a-f]+|[a-z]+/gi, ' ').trim().split(/\s+/).map(parseFloat); return (nums[2] || 0) > 0; };
+  const split = value => value.split(/,(?![^(]*\))/).map(v => v.trim());
+  root.querySelectorAll('*').forEach(el => {
+    if (el.closest('svg')) return;
+    const cs = win.getComputedStyle(el);
+    if (cs.textShadow && cs.textShadow !== 'none') {
+      const keep = split(cs.textShadow).filter(p => !blurred(p));
+      el.style.setProperty('text-shadow', keep.length ? keep.join(', ') : 'none', 'important');
+    }
+    if (cs.boxShadow && cs.boxShadow !== 'none') {
+      const keep = split(cs.boxShadow).filter(p => p.includes('inset') || !blurred(p));
+      el.style.setProperty('box-shadow', keep.length ? keep.join(', ') : 'none', 'important');
+    }
+    if (cs.filter && cs.filter.includes('drop-shadow')) el.style.setProperty('filter', 'none', 'important');
+  });
+}
+
 // Before/after slider on the case study.
 function wireSlider(root) {
   const cmp = root.querySelector('#cmp');
@@ -197,10 +259,11 @@ export default function ShopifyStudioPage({ kind = 'studio' }) {
       nav.insertBefore(slot, nav.querySelector('.btn') || null);
     }
     setThemeSlot(slot);
+    const fixTimer = setTimeout(() => { stripGlows(root); fixFaintText(root); }, 400);
     const hash = window.location.hash.slice(1);
     if (hash) requestAnimationFrame(() => document.getElementById(hash)?.scrollIntoView());
     else window.scrollTo(0, 0);
-    return () => { offSlider(); offForm(); root.removeEventListener('click', onClick); slot?.remove(); setThemeSlot(null); };
+    return () => { offSlider(); offForm(); root.removeEventListener('click', onClick); slot?.remove(); setThemeSlot(null); clearTimeout(fixTimer); };
   }, [html, era, navigate]);
 
   useEffect(() => {
