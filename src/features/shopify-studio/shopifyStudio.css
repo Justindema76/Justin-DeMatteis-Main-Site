@@ -123,3 +123,5 @@
 .ssp:is(.ssp-studio-80s,.ssp-case-80s) .mcard:nth-child(3) .top{background:#2fb6ff!important}
 /* 80s neon: lighter purple JustConsignIn card */
 .ssp.ssp:is(.ssp-studio-80s,.ssp-case-80s) .jci{background:linear-gradient(160deg,#7a3cff,#5a2bd6)!important}
+/* 80s neon: the two white package cards get solid blue buttons */
+.ssp.ssp:is(.ssp-studio-80s) .pkg:not(.pop) .btn{background:#2fb6ff!important;color:#fff!important;-webkit-text-fill-color:#fff!important;border-color:#2fb6ff!important}
