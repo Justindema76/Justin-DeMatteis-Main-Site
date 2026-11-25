@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import ServiceRequestForm from './ServiceRequestForm';
 import HiringContactForm from './HiringContactForm';
 
@@ -306,13 +306,19 @@ function ProjectCard(p) {
 }
 
 function GenericBlock({ type, p }) {
+  const location = useLocation();
+  const isHome = location.pathname === '/';
   if (type === 'HeroBlock') {
     const primaryButtonText = p.primaryButtonText ?? p.buttonText ?? '';
     const primaryButtonUrl = p.primaryButtonUrl ?? p.buttonUrl ?? '#';
-    const hasActions = Boolean(primaryButtonText || p.secondaryButtonText);
+    // Homepage banner also links to Shopify Studio (can be overridden with tertiaryButtonText/Url).
+    const tertiaryButtonText = p.tertiaryButtonText ?? (isHome ? 'Shopify Studio →' : '');
+    const tertiaryButtonUrl = p.tertiaryButtonUrl || '/shopify-studio';
+    const hasActions = Boolean(primaryButtonText || p.secondaryButtonText || tertiaryButtonText);
     const actions = hasActions ? <div className="shared-showcase-actions cms-hero-actions">
       {primaryButtonText && <SmartLink className="shared-btn shared-btn-primary" to={primaryButtonUrl}>{primaryButtonText}</SmartLink>}
       {p.secondaryButtonText && <SmartLink className="shared-btn shared-btn-secondary" to={p.secondaryButtonUrl || '#'}>{p.secondaryButtonText}</SmartLink>}
+      {tertiaryButtonText && <SmartLink className="shared-btn shared-btn-shopify" to={tertiaryButtonUrl}>{tertiaryButtonText}</SmartLink>}
     </div> : null;
 
     return <section id={p.id || undefined} className={`cms-hero showcase-style-hero theme-${p.background || 'light'} ${p.image ? 'with-media' : 'without-media'}`}>
