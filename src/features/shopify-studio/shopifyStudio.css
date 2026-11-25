@@ -179,3 +179,4 @@
 }
 .ssp.ssp .pkg>.btn{font-size:16px!important;padding:13px 12px!important}
 .ssp.ssp form[data-ss-review] button[type=submit]{font-size:17px!important}
+@media (max-width:600px){.ssp.ssp .hero .ctas .btn{white-space:nowrap!important;letter-spacing:.03em!important}}
