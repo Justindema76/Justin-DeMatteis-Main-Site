@@ -196,3 +196,8 @@
 /* Case banner intro bubble: white on every era */
 .ssp.ssp.ssp.ssp .chero .lead{background:#fff!important}
 .ssp.ssp.ssp.ssp:is(.ssp-case-50s,.ssp-case-80s,.ssp-case-2000s) .chero .lead{color:#1c1c2e!important;-webkit-text-fill-color:#1c1c2e!important}
+/* Intro bubble: see-through a little, corners match each era's own boxes */
+.ssp.ssp.ssp.ssp .chero .lead{background:rgba(255,255,255,.82)!important}
+.ssp.ssp.ssp.ssp:is(.ssp-case-50s,.ssp-case-80s,.ssp-case-80s-memphis,.ssp-case-90s) .chero .lead,
+.ssp.ssp.ssp.ssp:is(.ssp-case-50s,.ssp-case-80s,.ssp-case-80s-memphis,.ssp-case-90s) .chero .crumb{border-radius:0!important}
+.ssp.ssp.ssp.ssp.ssp-case-2010s .chero .lead{border-radius:6px!important}
