@@ -302,15 +302,15 @@ body.t-70s .hero .deco>*:not(.eramark),body.t-80s .hero .deco>*:not(.eramark){di
 </style></head><body>
 
 <div class="demo"><div class="wrap"><span><b>Demo store</b> · The same Shopify store in every era. Switch with Themes. Not a real shop.</span><a id="backlink" href="/shopify-studio">← Back to Shopify Studio</a></div></div>
-<div class="ann">Free shipping on orders over $75 · Gift wrap on every order</div>
+<div class="ann" data-t="announcement">Free shipping on orders over $75 · Gift wrap on every order</div>
 
 <header><div class="wrap">
-  <a class="logo" href="#home" data-go="home">Starlite<small>Home &amp; Gift</small></a>
+  <a class="logo" href="#home" data-go="home"><span data-t="storeName">Starlite</span><small data-t="storeTag">Home &amp; Gift</small></a>
   <nav class="main">
     <a href="#home" data-go="home">Home</a>
-    <a href="#shop" data-go="shop">Kitchen</a>
-    <a href="#shop" data-go="shop">Gifts</a>
-    <a href="#shop" data-go="shop">Sale</a>
+    <a href="#shop" data-go="shop" data-t="nav1">Kitchen</a>
+    <a href="#shop" data-go="shop" data-t="nav2">Gifts</a>
+    <a href="#shop" data-go="shop" data-t="nav3">Sale</a>
   </nav>
   <div class="hright">
     <div class="themes" id="themes">
@@ -327,10 +327,10 @@ body.t-70s .hero .deco>*:not(.eramark),body.t-80s .hero .deco>*:not(.eramark){di
   <section class="hero">
     <div class="bg"></div><div class="deco"></div>
     <div class="card">
-      <span class="script">Fresh from the counter</span>
-      <h1>Kitchen classics, made to last</h1>
-      <p>Diner mugs, malt glasses and table radios, picked by hand and shipped from our little shop on Main Street.</p>
-      <div class="row"><a class="btn" href="#shop" data-go="shop">Shop the kitchen</a><a class="btn ghost" href="#shop" data-go="shop">Gift ideas</a></div>
+      <span class="script" data-t="heroKicker">Fresh from the counter</span>
+      <h1 data-t="heroTitle">Kitchen classics, made to last</h1>
+      <p data-t="heroText">Diner mugs, malt glasses and table radios, picked by hand and shipped from our little shop on Main Street.</p>
+      <div class="row"><a class="btn" href="#shop" data-go="shop" data-t="heroBtn1">Shop the kitchen</a><a class="btn ghost" href="#shop" data-go="shop" data-t="heroBtn2">Gift ideas</a></div>
     </div>
   </section>
   <div class="perks"><div class="wrap">
@@ -341,12 +341,12 @@ body.t-70s .hero .deco>*:not(.eramark),body.t-80s .hero .deco>*:not(.eramark){di
   </div></div>
 
   <section class="block"><div class="wrap">
-    <div class="sh"><span class="script">Take a stroll</span><h2>Shop by department</h2></div>
+    <div class="sh"><span class="script">Take a stroll</span><h2 data-t="deptTitle">Shop by department</h2></div>
     <div class="depts" id="depts"></div>
   </div></section>
 
   <section class="block" style="padding-top:0"><div class="wrap">
-    <div class="sh"><span class="script">Customer favourites</span><h2>Best sellers this week</h2><p>The things people come back for.</p></div>
+    <div class="sh"><span class="script">Customer favourites</span><h2 data-t="bestTitle">Best sellers this week</h2><p>The things people come back for.</p></div>
     <div class="grid" id="best"></div>
     <div style="text-align:center;margin-top:32px"><a class="btn teal" href="#shop" data-go="shop">See everything</a></div>
   </div></section>
@@ -368,9 +368,9 @@ body.t-70s .hero .deco>*:not(.eramark),body.t-80s .hero .deco>*:not(.eramark){di
 
 <!-- ================= CATEGORY ================= -->
 <main class="page" id="shop"><div class="wrap">
-  <div class="crumbs"><a href="#home" data-go="home">Home</a> / Kitchen &amp; Diner</div>
+  <div class="crumbs"><a href="#home" data-go="home">Home</a> / <span data-t="collectionTitle">Kitchen &amp; Diner</span></div>
   <div class="cathead">
-    <div><span class="script">The counter collection</span><h1>Kitchen &amp; Diner</h1><p>Everything for a kitchen with a little chrome and a lot of personality. 24 products.</p></div>
+    <div><span class="script" data-t="collectionKicker">The counter collection</span><h1 data-t="collectionTitle">Kitchen &amp; Diner</h1><p data-t="collectionText">Everything for a kitchen with a little chrome and a lot of personality. 24 products.</p></div>
     <div class="sort">Sort by <select><option>Best selling</option><option>Price, low to high</option><option>Price, high to low</option><option>Newest</option></select></div>
   </div>
   <div class="catwrap">
@@ -400,17 +400,17 @@ body.t-70s .hero .deco>*:not(.eramark),body.t-80s .hero .deco>*:not(.eramark){di
 
 <!-- ================= PRODUCT ================= -->
 <main class="page" id="product"><div class="wrap">
-  <div class="crumbs"><a href="#home" data-go="home">Home</a> / <a href="#shop" data-go="shop">Kitchen &amp; Diner</a> / Chrome Table Radio</div>
+  <div class="crumbs"><a href="#home" data-go="home">Home</a> / <a href="#shop" data-go="shop" data-t="collectionTitle">Kitchen &amp; Diner</a> / <span data-p="t">Chrome Table Radio</span></div>
   <div class="pdp">
     <div class="gal">
       <div class="main"><span class="badge new">New</span><span id="pmain"></span></div>
       <div class="thumbs" id="pthumbs"></div>
     </div>
     <div class="info">
-      <small>Starlite Originals</small>
-      <h1>Chrome Table Radio</h1>
+      <small data-p="v">Starlite Originals</small>
+      <h1 data-p="t">Chrome Table Radio</h1>
       <div class="rate"><span class="stars">★★★★★</span> 4.9 · 128 reviews</div>
-      <div class="price">$89.00 <s>$109.00</s></div>
+      <div class="price"><span data-p="p">$89.00</span> <s data-p="was">$109.00</s></div>
       <div class="note">or 4 payments of $22.25 · taxes included</div>
       <div class="opt"><h4>Colour: Cherry Red</h4><div class="sw"><i class="on" style="background:#d42a3c"></i><i style="background:#1d9c97"></i><i style="background:#f6b8c5"></i><i style="background:#fbf1dc"></i></div></div>
       <div class="opt"><h4>Connection</h4><div class="sizes"><span class="on">Bluetooth</span><span>AM / FM</span><span>Both</span></div></div>
@@ -468,22 +468,32 @@ const P=[
  {k:'plate',t:'Blue Plate Special Dish',v:'Main Street Pottery',p:'$19.00',b:'',r:63}
 ];
 // Pictures: admin (Website > Shopify Studio > Demo store pictures) can swap any of these.
-let PHOTOS={},HEROES={};
+let PHOTOS={},HEROES={},TEXT={};
+P.forEach((x,i)=>x.i=i);
+const img=u=>`<img class="ph" src="${esc(u)}" alt="" loading="lazy">`;
+const ppic=x=>PHOTOS['p'+x.i]?img(PHOTOS['p'+x.i]):pic(x.k);
+let DEPTS=[['mug','Kitchen'],['glass','Glassware'],['radio','Radios'],['jukebox','Music'],['apron','Linens']];
+const escH=t=>String(t).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+function applyText(){document.querySelectorAll('[data-t]').forEach(el=>{if(!el.dataset.orig)el.dataset.orig=el.innerHTML;const v=TEXT[el.dataset.t];el.innerHTML=v?escH(v):el.dataset.orig});
+ const x=P[0];document.querySelectorAll('[data-p]').forEach(el=>{const v=x[el.dataset.p]||'';el.innerHTML=v;el.style.display=v?'':'none'});}
 const esc=u=>String(u).replace(/["<>]/g,'');
 const pic=k=>PHOTOS[k]?`<img class="ph" src="${esc(PHOTOS[k])}" alt="" loading="lazy">`:ART[k];
 function render(){
-const card=x=>`<a class="pcard" href="#product" data-go="product"><div class="im" style="background:${BG[x.k]}">${x.b?`<span class="badge ${x.b==='New'?'new':''}">${x.b}</span>`:''}${pic(x.k)}</div><div class="tx"><small>${x.v}</small><h3>${x.t}</h3><div class="stars">★★★★★ <span style="color:#5d6266;letter-spacing:0;font-size:13px">(${x.r})</span></div><div class="pr">${x.p}${x.was?`<s>${x.was}</s>`:''}</div></div></a>`;
+const card=x=>`<a class="pcard" href="#product" data-go="product"><div class="im" style="background:${BG[x.k]}">${x.b?`<span class="badge ${x.b==='New'?'new':''}">${x.b}</span>`:''}${ppic(x)}</div><div class="tx"><small>${x.v}</small><h3>${x.t}</h3><div class="stars">★★★★★ <span style="color:#5d6266;letter-spacing:0;font-size:13px">(${x.r})</span></div><div class="pr">${x.p}${x.was?`<s>${x.was}</s>`:''}</div></div></a>`;
 document.getElementById('best').innerHTML=P.slice(0,4).map(card).join('');
 document.getElementById('catgrid').innerHTML=P.map(card).join('');
 document.getElementById('related').innerHTML=[P[1],P[2],P[3],P[5]].map(card).join('');
-document.getElementById('depts').innerHTML=[['mug','Kitchen'],['glass','Glassware'],['radio','Radios'],['jukebox','Music'],['apron','Linens']].map(([k,n])=>`<a class="dept" href="#shop" data-go="shop"><div class="c" style="background:${BG[k]}">${pic(k)}</div><b>${n}</b></a>`).join('');
-document.getElementById('pmain').innerHTML=pic('radio');
-document.getElementById('pthumbs').innerHTML=['#fbf1dc','#e2f3f2','#fde3e7','#f3e3c3'].map((c,i)=>`<div class="${i?'':'on'}" style="background:${c}">${pic('radio')}</div>`).join('');
+document.getElementById('depts').innerHTML=DEPTS.map(([k,n],i)=>`<a class="dept" href="#shop" data-go="shop"><div class="c" style="background:${BG[k]}">${PHOTOS['d'+i]?img(PHOTOS['d'+i]):pic(k)}</div><b>${n}</b></a>`).join('');
+document.getElementById('pmain').innerHTML=ppic(P[0]);
+document.getElementById('pthumbs').innerHTML=['#fbf1dc','#e2f3f2','#fde3e7','#f3e3c3'].map((c,i)=>`<div class="${i?'':'on'}" style="background:${c}">${ppic(P[0])}</div>`).join('');
 }
 render();
 fetch('https://nowsajdmbpxvlvrhopjg.supabase.co/rest/v1/site_settings?select=value&site_key=eq.justindematteis&key=eq.global_shopify-studio&limit=1',{headers:{apikey:'sb_publishable_AZbVouJ6gN00dQGdZwPjog_GTQR0J-w',Authorization:'Bearer sb_publishable_AZbVouJ6gN00dQGdZwPjog_GTQR0J-w'}})
  .then(r=>r.json()).then(rows=>{const raw=rows?.[0]?.value||{};const v=raw?.content?.[0]?.props||raw;const d=v.demoImages||{};
-  PHOTOS=Object.fromEntries(Object.entries(d.products||{}).filter(([,u])=>u));HEROES=Object.fromEntries(Object.entries(d.hero||{}).filter(([,u])=>u));
+  PHOTOS=Object.fromEntries(Object.entries(d.products||{}).filter(([,u])=>u));TEXT=v.demoText||{};
+  (v.demoProducts||[]).forEach((o,i)=>{if(!P[i]||!o)return;['t','v','p','was','b'].forEach(f=>{if(o[f]!==undefined&&o[f]!=='')P[i][f]=escH(o[f])});if(o.img)PHOTOS['p'+i]=o.img});
+  (v.demoDepts||[]).forEach((o,i)=>{if(!DEPTS[i]||!o)return;if(o.label)DEPTS[i][1]=escH(o.label);if(o.img)PHOTOS['d'+i]=o.img});
+  applyText();HEROES=Object.fromEntries(Object.entries(d.hero||{}).filter(([,u])=>u));
   render();applyHero();}).catch(()=>{});
 function applyHero(){const t=(document.body.className.match(/t-([\w-]+)/)||[])[1];const u=HEROES[t];const bg=document.querySelector('.hero .bg');const deco=document.querySelector('.hero .deco');
  if(u){bg.style.setProperty('background',`url("${esc(u)}") center/cover no-repeat`,'important');deco.querySelectorAll(':scope>*:not(.eramark)').forEach(e=>e.style.display='none')}else{bg.style.removeProperty('background')}}
