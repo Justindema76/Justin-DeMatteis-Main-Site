@@ -399,3 +399,9 @@
 .ssp-case-50s .chero .visit{flex-direction:column;align-items:stretch}
 .ssp-case-50s .chero .visit .btn{justify-content:center}
 .ssp-case-50s .rightcol .tagsrow{flex-wrap:wrap!important}}
+.ssp-case-50s .chero .bg{position:absolute!important;inset:0!important;background:radial-gradient(circle at 82% 18%,rgba(212,42,60,.45),transparent 40%),radial-gradient(circle at 12% 88%,rgba(39,178,172,.55),transparent 45%),linear-gradient(135deg,#0a3f43,#0f5f63 60%,#0a3f43)!important}
+.ssp-case-50s .chero .bg::after{content:""!important;position:absolute!important;inset:0!important;background:radial-gradient(ellipse 52% 60% at 50% 50%,rgba(10,40,44,.82),rgba(10,40,44,.45) 60%,rgba(10,40,44,.15))!important}
+.ssp-case-50s .chero{position:relative!important;overflow:hidden}
+.ssp-case-50s .chero>.wrap{position:relative;z-index:2}
+.ssp-case-50s .chero .bg{position:absolute!important;inset:0!important;z-index:0}
+.ssp-case-50s .chero .bg::after{display:none!important}

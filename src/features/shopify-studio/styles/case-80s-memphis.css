@@ -490,3 +490,18 @@
 .ssp-case-80s-memphis header nav{gap:18px!important;flex-wrap:nowrap}
 .ssp-case-80s-memphis header nav a{white-space:nowrap}
 .ssp-case-80s-memphis header nav a:not(.btn){font-size:14px!important}
+.ssp-case-80s-memphis .chero .bg{position:absolute!important;inset:0!important;background:#f6f2ea!important}
+.ssp-case-80s-memphis .chero .bg::after{display:none!important}
+@media(max-width:600px){.ssp-case-80s-memphis .chero .bg{background-position:72% center!important}
+.ssp-case-80s-memphis .chero .bg::after{background:linear-gradient(180deg,rgba(8,52,52,.55),rgba(8,52,52,.85))!important}}
+.ssp-case-80s-memphis .chero .bg{background:var(--cream)!important}
+.ssp-case-80s-memphis .mem{position:absolute;pointer-events:none}
+.ssp-case-80s-memphis .dotgrid{right:4%;top:40px;width:220px;height:200px;background-image:radial-gradient(#151515 2px,transparent 2.4px);background-size:20px 20px;opacity:.55}
+.ssp-case-80s-memphis .chero .bg::after{display:none!important}
+.ssp-case-80s-memphis .chero .crumb,.ssp-case-80s-memphis .chero .crumb a{color:var(--ink)!important}
+.ssp-case-80s-memphis .chero .lead{color:var(--ink)!important;text-shadow:0 0 10px rgba(255,255,255,.9),0 0 3px rgba(255,255,255,.9)!important;font-weight:500}
+.ssp-case-80s-memphis .chero .visit .btn.ghost{background:#fff!important;color:var(--ink)!important;-webkit-text-fill-color:var(--ink)!important;border:2px solid var(--ink)!important}
+.ssp-case-80s-memphis .chero{position:relative!important;overflow:hidden}
+.ssp-case-80s-memphis .chero>.wrap{position:relative;z-index:2}
+.ssp-case-80s-memphis .chero .bg{position:absolute!important;inset:0!important;z-index:0}
+.ssp-case-80s-memphis .chero .bg::after{display:none!important}

@@ -480,3 +480,12 @@
 .ssp-case-2010s header nav{gap:18px!important;flex-wrap:nowrap}
 .ssp-case-2010s header nav a{white-space:nowrap}
 .ssp-case-2010s header nav a:not(.btn){font-size:14px!important}
+.ssp-case-2010s .chero .bg{background:url(/shopify-studio/img/bg-2010s-nobag.webp) center/cover no-repeat,#eef0f5!important}
+.ssp-case-2010s .chero .crumb,.ssp-case-2010s .chero .crumb a{color:var(--ink)!important}
+.ssp-case-2010s .chero .lead{color:var(--ink)!important;text-shadow:0 0 10px rgba(255,255,255,.9),0 0 3px rgba(255,255,255,.9)!important;font-weight:500}
+.ssp-case-2010s .chero .visit .btn.ghost{background:#fff!important;color:var(--ink)!important;-webkit-text-fill-color:var(--ink)!important;border:2px solid var(--ink)!important}
+.ssp-case-2010s .chero .visit .btn.ghost{background:var(--teal)!important;color:#fff!important;-webkit-text-fill-color:#fff!important;border:2px solid var(--teal)!important;box-shadow:0 4px 0 var(--teal3)!important}
+.ssp-case-2010s .chero{position:relative!important;overflow:hidden}
+.ssp-case-2010s .chero>.wrap{position:relative;z-index:2}
+.ssp-case-2010s .chero .bg{position:absolute!important;inset:0!important;z-index:0}
+.ssp-case-2010s .chero .bg::after{display:none!important}

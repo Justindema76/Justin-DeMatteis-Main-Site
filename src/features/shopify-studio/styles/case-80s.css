@@ -497,3 +497,17 @@
 .ssp-case-80s header nav{gap:18px!important;flex-wrap:nowrap}
 .ssp-case-80s header nav a{white-space:nowrap}
 .ssp-case-80s header nav a:not(.btn){font-size:14px!important}
+.ssp-case-80s .chero .bg{position:absolute!important;inset:0!important;background:var(--cream)!important}
+.ssp-case-80s .chero .rays{position:absolute;right:-180px;top:-260px;width:780px;height:780px;border-radius:50%;background:repeating-conic-gradient(from 0deg,#f26b1d 0 7deg,transparent 7deg 14deg,#f4b223 14deg 21deg,transparent 21deg 28deg,#e94e8a 28deg 35deg,transparent 35deg 42deg,#2a9d9a 42deg 49deg,transparent 49deg 56deg);-webkit-mask:radial-gradient(circle,transparent 150px,#000 151px);mask:radial-gradient(circle,transparent 150px,#000 151px);opacity:.9}
+.ssp-case-80s .chero .sun{position:absolute;right:20px;top:-110px;width:280px;height:280px;border-radius:50%;background:#f4b223}
+.ssp-case-80s .chero .waves{position:absolute;left:-40px;bottom:-30px;width:70%;height:200px}
+.ssp-case-80s .chero .flower{position:absolute}
+@media(max-width:600px){.ssp-case-80s .chero .bg{background-position:72% center!important}
+.ssp-case-80s .chero .bg::after{background:linear-gradient(180deg,rgba(8,52,52,.55),rgba(8,52,52,.85))!important}}
+.ssp-case-80s .chero .bg{background:transparent!important}
+.ssp-case-80s .sun80{position:absolute;right:8%;top:40px;width:420px;height:420px;border-radius:50%;background:linear-gradient(#ffb13b,#ff2e9a 70%);-webkit-mask:repeating-linear-gradient(#000 0 26px,transparent 26px 34px);mask:linear-gradient(#000 45%,transparent 45%),repeating-linear-gradient(#000 0 22px,transparent 22px 32px);box-shadow:0 0 80px rgba(255,46,154,.5)}
+.ssp-case-80s .grid80{position:absolute;left:-10%;right:-10%;bottom:-20px;height:300px;opacity:.9;background:repeating-linear-gradient(90deg,rgba(255,46,154,.7) 0 2px,transparent 2px 70px),repeating-linear-gradient(0deg,rgba(255,46,154,.7) 0 2px,transparent 2px 36px);transform:perspective(320px) rotateX(62deg);transform-origin:bottom}
+.ssp-case-80s .chero{position:relative!important;overflow:hidden}
+.ssp-case-80s .chero>.wrap{position:relative;z-index:2}
+.ssp-case-80s .chero .bg{position:absolute!important;inset:0!important;z-index:0}
+.ssp-case-80s .chero .bg::after{display:none!important}
