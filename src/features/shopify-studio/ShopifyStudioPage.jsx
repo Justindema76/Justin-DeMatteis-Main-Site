@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useNavigate, useParams } from 'react-router-dom';
 import { loadSetting } from '../../lib/content';
 import { submitServiceRequest } from '../../lib/serviceRequests';
@@ -127,6 +128,7 @@ export default function ShopifyStudioPage({ kind = 'studio' }) {
   const [loaded, setLoaded] = useState(false);
   const [page, setPage] = useState({ html: '', css: '' });
   const [menuOpen, setMenuOpen] = useState(false);
+  const [themeSlot, setThemeSlot] = useState(null);
 
   useEffect(() => {
     let live = true;
@@ -183,11 +185,27 @@ export default function ShopifyStudioPage({ kind = 'studio' }) {
       navigate(path + (hash ? `#${hash}` : ''));
     };
     root.addEventListener('click', onClick);
+    // "Themes" switcher lives in the page's own nav bar, before the Free Store Review button.
+    const nav = root.querySelector('header nav');
+    let slot = null;
+    if (nav) {
+      slot = document.createElement('span');
+      slot.className = 'ss-themes-slot';
+      nav.insertBefore(slot, nav.querySelector('.btn') || null);
+    }
+    setThemeSlot(slot);
     const hash = window.location.hash.slice(1);
     if (hash) requestAnimationFrame(() => document.getElementById(hash)?.scrollIntoView());
     else window.scrollTo(0, 0);
-    return () => { offSlider(); offForm(); root.removeEventListener('click', onClick); };
+    return () => { offSlider(); offForm(); root.removeEventListener('click', onClick); slot?.remove(); setThemeSlot(null); };
   }, [html, era, navigate]);
+
+  useEffect(() => {
+    if (!menuOpen) return undefined;
+    const close = event => { if (!event.target.closest('.ss-themes')) setMenuOpen(false); };
+    document.addEventListener('click', close);
+    return () => document.removeEventListener('click', close);
+  }, [menuOpen]);
 
   function switchEra(key) {
     setMenuOpen(false);
@@ -199,15 +217,13 @@ export default function ShopifyStudioPage({ kind = 'studio' }) {
   return <>
     <style>{page.css}</style>
     <div ref={rootRef} className={`ssp ssp-${pageKey}`} dangerouslySetInnerHTML={{ __html: html }} />
-    {settings.showEraSwitcher && enabledEras.length > 1 && <div className={`ss-era-switch${menuOpen ? ' open' : ''}`}>
+    {themeSlot && settings.showEraSwitcher && enabledEras.length > 1 && createPortal(<span className="ss-themes">
+      <a href="#" role="button" aria-expanded={menuOpen} onClick={event => { event.preventDefault(); event.stopPropagation(); setMenuOpen(open => !open); }}>Themes ▾</a>
       {menuOpen && <ul role="menu">
         {enabledEras.map(item => <li key={item.key}>
           <button type="button" role="menuitem" className={item.key === era ? 'on' : ''} onClick={() => switchEra(item.key)}>{item.label}</button>
         </li>)}
       </ul>}
-      <button type="button" className="ss-era-toggle" aria-expanded={menuOpen} onClick={() => setMenuOpen(open => !open)}>
-        🕰 {settings.switcherLabel || STUDIO_DEFAULTS.switcherLabel}
-      </button>
-    </div>}
+    </span>, themeSlot)}
   </>;
 }
