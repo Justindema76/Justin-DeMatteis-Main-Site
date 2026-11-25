@@ -31,3 +31,15 @@
 .ssp .quote div[style*="font-size:24px"]{font-size:18px!important}
 .ssp .goal blockquote{font-size:28px!important}
 @media (max-width:700px){.ssp .quote p{font-size:18px!important}.ssp .goal blockquote{font-size:22px!important}}
+/* Let sticky elements work (overflow:hidden on the page wrapper broke them) */
+.ssp.ssp{overflow:visible!important;overflow-x:clip!important}
+/* Google badge card scrolls with the SEO list on every era */
+@media (min-width:861px){.ssp .seogrid{align-items:start!important}.ssp .seogrid .badgecard{position:sticky!important;top:110px!important}}
+/* SEO list cards white on every era */
+.ssp .seo .si{background:#fff!important;border:1px solid rgba(0,0,0,.08)!important;box-shadow:0 14px 30px -22px rgba(0,0,0,.5)}
+.ssp .seo .si h4{color:#1c1c1c!important;-webkit-text-fill-color:#1c1c1c!important}
+.ssp .seo .si p{color:#4a4a4a!important;-webkit-text-fill-color:#4a4a4a!important}
+.ssp .seo .si .n{color:#fff!important;-webkit-text-fill-color:#fff!important}
+/* 70s: lighter, warmer browns */
+.ssp.ssp-studio-70s,.ssp.ssp-case-70s{--teal:#7a4a2e;--teal2:#6a3f27;--teal3:#5c3722}
+.ssp.ssp-studio-70s .strip .wrap>div,.ssp.ssp-case-70s .strip .wrap>div{background:rgba(122,74,46,.92)!important}
