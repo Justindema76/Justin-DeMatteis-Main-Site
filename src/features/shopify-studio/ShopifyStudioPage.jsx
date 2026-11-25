@@ -180,11 +180,14 @@ export default function ShopifyStudioPage({ kind = 'studio' }) {
       const [path, hash] = href.split('#');
       if (path === window.location.pathname) {
         if (hash) document.getElementById(hash)?.scrollIntoView({ behavior: 'smooth' });
+        else window.scrollTo({ top: 0, behavior: 'smooth' });
         return;
       }
       navigate(path + (hash ? `#${hash}` : ''));
     };
     root.addEventListener('click', onClick);
+    // Logo always goes back to the Shopify Studio home page for this era.
+    root.querySelectorAll('header .plate').forEach(a => a.setAttribute('href', `/shopify-studio/${era}`));
     // "Themes" switcher lives in the page's own nav bar, before the Free Store Review button.
     const nav = root.querySelector('header nav');
     let slot = null;

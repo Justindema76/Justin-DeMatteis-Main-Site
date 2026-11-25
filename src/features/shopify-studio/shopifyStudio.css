@@ -51,3 +51,69 @@
 .ssp .ss-themes li button{display:block;width:100%;text-align:left;background:#fff;border:0;color:#1c2427;-webkit-text-fill-color:#1c2427;font:600 15px/1.3 system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:0;text-transform:none;padding:10px 12px;border-radius:8px;cursor:pointer;text-shadow:none}
 .ssp .ss-themes li button:hover{background:#eef1f3}
 .ssp .ss-themes li button.on{background:#1c2427;color:#fff;-webkit-text-fill-color:#fff}
+
+/* ===== Nav: one line, smaller, on every era ===== */
+.ssp header .wrap{max-width:1280px!important;gap:20px!important;flex-wrap:nowrap!important}
+.ssp header .plate{flex:none!important;white-space:nowrap}
+.ssp header nav{display:flex!important;align-items:center!important;gap:20px!important;flex-wrap:nowrap!important;margin-left:auto}
+.ssp header nav>a,.ssp header nav .ss-themes>a{font-size:13px!important;letter-spacing:.06em!important;white-space:nowrap!important;padding-top:4px!important;padding-bottom:4px!important;line-height:1.2!important}
+.ssp header nav .btn{font-size:13px!important;padding:10px 16px!important;white-space:nowrap!important;line-height:1.1!important;flex:none}
+@media (max-width:1180px){.ssp header nav{gap:14px!important}.ssp header nav>a,.ssp header nav .ss-themes>a{font-size:12px!important;letter-spacing:.04em!important}}
+
+/* ===== Mobile: logo + Themes + review button, nothing else ===== */
+@media (max-width:980px){
+  .ssp header .wrap{padding-left:14px!important;padding-right:14px!important;gap:10px!important}
+  .ssp header nav{gap:10px!important}
+  .ssp header nav .ss-themes>a{display:inline-flex!important;align-items:center;background:#fff!important;color:#1c2427!important;-webkit-text-fill-color:#1c2427!important;border-radius:999px;padding:8px 12px!important;font-size:13px!important;font-weight:700;text-shadow:none!important;box-shadow:none!important}
+  .ssp header nav .ss-themes ul{right:-60px;max-height:70vh;overflow:auto}
+  .ssp header .plate{transform:scale(.85);transform-origin:left center}
+}
+@media (max-width:600px){
+  .ssp header nav .btn{display:none!important}
+  .ssp header .plate{transform:scale(.75)}
+  .ssp header nav .ss-themes ul{right:0}
+}
+
+/* ===== 80s neon: readable result boxes on the white card ===== */
+:is(.ssp-studio-80s,.ssp-case-80s) .score div{background:#fff!important;border:2px solid #ff2e9a!important;box-shadow:none!important}
+:is(.ssp-studio-80s,.ssp-case-80s) .score div b{color:#ff2e9a!important;-webkit-text-fill-color:#ff2e9a!important;text-shadow:none!important}
+:is(.ssp-studio-80s,.ssp-case-80s) .score div span{color:#1a1238!important;-webkit-text-fill-color:#1a1238!important}
+
+/* ===== No empty gap beside the tall JustConsignIn card ===== */
+@media (min-width:861px){.ssp .apps{align-items:start!important}.ssp .apps .olist{position:sticky;top:110px}}
+
+/* ===== Phone fixes: nothing runs off the right edge ===== */
+@media (max-width:600px){
+  .ssp .chero .wrap{grid-template-columns:1fr!important;padding:0 16px!important;max-width:100%!important;gap:28px!important}
+  .ssp .chero .wrap>*{min-width:0}
+  .ssp .chero .sign{max-width:100%;box-sizing:border-box}
+  .ssp .chero .sign h1{font-size:40px!important}
+  .ssp .chero .lead{font-size:17px!important}
+  .ssp .chero .visit{flex-direction:column!important;flex-wrap:wrap!important;align-items:stretch!important}
+  .ssp .chero .visit .btn,.ssp .hero .btn{white-space:normal!important;text-align:center}
+  .ssp .hero .ctas{flex-wrap:wrap!important}
+  .ssp .hero .in>*{max-width:100%!important}
+  .ssp .hero .tags{flex-wrap:wrap!important}
+}
+@media (max-width:600px){
+  .ssp.ssp .hero .in>.tags,.ssp.ssp .hero .tags{flex-wrap:wrap!important;max-width:100%!important}
+  .ssp.ssp .hero .in>.signwrap,.ssp.ssp .hero .sign{max-width:100%!important;box-sizing:border-box}
+  .ssp.ssp .hero .sign h1{font-size:44px!important}
+  .ssp.ssp .strip .wrap{display:grid!important;grid-template-columns:1fr 1fr!important;gap:0!important;padding:0!important}
+  .ssp.ssp .strip .wrap>div{min-width:0;padding:14px 8px!important}
+  .ssp.ssp .strip b{font-size:30px!important}
+  .ssp.ssp .strip span{font-size:12.5px!important}
+  .ssp.ssp .feat h3{font-size:20px!important;overflow-wrap:anywhere}
+  .ssp.ssp .score{flex-wrap:wrap!important}
+  .ssp.ssp .score div{min-width:0;flex:1 1 90px!important}
+  .ssp.ssp .score b{font-size:24px!important}
+  .ssp.ssp .res{grid-template-columns:1fr!important}
+  .ssp.ssp .wrap{max-width:100%!important;box-sizing:border-box}
+}
+@media (max-width:600px){
+  .ssp.ssp .jci h3{font-size:24px!important;overflow-wrap:anywhere}
+  .ssp.ssp .pk{grid-template-columns:minmax(0,1fr)!important}
+  .ssp.ssp .pk>div{min-width:0;box-sizing:border-box}
+  .ssp.ssp .res{grid-template-columns:minmax(0,1fr)!important}
+  .ssp.ssp .res>div{min-width:0;box-sizing:border-box;max-width:100%}
+}
