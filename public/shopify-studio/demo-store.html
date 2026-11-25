@@ -280,6 +280,23 @@ body.t-80s .hero .eramark{color:#ff2e9a;opacity:.22}
 .themes>button{background:#fff!important;color:#1c2427!important;border-color:#fff!important}
 body.t-2000s .btn.ghost,body.t-2010s .btn.ghost{color:var(--teal);box-shadow:inset 0 0 0 2px var(--teal)}
 
+/* phone fixes */
+@media(max-width:900px){
+ .wrap{padding:0 16px}
+ .band .wrap{padding:44px 16px}.band .wrap>*{min-width:0}
+ .band h2{font-size:34px}.band .tile{padding:22px}
+ .band .tile form{flex-wrap:wrap}.band .tile input{min-width:0;width:100%}.band .tile form .btn{width:100%}
+ .cathead{grid-template-columns:1fr}.cathead h1{font-size:36px}
+ .sort{flex-wrap:wrap}.sort select{max-width:100%;min-width:0}
+ .sh h2{font-size:32px}section.block{padding:52px 0}
+ .catwrap>*,.pdp>*{min-width:0}
+}
+@media(max-width:520px){.depts{grid-template-columns:repeat(2,1fr)}.grid,.catwrap .grid{gap:12px}.pcard .tx{padding:12px}.pcard h3{font-size:15px}.perks .wrap{grid-template-columns:1fr 1fr;padding:14px 16px}.perks div{font-size:13px}}
+
+/* era pictures without the Shopify bag (store previews) */
+body.t-70s .hero .bg{background:url(img/hero-phone-70s-nobag.webp) center 62%/cover no-repeat,#f3e4c8!important}
+body.t-80s .hero .bg{background:url(img/hero-phone-80s-nobag.webp) center 70%/cover no-repeat,#120a2e!important}
+body.t-70s .hero .deco>*:not(.eramark),body.t-80s .hero .deco>*:not(.eramark){display:none!important}
 </style></head><body>
 
 <div class="demo"><div class="wrap"><span><b>Demo store</b> · The same Shopify store in every era. Switch with Themes. Not a real shop.</span><a id="backlink" href="/shopify-studio">← Back to Shopify Studio</a></div></div>

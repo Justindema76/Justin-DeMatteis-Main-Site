@@ -240,3 +240,6 @@
   .ssp .ss-burger-slot{display:block;margin-left:auto}
   .ssp header nav{display:none!important}
 }
+
+/* Phone hero picture (3x4), full width under the hero text */
+.ssp .ssp-phone-hero{display:none;position:relative;z-index:2;width:100%;height:auto;margin:0;aspect-ratio:3/4;object-fit:cover}

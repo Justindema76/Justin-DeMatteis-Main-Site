@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { useNavigate, useParams } from 'react-router-dom';
 import { loadSetting } from '../../lib/content';
 import { submitServiceRequest } from '../../lib/serviceRequests';
-import { STUDIO_DEFAULTS, STUDIO_ERAS, STUDIO_SETTING_KEY } from './studioConfig';
+import { HERO_DEFAULTS, STUDIO_DEFAULTS, STUDIO_ERAS, STUDIO_SETTING_KEY } from './studioConfig';
 import fonts from './fonts.json';
 import './shopifyStudio.css';
 
@@ -32,6 +32,21 @@ function fillTokens(html, settings) {
     .replaceAll('{{PRICE3}}', price(settings.priceCustomApp))
     .replaceAll('{{SPOTS}}', spots ? ` · ${spots} spots left this month` : '')
     .replaceAll('{{SPOTS_BADGE}}', spots ? `${spots} spots left` : 'Free');
+}
+
+// Hero pictures (admin can swap them). Desktop replaces the wide banner picture;
+// phone shows the 3x4 picture full width under the hero text.
+function heroCss(kind, era, settings) {
+  const saved = settings.heroImages?.[era] || {};
+  const pick = key => String(saved[key] || '').trim() || HERO_DEFAULTS[era]?.[key] || '';
+  const safe = url => url.replace(/["\\()\s]/g, encodeURIComponent);
+  const desktop = pick('desktop');
+  const phone = pick('phone');
+  const scope = `.ssp-${kind}-${era} .hero`;
+  let css = '';
+  if (desktop) css += `@media(min-width:601px){${scope} .bg{background-image:url("${safe(desktop)}")!important}}`;
+  if (phone) css += `@media(max-width:600px){${scope}{flex-wrap:wrap!important}${scope} .ssp-phone-hero{display:block!important;flex:0 0 100%}}`;
+  return css;
 }
 
 function tracking() {
@@ -272,12 +287,24 @@ export default function ShopifyStudioPage({ kind = 'studio' }) {
       setNavLinks([...nav.querySelectorAll(':scope > a')].map(a => ({ href: a.getAttribute('href'), label: a.textContent.trim(), cta: a.classList.contains('btn') })));
     }
     setBurgerSlot(burger);
+    // Phone hero picture: sits under the hero text, full width.
+    const phoneUrl = String(settings.heroImages?.[era]?.phone || '').trim() || HERO_DEFAULTS[era]?.phone || '';
+    const heroIn = root.querySelector('.hero');
+    let phonePic = null;
+    if (heroIn && phoneUrl) {
+      phonePic = document.createElement('img');
+      phonePic.className = 'ssp-phone-hero';
+      phonePic.src = phoneUrl;
+      phonePic.alt = '';
+      phonePic.loading = 'eager';
+      heroIn.appendChild(phonePic);
+    }
     const fixTimer = setTimeout(() => { stripGlows(root); fixFaintText(root); }, 400);
     const hash = window.location.hash.slice(1);
     if (hash) requestAnimationFrame(() => document.getElementById(hash)?.scrollIntoView());
     else window.scrollTo(0, 0);
-    return () => { offSlider(); offForm(); root.removeEventListener('click', onClick); slot?.remove(); setThemeSlot(null); burger?.remove(); setBurgerSlot(null); setBurgerOpen(false); clearTimeout(fixTimer); };
-  }, [html, era, navigate]);
+    return () => { phonePic?.remove(); offSlider(); offForm(); root.removeEventListener('click', onClick); slot?.remove(); setThemeSlot(null); burger?.remove(); setBurgerSlot(null); setBurgerOpen(false); clearTimeout(fixTimer); };
+  }, [html, era, navigate, settings]);
 
   useEffect(() => {
     if (!menuOpen) return undefined;
@@ -295,7 +322,7 @@ export default function ShopifyStudioPage({ kind = 'studio' }) {
   if (!html) return <div className="ssp-loading" aria-busy="true" />;
 
   return <>
-    <style>{page.css}</style>
+    <style>{page.css + heroCss(kind, era, settings)}</style>
     <div ref={rootRef} className={`ssp ssp-${pageKey}`} dangerouslySetInnerHTML={{ __html: html }} />
     {burgerSlot && createPortal(<>
       <button type="button" className="ss-burger" aria-label="Menu" aria-expanded={burgerOpen} onClick={() => setBurgerOpen(open => !open)}>{burgerOpen ? '✕' : '☰'}</button>
