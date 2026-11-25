@@ -172,3 +172,4 @@
 /* No sticky "free store review" bar at the bottom of the screen; the banner already has the button */
 .ssp.ssp .mbar{display:none!important}
 .ssp.ssp{padding-bottom:0!important}
+@media (max-width:980px){.ssp.ssp footer{padding-bottom:26px!important}}
