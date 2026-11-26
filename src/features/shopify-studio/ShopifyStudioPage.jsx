@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useNavigate, useParams } from 'react-router-dom';
 import { loadSetting } from '../../lib/content';
-import { submitServiceRequest } from '../../lib/serviceRequests';
+import { fillTokens, wireForm } from './studioShared';
 import { HERO_DEFAULTS, STUDIO_DEFAULTS, STUDIO_ERAS, STUDIO_SETTING_KEY } from './studioConfig';
 import fonts from './fonts.json';
 import { applyLook, heroLook, lookCss, phonePicture } from './heroLook';
@@ -35,21 +35,6 @@ function pickEra(requested, settings) {
   return enabled[0] || '50s';
 }
 
-function price(value) {
-  const clean = String(value || '').trim().replace(/^\$/, '');
-  return clean ? `from <b>$${clean}</b>` : '<b>Free quote</b>';
-}
-
-function fillTokens(html, settings) {
-  const spots = String(settings.spotsLeft || '').trim();
-  return html
-    .replaceAll('{{PRICE1}}', price(settings.priceTuneUp))
-    .replaceAll('{{PRICE2}}', price(settings.priceRedesign))
-    .replaceAll('{{PRICE3}}', price(settings.priceCustomApp))
-    .replaceAll('{{SPOTS}}', spots ? ` · ${spots} spots left this month` : '')
-    .replaceAll('{{SPOTS_BADGE}}', spots ? `${spots} spots left` : 'Free');
-}
-
 // Hero picture (admin can swap it): replaces the wide banner picture on desktop.
 function heroCss(kind, era, settings) {
   const saved = settings.heroImages?.[era] || {};
@@ -62,18 +47,6 @@ function heroCss(kind, era, settings) {
   return css;
 }
 
-function tracking() {
-  const params = new URLSearchParams(window.location.search);
-  return {
-    source_path: window.location.pathname,
-    referrer: document.referrer || '',
-    utm_source: params.get('utm_source') || '',
-    utm_medium: params.get('utm_medium') || '',
-    utm_campaign: params.get('utm_campaign') || '',
-    utm_content: params.get('utm_content') || '',
-    utm_term: params.get('utm_term') || '',
-  };
-}
 
 
 // Any text that is too faint against its own solid background gets darker or lighter
@@ -177,39 +150,6 @@ function wireSlider(root) {
 }
 
 // The free store review form posts into the existing Service Requests inbox.
-function wireForm(root, era) {
-  const form = root.querySelector('form[data-ss-review]');
-  if (!form) return () => {};
-  const onSubmit = async event => {
-    event.preventDefault();
-    const data = new FormData(form);
-    const msg = form.querySelector('.ss-form-msg');
-    const button = form.querySelector('button[type="submit"]');
-    const website = String(data.get('website') || '').trim();
-    const headache = String(data.get('headache') || '').trim();
-    button.disabled = true;
-    msg.textContent = 'Sending…';
-    try {
-      await submitServiceRequest({
-        name: String(data.get('name') || '').trim(),
-        email: String(data.get('email') || '').trim(),
-        website,
-        service: 'shopify_ecommerce',
-        message: `Free Shopify audit request.\nStore: ${website}\nBiggest headache: ${headache}\nSeen on: Shopify Studio (${era} style)`,
-        contact_consent: data.get('contact_consent') === 'on',
-        fax_number: String(data.get('fax_number') || ''),
-        ...tracking(),
-      });
-      form.innerHTML = '<h3>Got it, thank you.</h3><p class="sub">Your free audit will be in your inbox within 48 hours.</p>';
-    } catch (error) {
-      button.disabled = false;
-      msg.textContent = error?.message || 'Unable to send right now. Please try again.';
-    }
-  };
-  form.addEventListener('submit', onSubmit);
-  return () => form.removeEventListener('submit', onSubmit);
-}
-
 export default function ShopifyStudioPage({ kind = 'studio' }) {
   const { era: requestedEra } = useParams();
   const navigate = useNavigate();
@@ -279,8 +219,8 @@ export default function ShopifyStudioPage({ kind = 'studio' }) {
       navigate(path + (hash ? `#${hash}` : ''));
     };
     root.addEventListener('click', onClick);
-    // Logo always goes back to the Shopify Studio home page for this era.
-    root.querySelectorAll('header .plate').forEach(a => a.setAttribute('href', `/shopify-studio/${era}`));
+    // Logo always goes back to the Shopify Studio main page (where you pick a style).
+    root.querySelectorAll('header .plate').forEach(a => a.setAttribute('href', '/shopify-studio'));
     // "Themes" switcher lives in the page's own nav bar, before the Free Store Review button.
     const nav = root.querySelector('header nav');
     let slot = null;

@@ -23,7 +23,7 @@ header nav{display:flex;gap:26px;align-items:center;font-weight:600;font-size:15
 .btn.ghost{background:transparent;color:var(--ink);box-shadow:4px 4px 0 var(--ink)}
 .btn.sm{padding:10px 16px;font-size:14px}
 /* hero */
-.hero{padding:76px 0 56px;border-bottom:2px solid var(--line)}
+.hero{padding:76px 0 56px;border-bottom:2px solid var(--line);background:#fff}
 .hero .wrap{display:grid;grid-template-columns:1.15fr 1fr;gap:56px;align-items:center}
 .kick{display:inline-block;font-weight:700;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--green);margin-bottom:18px}
 .hero h1{font-size:clamp(44px,6vw,78px)}
@@ -168,6 +168,50 @@ header .brand small{display:block!important}
 .lb .nav button:disabled{opacity:.35;cursor:default}
 @media(max-width:980px){.walk{grid-template-columns:1fr 1fr}.lb .box{grid-template-columns:1fr;grid-template-rows:minmax(0,46%) minmax(0,54%);height:94vh}.lb .side{border-left:0;border-top:2px solid var(--line)}.lb .pic{margin:10px;box-shadow:none}.pin{width:26px;height:26px;font-size:12px;line-height:20px;border-width:2px}}
 @media(max-width:640px){.lb .pic{width:760px;max-width:none}.lb .stage{-webkit-overflow-scrolling:touch}.walk{grid-template-columns:1fr 1fr;gap:10px}.wcard h4{font-size:16px}.wcard .t{padding:10px}.lb .box{width:100vw;height:100dvh;border:0}.lb .txt h3{font-size:22px}}
+/* packages, steps, audit form, faq */
+.pk{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:stretch}
+.pkg{border:2px solid var(--line);background:var(--card);padding:28px;display:flex;flex-direction:column;position:relative}
+.pkg.pop{background:var(--ink);color:#f2efe8;box-shadow:8px 8px 0 var(--green2)}
+.pkg small{font-weight:700;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--green)}
+.pkg.pop small{color:var(--green2)}
+.pkg h3{font-size:26px;margin:6px 0 10px}
+.pkg .pr{font-size:17px;margin-bottom:14px}
+.pkg .pr b{font-family:Fraunces,serif;font-size:32px}
+.pkg ul{list-style:none;display:grid;gap:8px;margin-bottom:22px;font-size:15.5px;flex:1}
+.pkg li::before{content:"✓ ";color:var(--green);font-weight:700}
+.pkg.pop li::before{color:var(--green2)}
+.pkg .badge{position:absolute;top:-14px;right:18px;background:var(--green2);color:var(--ink);border:2px solid var(--ink);font-weight:800;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px}
+.pkg.pop .btn{background:var(--green2);color:var(--ink);border-color:var(--green2);box-shadow:4px 4px 0 #fff}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);border:2px solid var(--line);background:var(--card);margin-top:40px}
+.steps div{padding:24px}
+.steps div+div{border-left:2px solid var(--line)}
+.steps b{display:grid;place-items:center;width:40px;height:40px;border:2px solid var(--ink);background:var(--green2);font-family:Fraunces,serif;font-size:20px;margin-bottom:12px}
+.steps h4{font-family:Fraunces,serif;font-weight:800;font-size:21px;margin-bottom:6px}
+.steps p{font-size:15px;color:var(--mute)}
+.auditsec{background:var(--ink);color:#f2efe8;border-top:2px solid var(--line);border-bottom:2px solid var(--line)}
+.auditsec .wrap{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+.auditsec h2{font-size:clamp(34px,4.4vw,52px)}
+.auditsec .l p{color:#c9c5bc;font-size:19px;margin-top:14px}
+.auditsec .l ul{list-style:none;margin-top:22px;display:grid;gap:10px;font-size:17px}
+.auditsec .l li::before{content:"✓ ";color:var(--green2);font-weight:700}
+.auditsec form{background:#fff;color:var(--ink);border:2px solid #fff;box-shadow:10px 10px 0 var(--green2);padding:30px;display:grid;gap:6px}
+.auditsec form h3{font-size:26px}
+.auditsec form .sub{color:var(--mute);font-size:15px;margin-bottom:8px}
+.auditsec label{font-weight:700;font-size:14px;margin-top:8px}
+.auditsec input,.auditsec select{font:inherit;font-size:16px;padding:12px 14px;border:2px solid var(--ink);background:var(--paper);width:100%}
+.auditsec .ss-consent{display:flex;gap:10px;align-items:flex-start;font-weight:500;font-size:14px;color:var(--mute)}
+.auditsec .ss-consent input{width:auto;margin-top:3px}
+.auditsec .ss-hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.auditsec button.btn{margin-top:14px;justify-content:center;cursor:pointer}
+.auditsec .ss-form-msg{font-size:14px;color:var(--mute);min-height:1em}
+.faq{display:grid;gap:12px;max-width:860px}
+.faq details{border:2px solid var(--line);background:var(--card)}
+.faq summary{cursor:pointer;padding:18px 22px;font-weight:700;font-size:17px;list-style:none;display:flex;justify-content:space-between;gap:12px}
+.faq summary::after{content:"+";font-size:22px;line-height:1}
+.faq details[open] summary::after{content:"–"}
+.faq details p{padding:0 22px 20px;color:var(--mute)}
+@media(max-width:980px){.pk{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.steps div:nth-child(3){border-left:0}.steps div:nth-child(n+3){border-top:2px solid var(--line)}.auditsec .wrap{grid-template-columns:1fr;gap:30px}}
+@media(max-width:640px){.steps{grid-template-columns:1fr}.steps div+div{border-left:0;border-top:2px solid var(--line)}.auditsec form{padding:22px;box-shadow:6px 6px 0 var(--green2)}}
 /* cta */
 .cta{border-top:2px solid var(--line);padding:80px 0}
 .cta .box{border:2px solid var(--line);background:#fff;box-shadow:10px 10px 0 var(--ink);padding:48px;display:grid;grid-template-columns:1.4fr 1fr;gap:30px;align-items:center}
@@ -202,7 +246,7 @@ footer a{color:#fff}
 
 <header><div class="wrap">
   <a class="brand" href="#">Justin DeMatteis<small>Shopify Studio</small></a>
-  <nav><a href="#how">How it works</a><a href="#eras">Pick a style</a><a href="#case">Case study</a><a href="#get">What you get</a><a class="btn sm" href="/shopify-studio/50s#audit">Free audit</a></nav>
+  <nav><a href="#how">How it works</a><a href="#eras">Pick a style</a><a href="#case">Case study</a><a href="#packages">Packages</a><a href="#faq">FAQ</a><a class="btn sm" href="#audit">Free audit</a></nav>
 </div></header>
 
 <section class="hero"><div class="wrap">
@@ -210,7 +254,7 @@ footer a{color:#fff}
     <span class="kick">Custom Shopify stores</span>
     <h1>One store. <em>Eight decades</em> of style.</h1>
     <p class="lead">I build Shopify stores for independent retailers: better-looking themes, smarter features and custom apps you won't find off the shelf. To show you what's possible, I built the same store in eight different styles. Pick one and look around.</p>
-    <div class="ctas"><a class="btn" href="#eras">Pick a style →</a><a class="btn ghost" href="/shopify-studio/50s#audit">Get a free audit</a></div>
+    <div class="ctas"><a class="btn" href="#eras">Pick a style →</a><a class="btn ghost" href="#audit">Get a free audit</a></div>
   </div>
   <div class="strip">
     <a href="/shopify-studio/50s"><img src="/shopify-studio/img/hero-phone-50s.webp" alt="1950s style"></a>
@@ -282,7 +326,7 @@ footer a{color:#fff}
     <div><span class="tagc">Scripts + tools</span><h4>7,788 products cleaned up</h4><p>Scripts sorted tags and types into 145 self-filling collections, with backups and a staff dashboard.</p></div>
   </div>
   <div class="badge-g"><b class="star">★</b><p><strong>First page of Google, and Google's Top Quality Store badge.</strong> 7,788 products cleaned up into 145 collections that fill themselves, rated Exceptional in Google Merchant Center.</p></div>
-  <div class="more"><a class="btn" href="#" data-open="0">Walk through the store →</a><a class="btn ghost" href="/shopify-studio/50s#audit">Get a free audit</a></div>
+  <div class="more"><a class="btn" href="#" data-open="0">Walk through the store →</a><a class="btn ghost" href="#audit">Get a free audit</a></div>
 </div></section>
 
 <section class="block" id="get"><div class="wrap">
@@ -300,10 +344,48 @@ footer a{color:#fff}
   </div>
 </div></section>
 
-<section class="cta"><div class="wrap"><div class="box">
-  <div><h2>Want to see what your store could be?</h2><p>Get a free audit of your Shopify store. I'll send you what to fix first, within 48 hours.</p></div>
-  <div class="ctas"><a class="btn" href="/shopify-studio/50s#audit">Get my free audit</a><a class="btn ghost" href="#case">See the case study</a></div>
-</div></div></section>
+<section class="block" id="packages"><div class="wrap">
+  <div class="sh"><span class="kick">Packages</span><h2>Clear prices. No surprises.</h2><p>Every project starts with a free audit, so you know exactly what you're getting before you pay anything.</p></div>
+  <div class="pk">
+    <div class="pkg"><small>The quick fix</small><h3>Store Tune-Up</h3><div class="pr">{{PRICE1}}</div><ul><li>Catalog &amp; collection cleanup</li><li>Navigation &amp; mobile fixes</li><li>Sale badges &amp; cart notes</li><li>About 2 weeks</li></ul><a class="btn ghost" href="#audit">Free audit</a></div>
+    <div class="pkg pop"><span class="badge">Most popular</span><small>The full works</small><h3>Custom Store Redesign</h3><div class="pr">{{PRICE2}}</div><ul><li>Custom homepage &amp; product pages</li><li>Shop by age, style &amp; brand</li><li>Owner's picks &amp; cart rules</li><li>Full catalog cleanup</li><li>30 days of support</li></ul><a class="btn" href="#audit">Free audit</a></div>
+    <div class="pkg"><small>Made to order</small><h3>Custom App or Feature</h3><div class="pr">{{PRICE3}}</div><ul><li>Shipping &amp; discount rules</li><li>Shopify Functions</li><li>Consignment setup</li><li>Built, tested &amp; installed</li></ul><a class="btn ghost" href="#audit">Tell me what you need</a></div>
+  </div>
+  <div class="steps">
+    <div><b>1</b><h4>Free audit</h4><p>A recorded video of your store with the 3 things I'd fix first.</p></div>
+    <div><b>2</b><h4>Plan &amp; price</h4><p>A fixed price and timeline. No surprises later.</p></div>
+    <div><b>3</b><h4>Preview &amp; build</h4><p>You see the new store before anything goes live.</p></div>
+    <div><b>4</b><h4>Launch &amp; grow</h4><p>We go live, then keep tuning what works.</p></div>
+  </div>
+</div></section>
+
+<section class="block auditsec" id="audit"><div class="wrap">
+  <div class="l"><span class="kick">Free, no strings</span><h2>Get a free audit of your Shopify store</h2><p>I'll record a 10-minute video going through your store and show you the 3 changes that would make the biggest difference to sales.</p><ul><li>A real person, not a robot report</li><li>In your inbox within 48 hours</li><li>Yours to keep, either way</li></ul></div>
+  <form data-ss-review>
+    <h3>Request my free audit</h3><p class="sub">Takes 30 seconds{{SPOTS}}</p>
+    <label for="a-name">Your name</label><input id="a-name" name="name" autocomplete="name" required>
+    <label for="a-site">Your store URL</label><input id="a-site" name="website" placeholder="yourstore.com" required>
+    <label for="a-email">Email</label><input id="a-email" name="email" type="email" autocomplete="email" placeholder="you@yourstore.com" required>
+    <label for="a-head">Biggest headache</label><select id="a-head" name="headache"><option>My theme looks like everyone else's</option><option>Customers can't find products</option><option>Shopify can't do something I need</option><option>Sales are flat</option><option>Something else</option></select>
+    <label class="ss-consent"><input type="checkbox" name="contact_consent" required> You can contact me about my store.</label>
+    <input class="ss-hp" name="fax_number" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <button class="btn" type="submit">Get my free audit</button>
+    <p class="ss-form-msg" role="status" aria-live="polite"></p>
+  </form>
+</div></section>
+
+<section class="block" id="faq"><div class="wrap">
+  <div class="sh"><span class="kick">Questions</span><h2>Before you ask</h2></div>
+  <div class="faq">
+    <details open><summary>How much does it cost?</summary><p>Most projects are a fixed price based on how many products and pages you have. You get an exact number after your free audit, before you commit.</p></details>
+    <details><summary>Do I need a premium theme?</summary><p>Not necessarily. I can take the theme you have well past what it does now, and I'll tell you if a different one would save you money.</p></details>
+    <details><summary>Will my store go down while you work?</summary><p>No. I build on a copy, you review a private preview, and it goes live only when you're happy.</p></details>
+    <details><summary>Can my staff still update things?</summary><p>Yes. Everything is editable in Shopify's theme editor with no code, and you get a how-to guide.</p></details>
+    <details><summary>Do the eight styles cost extra?</summary><p>No. They show what's possible. Your store gets its own look, built around your shop and your customers.</p></details>
+  </div>
+</div></section>
+
+
 
 <footer><div class="wrap"><span>© Justin DeMatteis · Shopify Studio · Shopify Partner (JUSTInnovate)</span><a href="/">← justindematteis.com</a></div></footer>
 <div class="lb" id="lb" aria-hidden="true"><div class="box" role="dialog" aria-modal="true" aria-label="Jill and the Beanstalk walkthrough">

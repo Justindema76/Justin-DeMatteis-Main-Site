@@ -1,7 +1,10 @@
 // Shopify Studio main page (/shopify-studio): explains the studio and lets visitors pick an era.
-// The page itself lives in home.html (copy of the public/shopify-studio/home-v6.html preview, with absolute image paths).
-import { useEffect, useMemo } from 'react';
+// The page itself lives in home.html (copy of the public/shopify-studio/home-v8.html preview, with absolute image paths).
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { loadSetting } from '../../../lib/content';
+import { STUDIO_DEFAULTS, STUDIO_SETTING_KEY } from '../studioConfig';
+import { fillTokens, wireForm } from '../studioShared';
 import raw from './home.html?raw';
 
 function split(html) {
@@ -17,6 +20,15 @@ function split(html) {
 export default function StudioHome() {
   const page = useMemo(() => split(raw), []);
   const navigate = useNavigate();
+  const rootRef = useRef(null);
+  // Package prices and "spots left" come from the Shopify Studio admin settings.
+  const [settings, setSettings] = useState(STUDIO_DEFAULTS);
+  useEffect(() => {
+    let live = true;
+    loadSetting(STUDIO_SETTING_KEY, STUDIO_DEFAULTS).then(value => { if (live) setSettings({ ...STUDIO_DEFAULTS, ...(value || {}) }); });
+    return () => { live = false; };
+  }, []);
+  const html = useMemo(() => fillTokens(page.body, settings), [page.body, settings]);
 
   useEffect(() => {
     const style = document.createElement('style');
@@ -35,14 +47,19 @@ export default function StudioHome() {
     const hash = window.location.hash.slice(1);
     if (hash) requestAnimationFrame(() => document.getElementById(hash)?.scrollIntoView());
     else window.scrollTo(0, 0);
-    // Page scripts (the store walkthrough slider) run once the markup is on the page.
+    return () => { style.remove(); links.forEach(l => l.remove()); document.title = oldTitle; };
+  }, [page]);
+
+  // Page scripts (the store walkthrough slider) and the free-audit form, wired to whatever markup is on the page.
+  useEffect(() => {
     page.scripts.forEach(code => new Function(code)());
+    const offForm = rootRef.current ? wireForm(rootRef.current, '') : () => {};
     return () => {
       window.__studioHomeCleanup?.();
       delete window.__studioHomeCleanup;
-      style.remove(); links.forEach(l => l.remove()); document.title = oldTitle;
+      offForm();
     };
-  }, [page]);
+  }, [page, html]);
 
   // Same-site links move inside the app instead of reloading the page.
   const onClick = event => {
@@ -53,5 +70,5 @@ export default function StudioHome() {
     navigate(href);
   };
 
-  return <div className="studio-home" onClick={onClick} dangerouslySetInnerHTML={{ __html: page.body }} />;
+  return <div className="studio-home" ref={rootRef} onClick={onClick} dangerouslySetInnerHTML={{ __html: html }} />;
 }
