@@ -5,10 +5,26 @@ import { loadSetting } from '../../lib/content';
 import { submitServiceRequest } from '../../lib/serviceRequests';
 import { HERO_DEFAULTS, STUDIO_DEFAULTS, STUDIO_ERAS, STUDIO_SETTING_KEY } from './studioConfig';
 import fonts from './fonts.json';
+import { applyLook, heroLook, lookCss, phonePicture } from './heroLook';
 import './shopifyStudio.css';
 
 const MARKUP = import.meta.glob('./content/*.html', { query: '?raw', import: 'default' });
 const STYLES = import.meta.glob('./styles/*.css', { query: '?inline', import: 'default' });
+// Studio pages share one page (content/studio.html); each era only adds its hero decorations.
+const STUDIO_DECO = import.meta.glob('./content/studio-deco/*.html', { query: '?raw', import: 'default' });
+
+export function buildStudioHtml(shared, deco, era) {
+  return shared
+    .replaceAll('{{ERA}}', era)
+    .replace('{{MDECO}}', deco)
+    .replace('{{SURNAME}}', era === '80s-memphis' ? '<span class="hl">DeMatteis</span>' : 'DeMatteis');
+}
+
+function loadMarkup(kind, era) {
+  if (kind !== 'studio') return MARKUP[`./content/${kind}-${era}.html`]();
+  return Promise.all([MARKUP['./content/studio.html'](), STUDIO_DECO[`./content/studio-deco/${era}.html`]()])
+    .then(([shared, deco]) => buildStudioHtml(shared, deco, era));
+}
 
 const ERA_KEYS = STUDIO_ERAS.map(era => era.key);
 
@@ -34,19 +50,15 @@ function fillTokens(html, settings) {
     .replaceAll('{{SPOTS_BADGE}}', spots ? `${spots} spots left` : 'Free');
 }
 
-// Hero pictures (admin can swap them). Desktop replaces the wide banner picture;
-// phone shows the 3x4 picture full width under the hero text.
+// Hero picture (admin can swap it): replaces the wide banner picture on desktop.
 function heroCss(kind, era, settings) {
   const saved = settings.heroImages?.[era] || {};
   const pick = key => String(saved[key] || '').trim() || HERO_DEFAULTS[era]?.[key] || '';
   const safe = url => url.replace(/["\\()\s]/g, encodeURIComponent);
   const desktop = pick('desktop');
-  const phone = pick('phone');
   const scope = `.ssp-${kind}-${era} .hero`;
   let css = '';
   if (desktop) css += `@media(min-width:601px){${scope} .bg{background-image:url("${safe(desktop)}")!important}}`;
-  // Phone: the picture becomes the hero background. The CSS art (.bg/.mdeco) stays in the code, just hidden on phones.
-  if (phone) css += `@media(max-width:600px){${scope} .mdeco,${scope} .bg>*,${scope} .bg::before,${scope} .bg::after{display:none!important}${scope} .bg{background-image:none!important}${scope} .ssp-phone-hero{display:block!important;position:absolute!important;top:0;left:0;width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;z-index:0}${scope} .in{position:relative;z-index:1}}`;
   return css;
 }
 
@@ -226,7 +238,7 @@ export default function ShopifyStudioPage({ kind = 'studio' }) {
   useEffect(() => {
     if (!loaded) return;
     let live = true;
-    Promise.all([MARKUP[`./content/${pageKey}.html`](), STYLES[`./styles/${pageKey}.css`]()]).then(([html, css]) => {
+    Promise.all([loadMarkup(kind, era), STYLES[`./styles/${pageKey}.css`]()]).then(([html, css]) => {
       if (live) setPage({ html, css });
     });
     return () => { live = false; };
@@ -288,37 +300,12 @@ export default function ShopifyStudioPage({ kind = 'studio' }) {
       setNavLinks([...nav.querySelectorAll(':scope > a')].map(a => ({ href: a.getAttribute('href'), label: a.textContent.trim(), cta: a.classList.contains('btn') })));
     }
     setBurgerSlot(burger);
-    // Phone hero picture: sits under the hero text, full width.
-    const phoneUrl = String(settings.heroImages?.[era]?.phone || '').trim() || HERO_DEFAULTS[era]?.phone || '';
-    const heroIn = root.querySelector('.hero');
-    let phonePic = null;
-    if (heroIn && phoneUrl) {
-      phonePic = document.createElement('img');
-      phonePic.className = 'ssp-phone-hero';
-      phonePic.src = phoneUrl;
-      phonePic.alt = '';
-      phonePic.loading = 'eager';
-      heroIn.appendChild(phonePic);
-    }
-    // Phone: title sits on the picture's empty top; the paragraph and buttons start below the picture.
-    const lead = phonePic ? heroIn.querySelector('.in p') : null;
-    const placeLead = () => {
-      if (!lead) return;
-      lead.style.marginTop = '';
-      if (window.innerWidth > 600) return;
-      const picH = heroIn.offsetWidth * 4 / 3;
-      const top = lead.getBoundingClientRect().top - heroIn.getBoundingClientRect().top;
-      const extra = picH - top + 24;
-      if (extra > 0) lead.style.marginTop = `${extra}px`;
-    };
-    placeLead();
-    const leadTimer = setTimeout(placeLead, 600);
-    window.addEventListener('resize', placeLead);
+    const offLook = applyLook(root, era, heroLook(), phonePicture(era, settings));
     const fixTimer = setTimeout(() => { stripGlows(root); fixFaintText(root); }, 400);
     const hash = window.location.hash.slice(1);
     if (hash) requestAnimationFrame(() => document.getElementById(hash)?.scrollIntoView());
     else window.scrollTo(0, 0);
-    return () => { phonePic?.remove(); if (lead) lead.style.marginTop = ''; clearTimeout(leadTimer); window.removeEventListener('resize', placeLead); offSlider(); offForm(); root.removeEventListener('click', onClick); slot?.remove(); setThemeSlot(null); burger?.remove(); setBurgerSlot(null); setBurgerOpen(false); clearTimeout(fixTimer); };
+    return () => { offLook(); offSlider(); offForm(); root.removeEventListener('click', onClick); slot?.remove(); setThemeSlot(null); burger?.remove(); setBurgerSlot(null); setBurgerOpen(false); clearTimeout(fixTimer); };
   }, [html, era, navigate, settings]);
 
   useEffect(() => {
@@ -337,7 +324,7 @@ export default function ShopifyStudioPage({ kind = 'studio' }) {
   if (!html) return <div className="ssp-loading" aria-busy="true" />;
 
   return <>
-    <style>{page.css + heroCss(kind, era, settings)}</style>
+    <style>{page.css + heroCss(kind, era, settings) + lookCss(kind, era, heroLook(), phonePicture(era, settings))}</style>
     <div ref={rootRef} className={`ssp ssp-${pageKey}`} dangerouslySetInnerHTML={{ __html: html }} />
     {burgerSlot && createPortal(<>
       <button type="button" className="ss-burger" aria-label="Menu" aria-expanded={burgerOpen} onClick={() => setBurgerOpen(open => !open)}>{burgerOpen ? '✕' : '☰'}</button>
