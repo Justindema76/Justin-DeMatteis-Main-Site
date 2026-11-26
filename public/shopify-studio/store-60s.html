@@ -1,0 +1,771 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sunny Days Kids · 1960s store demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shrikhand&family=DM+Sans:wght@400;500;700&display=swap">
+<style>
+:root{--pu:#5b2a86;--pu2:#47206b;--pu3:#331650;--or:#f26b1d;--or2:#c9500f;--cr:#f6e9cf;--cr2:#ecd6ad;--pk:#e94e8a;--tl:#2a9d9a;--ink:#2a1838;--mu:#6a5a6e;--go:#f4b223;--r:22px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"DM Sans",system-ui,sans-serif;color:var(--ink);background:var(--cr);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer;color:inherit;background:none;border:0}
+img,svg{display:block;max-width:100%}
+.wrap{max-width:1200px;margin:0 auto;padding:0 20px}
+h1,h2,h3,.sh h2,.logo b{font-family:Shrikhand,cursive;font-weight:400}
+.kick{font-weight:700;color:var(--pk);font-size:14px;letter-spacing:.02em}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:700;font-size:15px;padding:12px 24px;border-radius:999px;background:var(--pu);color:#fff;border:2px solid var(--pu);transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn.or{background:var(--or);border-color:var(--or)}
+.btn.line{background:#fff;color:var(--pu)}
+.btn.sm{padding:8px 16px;font-size:14px}
+/* demo bar */
+.demo{background:var(--pu3);color:#e9def3;font-size:13px}
+.demo .wrap{display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:34px;flex-wrap:wrap}
+.demo a{color:var(--go);font-weight:700}
+/* announcement slider */
+.ann{background:var(--or);color:#fff;font-weight:700;font-size:14px}
+.ann .wrap{display:flex;align-items:center;justify-content:center;gap:14px;min-height:40px}
+.ann button{width:28px;height:28px;border-radius:50%;font-size:18px;line-height:1}
+.ann button:hover{background:rgba(255,255,255,.2)}
+.ann .msg{min-width:0;text-align:center;flex:0 1 640px}
+.ann .msg a{text-decoration:underline}
+/* header */
+header{background:var(--cr);position:sticky;top:0;z-index:30;border-bottom:3px solid var(--pu)}
+header .wrap{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;min-height:82px;gap:16px}
+.open{font-size:14px;color:var(--mu)}.open b{color:var(--tl)}.open b.shut{color:var(--or2)}
+.logo{justify-self:center;display:inline-block;background:var(--pu);color:#fff;border-radius:999px;padding:6px 26px 9px;box-shadow:5px 5px 0 var(--or);transform:rotate(-2deg);text-align:center;line-height:1}
+.logo b{font-size:28px;display:block}
+.logo small{display:block;font-size:10px;letter-spacing:.3em;font-weight:700;color:var(--go);margin-top:3px}
+.hicons{justify-self:end;display:flex;align-items:center;gap:6px}
+.hicons button,.hicons a{display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:999px;font-weight:700;font-size:14px;color:var(--pu)}
+.hicons button:hover,.hicons a:hover{background:var(--cr2)}
+.hicons svg{width:20px;height:20px}
+.cartbtn{position:relative}
+.cartbtn i{position:absolute;top:0;right:2px;background:var(--pk);color:#fff;font-style:normal;font-size:11px;min-width:18px;height:18px;border-radius:9px;display:grid;place-items:center;padding:0 4px}
+nav.main{background:var(--pu);}
+nav.main .wrap{display:flex;justify-content:center;gap:4px;flex-wrap:wrap;min-height:46px;align-items:center}
+nav.main a{color:#fff;font-weight:700;font-size:14.5px;padding:6px 14px;border-radius:999px}
+nav.main a:hover,nav.main a.on{background:var(--go);color:var(--ink)}
+.search{display:none;background:#fff;border-bottom:2px solid var(--pu)}
+.search.on{display:block}
+.search .wrap{padding:14px 20px;display:flex;gap:10px}
+.search input{flex:1;border:2px solid var(--pu);border-radius:999px;padding:10px 18px;font:inherit}
+.sres{max-width:1200px;margin:0 auto;padding:0 20px 14px;display:flex;gap:10px;flex-wrap:wrap}
+.sres a{background:var(--cr);border-radius:999px;padding:6px 14px;font-size:14px;font-weight:500}
+/* pages */
+.page{display:none}.page.on{display:block}
+section.blk{padding:56px 0 8px}
+.sh{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+.sh h2{font-size:38px;line-height:1.05;color:var(--pu3)}
+.sh h2 em{font-style:normal;color:var(--or2)}
+.sh .more{font-weight:700;color:var(--pu);border-bottom:2px solid var(--go)}
+/* hero slideshow */
+.hero{position:relative;overflow:hidden;background:var(--cr);border-bottom:3px solid var(--pu)}
+.slides{position:relative;height:540px}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity .6s;pointer-events:none}
+.slide.on{opacity:1;pointer-events:auto}
+.slide .rays{position:absolute;right:-160px;top:-240px;width:760px;height:760px;border-radius:50%;background:repeating-conic-gradient(from var(--rot,0deg),var(--c1) 0 7deg,transparent 7deg 14deg,var(--c2) 14deg 21deg,transparent 21deg 28deg,var(--c3) 28deg 35deg,transparent 35deg 42deg);-webkit-mask:radial-gradient(circle,transparent 150px,#000 151px);mask:radial-gradient(circle,transparent 150px,#000 151px)}
+.slide .sun{position:absolute;right:40px;top:-90px;width:280px;height:280px;border-radius:50%;background:var(--go)}
+.slide .waves{position:absolute;left:-40px;bottom:-20px;width:75%;height:190px}
+.slide .flower{position:absolute}
+.slide .art{position:absolute;right:7%;bottom:48px;width:360px}
+.slide .in{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:70px 20px 0}
+.card{background:#fff;border:3px solid var(--pu);border-radius:var(--r);padding:30px 34px;max-width:520px}
+.card h1{font-size:54px;line-height:1;color:var(--pu3)}
+.card h1 em{font-style:normal;color:var(--or)}
+.card p{color:var(--mu);font-size:18px;margin:14px 0 20px}
+.card .row{display:flex;gap:10px;flex-wrap:wrap}
+.hnav{position:absolute;right:24px;bottom:22px;z-index:3;display:flex;gap:8px}
+.hnav button{width:46px;height:46px;border-radius:50%;background:var(--pu);color:#fff;font-size:22px}
+.dots{position:absolute;left:50%;bottom:26px;transform:translateX(-50%);z-index:3;display:flex;gap:8px}
+.dots button{width:12px;height:12px;border-radius:50%;background:#fff;border:2px solid var(--pu)}
+.dots button.on{background:var(--pk);border-color:var(--pk)}
+/* perks */
+.perks{background:#fff;border-bottom:3px solid var(--pu)}
+.perks .wrap{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;padding:16px 20px}
+.perks a{display:flex;gap:10px;align-items:flex-start;font-size:14px;font-weight:500;line-height:1.35}
+.bean{flex:0 0 auto;width:14px;height:20px;border-radius:50%;margin-top:1px;transform:rotate(-20deg)}
+/* brand tiles */
+.brands{display:grid;grid-template-columns:repeat(8,1fr);gap:12px}
+.brands a{background:#fff;border:2px solid var(--cr2);border-radius:16px;height:84px;display:grid;place-items:center;font-family:Shrikhand;font-size:17px;color:var(--pu2);text-align:center;padding:6px;transition:border-color .15s}
+.brands a:hover{border-color:var(--pu)}
+.brands a:nth-child(3n+2){color:var(--or2)}.brands a:nth-child(3n){color:var(--tl)}
+/* welcome */
+.welcome{display:grid;grid-template-columns:1fr 1fr;gap:0;background:#fff;border:3px solid var(--pu);border-radius:var(--r);overflow:hidden}
+.welcome .ph{min-height:360px;background:var(--pu2);position:relative;overflow:hidden}
+.welcome .tx{padding:40px}
+.welcome h2{font-size:36px;line-height:1.08;color:var(--pu3);margin:6px 0 14px}
+.welcome p{color:var(--mu);margin-bottom:12px}
+/* toy grid */
+.tgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+.tile{display:block;text-align:center;font-weight:700}
+.tile .pic{border-radius:18px;overflow:hidden;border:2px solid var(--cr2);margin-bottom:8px;aspect-ratio:1;transition:border-color .15s}
+.tile:hover .pic{border-color:var(--pu)}
+/* age circles */
+.ages{display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
+.age{text-align:center}
+.age .c{aspect-ratio:1;border-radius:50%;display:grid;place-items:center;color:#fff;font-family:Shrikhand;font-size:40px;line-height:1;border:4px solid #fff;box-shadow:0 0 0 3px var(--pu);transition:transform .15s}
+.age:hover .c{transform:scale(1.04)}
+.age .c small{display:block;font-family:"DM Sans";font-weight:700;font-size:14px;margin-top:4px}
+.age span{display:block;margin-top:10px;font-weight:700}
+/* shelf cards */
+.shelves{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.shelf{background:#fff;border:2px solid var(--pu);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column}
+.shelf .top{padding:18px 20px;color:#fff}
+.shelf .top small{font-weight:700;opacity:.9}
+.shelf .top h3{font-size:24px;line-height:1.1}
+.shelf .body{display:grid;grid-template-columns:1fr 110px;gap:14px;padding:16px 20px;flex:1;align-items:center}
+.shelf p{font-size:14.5px;color:var(--mu)}
+.shelf .pic{border-radius:14px;overflow:hidden}
+.shelf .go{padding:0 20px 18px;font-weight:700;color:var(--pu)}
+/* product cards */
+.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.pc{background:#fff;border:2px solid var(--cr2);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;position:relative;transition:border-color .15s}
+.pc:hover{border-color:var(--pu)}
+.pc .pic{aspect-ratio:1;display:block}
+.pc .b{padding:12px 14px 14px;display:flex;flex-direction:column;gap:4px;flex:1}
+.pc .br{font-size:12px;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.06em}
+.pc .t{font-weight:700;line-height:1.3}
+.pc .pr{margin-top:auto;padding-top:6px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.pc .pr b{font-size:17px}
+.pc .pr s{color:var(--mu);font-size:14px;margin-left:6px}
+.pc .add{width:38px;height:38px;border-radius:50%;background:var(--pu);color:#fff;font-size:22px;line-height:1;flex:0 0 auto}
+.pc .add:hover{background:var(--or)}
+.badge{position:absolute;top:10px;left:10px;z-index:2;display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.badge span{font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;color:#fff}
+.b-pick{background:var(--pk)}.b-pre{background:var(--tl)}.b-sale{background:var(--or)}.b-nod{background:var(--pu3)}
+/* tabs */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.tabs button{padding:8px 18px;border-radius:999px;border:2px solid var(--pu);font-weight:700;font-size:14px;color:var(--pu);background:#fff}
+.tabs button.on{background:var(--pu);color:#fff}
+/* toy rows */
+.rowpills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.rowpills button{padding:7px 16px;border-radius:999px;background:#fff;border:2px solid var(--cr2);font-weight:700;font-size:14px}
+.rowpills button.on{border-color:var(--or);background:var(--or);color:#fff}
+.scroller{position:relative}
+.track{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 5*16px)/6);gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:4px}
+.track::-webkit-scrollbar{display:none}
+.track .pc{scroll-snap-align:start}
+.track .pc .t{font-size:14.5px}
+.arr{position:absolute;top:35%;width:42px;height:42px;border-radius:50%;background:var(--pu);color:#fff;font-size:20px;z-index:3}
+.arr.l{left:-14px}.arr.r{right:-14px}
+/* why cards */
+.why{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.why .w{background:#fff;border:2px solid var(--pu);border-radius:var(--r);overflow:hidden}
+.why .ph{height:190px;position:relative}
+.why .pill{position:absolute;top:12px;left:12px;background:var(--go);font-weight:700;font-size:12px;padding:4px 12px;border-radius:999px}
+.why .w div.tx{padding:18px 20px 22px}
+.why h3{font-size:22px;color:var(--pu3);margin-bottom:6px}
+.why p{color:var(--mu);font-size:15px}
+/* gazette */
+.gaz{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.gaz a{background:#fff;border:2px solid var(--cr2);border-radius:var(--r);overflow:hidden}
+.gaz a:hover{border-color:var(--pu)}
+.gaz .ph{height:170px}
+.gaz .tx{padding:16px 18px 20px}
+.gaz small{color:var(--pk);font-weight:700}
+.gaz h3{font-family:"DM Sans";font-weight:700;font-size:19px;line-height:1.3;margin:4px 0}
+.gaz p{font-size:14.5px;color:var(--mu)}
+/* visit */
+.visit{background:var(--pu);color:#fff;border-radius:var(--r);display:grid;grid-template-columns:1.1fr 1fr;overflow:hidden}
+.visit .tx{padding:40px}
+.visit h2{font-size:40px;color:var(--go);margin-bottom:16px}
+.visit dl{display:grid;grid-template-columns:130px 1fr;gap:10px 14px;margin-bottom:22px}
+.visit dt{font-weight:700;color:var(--cr2)}
+.visit .ph{min-height:320px;position:relative;overflow:hidden;background:var(--pu2)}
+/* newsletter */
+.news{margin-top:56px;background:#fff;border-top:3px solid var(--pu);border-bottom:3px solid var(--pu);padding:52px 0;text-align:center}
+.news h2{font-size:40px;color:var(--pu3)}
+.news p{color:var(--mu);max-width:520px;margin:8px auto 18px}
+.news form{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.news input{border:2px solid var(--pu);border-radius:999px;padding:12px 20px;font:inherit;width:min(340px,100%)}
+.news .thx{display:none;font-weight:700;color:var(--tl);margin-top:12px}
+/* footer */
+footer{background:var(--pu3);color:#e9def3;padding:46px 0 30px;font-size:14.5px}
+footer .cols{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:28px}
+footer h4{color:var(--go);font-size:15px;margin-bottom:10px}
+footer li{list-style:none;margin:4px 0}
+footer a:hover{color:#fff;text-decoration:underline}
+footer .fine{margin-top:34px;padding-top:18px;border-top:1px solid rgba(255,255,255,.15);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:13px;color:#bba9cb}
+/* collection */
+.chead{background:var(--pu);color:#fff;padding:40px 0 30px;position:relative;overflow:hidden}
+.chead .crumb{font-size:14px;color:var(--cr2)}
+.chead h1{font-size:50px;color:var(--go);line-height:1.05;margin:6px 0}
+.chead p{max-width:620px;color:#eadff5}
+.dpills{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.dpills button{padding:7px 16px;border-radius:999px;border:2px solid #fff;color:#fff;font-weight:700;font-size:14px}
+.dpills button.on{background:#fff;color:var(--pu)}
+.cats{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin:28px 0 8px}
+.cats button{background:#fff;border:2px solid var(--cr2);border-radius:16px;padding:10px;font-weight:700;font-size:14px;text-align:center}
+.cats button .pic{border-radius:12px;overflow:hidden;margin-bottom:8px;aspect-ratio:1}
+.cats button.on{border-color:var(--or)}
+.clay{display:grid;grid-template-columns:230px 1fr;gap:28px;padding:22px 0 10px}
+.filters{align-self:start;position:sticky;top:150px;background:#fff;border:2px solid var(--cr2);border-radius:var(--r);padding:18px}
+.filters h4{font-size:15px;margin:12px 0 8px;color:var(--pu)}
+.filters h4:first-child{margin-top:0}
+.filters label{display:flex;gap:8px;align-items:center;font-size:14.5px;margin:5px 0;cursor:pointer}
+.filters input{accent-color:var(--pu);width:16px;height:16px}
+.ctools{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:12px;flex-wrap:wrap}
+.ctools select{border:2px solid var(--pu);border-radius:999px;padding:8px 14px;font:inherit;background:#fff}
+.clay .pgrid{grid-template-columns:repeat(3,1fr)}
+.empty{padding:40px;text-align:center;color:var(--mu);background:#fff;border-radius:var(--r);border:2px dashed var(--cr2)}
+/* product page */
+.pp{display:grid;grid-template-columns:1.05fr 1fr;gap:44px;padding:30px 0 10px}
+.crumbs{font-size:14px;color:var(--mu);padding-top:24px}
+.crumbs a{color:var(--pu);font-weight:700}
+.gal .main{border-radius:var(--r);overflow:hidden;border:3px solid var(--pu);position:relative}
+.thumbs{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:10px}
+.thumbs button{border-radius:12px;overflow:hidden;border:2px solid var(--cr2)}
+.thumbs button.on{border-color:var(--or)}
+.info .br{font-weight:700;color:var(--pk);letter-spacing:.06em;text-transform:uppercase;font-size:13px}
+.info h1{font-size:40px;line-height:1.08;color:var(--pu3);margin:6px 0 10px}
+.info .price{font-size:26px;font-weight:700;display:flex;gap:10px;align-items:baseline}
+.info .price s{font-size:18px;color:var(--mu);font-weight:400}
+.pnote{margin:16px 0;background:#fff;border:2px solid var(--cr2);border-radius:16px;padding:14px 16px;font-size:14.5px}
+.pnote b{color:var(--pu)}
+.cons{background:var(--tl);color:#fff;border-radius:16px;padding:14px 16px;margin:16px 0;font-size:14.5px}
+.cons b{font-family:Shrikhand;font-weight:400;font-size:18px;display:block}
+.cons a{text-decoration:underline;font-weight:700}
+.buy{display:flex;gap:10px;margin:18px 0}
+.qty{display:flex;align-items:center;border:2px solid var(--pu);border-radius:999px;overflow:hidden;background:#fff}
+.qty button{width:40px;height:46px;font-size:20px;color:var(--pu)}
+.qty span{min-width:28px;text-align:center;font-weight:700}
+.buy .btn{flex:1}
+.lines{display:grid;gap:8px;margin:18px 0}
+.lines div{display:flex;gap:10px;align-items:flex-start;font-size:14.5px}
+details{border-top:2px solid var(--cr2);padding:12px 0}
+details summary{font-weight:700;cursor:pointer;color:var(--pu);list-style:none;display:flex;justify-content:space-between}
+details summary::after{content:"+";font-size:20px;line-height:1}
+details[open] summary::after{content:"–"}
+details p{margin-top:8px;color:var(--mu);font-size:14.5px}
+.why-pick{background:#fff;border:2px solid var(--pk);border-radius:16px;padding:14px 16px;margin:16px 0}
+.why-pick b{color:var(--pk)}
+/* consign page */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.step{background:#fff;border:2px solid var(--pu);border-radius:var(--r);padding:22px}
+.step .n{width:46px;height:46px;border-radius:50%;background:var(--or);color:#fff;font-family:Shrikhand;font-size:22px;display:grid;place-items:center;margin-bottom:12px}
+.step h3{font-size:20px;color:var(--pu3);margin-bottom:6px}
+.step p{font-size:14.5px;color:var(--mu)}
+.portal{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center;background:#fff;border:3px solid var(--pu);border-radius:var(--r);padding:30px;margin-top:22px}
+.portal h2{font-size:32px;color:var(--pu3);line-height:1.1;margin:6px 0 12px}
+.portal p{color:var(--mu);margin-bottom:12px}
+.mock{background:var(--cr);border-radius:16px;padding:16px;border:2px solid var(--cr2);font-size:14px}
+.mock .hd{display:flex;justify-content:space-between;font-weight:700;margin-bottom:10px}
+.mock table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden}
+.mock td,.mock th{padding:8px 10px;text-align:left;border-bottom:1px solid var(--cr2)}
+.mock th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--mu)}
+.mock .tot{display:flex;justify-content:space-between;margin-top:10px;font-weight:700;color:var(--tl)}
+.pill2{font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:999px;color:#fff}
+/* cart drawer */
+.scrim{position:fixed;inset:0;background:rgba(42,24,56,.5);z-index:50;opacity:0;pointer-events:none;transition:opacity .2s}
+.scrim.on{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(430px,100%);background:var(--cr);z-index:60;transform:translateX(100%);transition:transform .25s;display:flex;flex-direction:column;border-left:3px solid var(--pu)}
+.drawer.on{transform:none}
+.dh{display:flex;justify-content:space-between;align-items:center;padding:18px 20px;background:var(--pu);color:#fff}
+.dh h3{font-size:24px}
+.dh button{font-size:26px;color:#fff;width:36px;height:36px;border-radius:50%}
+.ship{padding:14px 20px;background:#fff;border-bottom:2px solid var(--cr2);font-size:14px}
+.bar{height:12px;border-radius:999px;background:var(--cr2);margin-top:8px;overflow:hidden}
+.bar i{display:block;height:100%;background:repeating-linear-gradient(45deg,var(--tl) 0 10px,#33b3af 10px 20px);border-radius:999px;transition:width .3s}
+.dnotes{padding:12px 20px;border-bottom:2px solid var(--cr2);display:grid;gap:6px;font-size:13.5px}
+.dnotes p{display:flex;gap:8px;align-items:flex-start}
+.dnotes .bean{width:11px;height:16px}
+.items{flex:1;overflow:auto;padding:10px 20px}
+.it{display:grid;grid-template-columns:72px 1fr auto;gap:12px;padding:12px 0;border-bottom:1px dashed var(--cr2);align-items:center}
+.it .pic{border-radius:12px;overflow:hidden}
+.it .t{font-weight:700;font-size:14.5px;line-height:1.3}
+.it small{display:block;color:var(--mu);font-size:12.5px}
+.it .q{display:flex;align-items:center;gap:6px;margin-top:6px}
+.it .q button{width:26px;height:26px;border-radius:50%;border:2px solid var(--pu);color:var(--pu);font-weight:700;line-height:1}
+.it .rm{font-size:12.5px;color:var(--or2);text-decoration:underline;margin-left:6px}
+.dfoot{padding:16px 20px;background:#fff;border-top:2px solid var(--pu)}
+.code{display:flex;gap:8px;margin-bottom:6px}
+.code input{flex:1;border:2px solid var(--pu);border-radius:999px;padding:9px 14px;font:inherit;text-transform:lowercase}
+.cmsg{font-size:13px;min-height:18px;margin-bottom:8px}
+.cmsg.ok{color:var(--tl)}.cmsg.bad{color:var(--or2)}
+.tot{display:grid;gap:4px;font-size:15px;margin-bottom:12px}
+.tot div{display:flex;justify-content:space-between}
+.tot .g{font-weight:700;font-size:18px}
+.dfoot .btn{width:100%}
+.dempty{text-align:center;padding:50px 10px;color:var(--mu)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(120px);background:var(--pu3);color:#fff;padding:12px 22px;border-radius:999px;font-weight:700;z-index:70;transition:transform .25s}
+.toast.on{transform:translateX(-50%)}
+/* phones */
+@media (max-width:980px){
+  .perks .wrap{grid-template-columns:repeat(2,1fr)}
+  .brands{grid-template-columns:repeat(4,1fr)}
+  .tgrid{grid-template-columns:repeat(3,1fr)}
+  .shelves,.why,.gaz{grid-template-columns:1fr 1fr}
+  .pgrid,.clay .pgrid{grid-template-columns:repeat(2,1fr)}
+  .track{grid-auto-columns:calc((100% - 16px)/2.3)}
+  .welcome,.visit,.pp,.portal{grid-template-columns:1fr}
+  .clay{grid-template-columns:1fr}.filters{position:static}
+  .cats{grid-template-columns:repeat(3,1fr)}
+  .steps{grid-template-columns:1fr 1fr}
+  footer .cols{grid-template-columns:1fr 1fr}
+  .slide .art{display:none}
+}
+@media (max-width:640px){
+  header .wrap{grid-template-columns:1fr auto;min-height:70px}
+  .open{display:none}.logo{justify-self:start}.logo b{font-size:22px}
+  .hicons .lbl{display:none}
+  nav.main .wrap{justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto}
+  nav.main a{white-space:nowrap}
+  .slides{height:520px}.slide .in{padding-top:40px}
+  .card{padding:22px}.card h1{font-size:38px}
+  .sh h2{font-size:30px}
+  .ages{grid-template-columns:repeat(3,1fr)}
+  .shelves,.why,.gaz,.steps{grid-template-columns:1fr}
+  .tgrid{grid-template-columns:repeat(2,1fr)}
+  .brands{grid-template-columns:repeat(2,1fr)}
+  .perks .wrap{grid-template-columns:1fr}
+  .welcome .tx,.visit .tx{padding:26px}
+  .visit dl{grid-template-columns:1fr}
+  .chead h1{font-size:36px}
+  .info h1{font-size:30px}
+  .arr{display:none}
+  .ann .msg{font-size:13px}
+  .demo .wrap{justify-content:center;text-align:center;padding:6px 20px}
+}
+</style></head>
+<body>
+
+<div class="demo"><div class="wrap"><span>Demo store built by <a href="/shopify-studio">Justin DeMatteis Shopify Studio</a> · fake products, real features</span><span>Consignment by <a href="https://www.justconsignin.com" target="_blank" rel="noopener">JustConsignIn</a></span></div></div>
+
+<div class="ann"><div class="wrap"><button aria-label="Previous message" data-ann="-1">‹</button><div class="msg" id="annMsg"></div><button aria-label="Next message" data-ann="1">›</button></div></div>
+
+<header><div class="wrap">
+  <div class="open" id="openNow"></div>
+  <a class="logo" href="#home"><b>Sunny Days</b><small>KIDS · TOYS · CONSIGNMENT</small></a>
+  <div class="hicons">
+    <button id="searchBtn" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><span class="lbl">Search</span></button>
+    <a href="#consign"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg><span class="lbl">Account</span></a>
+    <button class="cartbtn" id="cartBtn" aria-label="Cart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><i id="cartCount">0</i></button>
+  </div>
+</div>
+<nav class="main"><div class="wrap">
+  <a href="#home" data-nav="home">Home</a>
+  <a href="#shop/toys" data-nav="toys">Toys &amp; Games</a>
+  <a href="#shop/clothing" data-nav="clothing">Clothing</a>
+  <a href="#shop/feeding" data-nav="feeding">Feeding</a>
+  <a href="#shop/baby" data-nav="baby">Baby Essentials</a>
+  <a href="#shop/preloved" data-nav="preloved">Pre-loved</a>
+  <a href="#consign" data-nav="consign">Consign with us</a>
+</div></nav>
+<div class="search" id="search"><div class="wrap"><input id="q" placeholder="Search toys, brands, sizes…" autocomplete="off"><button class="btn sm" id="searchClose">Close</button></div><div class="sres" id="sres"></div></div>
+</header>
+
+<main>
+<!-- HOME -->
+<div class="page" id="p-home">
+  <section class="hero">
+    <div class="slides" id="slides"></div>
+    <div class="dots" id="dots"></div>
+    <div class="hnav"><button aria-label="Previous slide" data-sl="-1">‹</button><button aria-label="Next slide" data-sl="1">›</button></div>
+  </section>
+
+  <div class="perks"><div class="wrap" id="perks"></div></div>
+
+  <section class="blk"><div class="wrap">
+    <div class="sh"><div><span class="kick">The names kids ask for</span><h2>Shop our <em>brands</em></h2></div></div>
+    <div class="brands" id="brands"></div>
+  </div></section>
+
+  <section class="blk"><div class="wrap">
+    <div class="welcome">
+      <div class="ph" id="welcomeArt"></div>
+      <div class="tx">
+        <span class="kick">Welcome!</span>
+        <h2>A neighbourhood kids' shop with a lot inside</h2>
+        <p>New toys, eco-friendly baby clothes, feeding gear and gifts, plus a pre-loved rack that changes every day. Shop online or come see us on Sunny Street.</p>
+        <p>Families bring in what their kids have outgrown, we sell it, and they earn half. Everything pre-loved is checked, steamed and priced by hand.</p>
+        <div class="row" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px"><a class="btn" href="#shop/toys">Shop toys</a><a class="btn line" href="#consign">How consigning works</a></div>
+      </div>
+    </div>
+  </div></section>
+
+  <section class="blk"><div class="wrap">
+    <div class="sh"><div><span class="kick">Favourite characters</span><h2>Shop <em>favourite</em> brands</h2></div><a class="more" href="#shop/toys">All toys →</a></div>
+    <div class="tgrid" id="tgrid"></div>
+  </div></section>
+
+  <section class="blk"><div class="wrap">
+    <div class="sh"><div><span class="kick">Find the right toy, fast</span><h2>Shop by <em>age</em></h2></div></div>
+    <div class="ages" id="ages"></div>
+  </div></section>
+
+  <section class="blk"><div class="wrap">
+    <div class="sh"><div><span class="kick">Every department</span><h2>Shop the <em>shelves</em></h2></div><a class="more" href="#shop/toys">Everything →</a></div>
+    <div class="shelves" id="shelves"></div>
+  </div></section>
+
+  <section class="blk"><div class="wrap" data-tabs="clothing">
+    <div class="sh"><div><span class="kick">Just in</span><h2>New baby <em>clothing</em> &amp; shoes</h2></div><a class="more" href="#shop/clothing">Shop all →</a></div>
+    <div class="tabs"></div><div class="pgrid"></div>
+  </div></section>
+
+  <section class="blk"><div class="wrap" data-rows="winter">
+    <div class="sh"><div><span class="kick">Bundle up</span><h2>Ready for <em>winter</em></h2></div></div>
+    <div class="rowpills"></div><div class="scroller"><button class="arr l" aria-label="Scroll left">‹</button><div class="track"></div><button class="arr r" aria-label="Scroll right">›</button></div>
+  </div></section>
+
+  <section class="blk"><div class="wrap" data-tabs="plush">
+    <div class="sh"><div><span class="kick">Cuddle squad</span><h2>Plush toys &amp; <em>dolls</em></h2></div><a class="more" href="#shop/toys">Shop all →</a></div>
+    <div class="tabs"></div><div class="pgrid"></div>
+  </div></section>
+
+  <section class="blk"><div class="wrap" data-rows="picks">
+    <div class="sh"><div><span class="kick">Hand-picked by the owner</span><h2>Owner's <em>picks</em></h2></div></div>
+    <div class="rowpills"></div><div class="scroller"><button class="arr l" aria-label="Scroll left">‹</button><div class="track"></div><button class="arr r" aria-label="Scroll right">›</button></div>
+  </div></section>
+
+  <section class="blk"><div class="wrap" data-tabs="feeding">
+    <div class="sh"><div><span class="kick">Little eaters</span><h2>Feeding &amp; <em>mealtime</em></h2></div><a class="more" href="#shop/feeding">Shop all →</a></div>
+    <div class="tabs"></div><div class="pgrid"></div>
+  </div></section>
+
+  <section class="blk"><div class="wrap">
+    <div class="sh"><div><span class="kick">Why families love us</span><h2>Why shop and <em>consign</em> with us</h2></div></div>
+    <div class="why" id="why"></div>
+  </div></section>
+
+  <section class="blk"><div class="wrap">
+    <div class="sh"><div><span class="kick">News from the shop</span><h2>The Sunny Days <em>Gazette</em></h2></div><a class="more" href="#home">All posts →</a></div>
+    <div class="gaz" id="gaz"></div>
+  </div></section>
+
+  <section class="blk"><div class="wrap">
+    <div class="visit">
+      <div class="tx"><h2>Visit us in person!</h2>
+        <dl><dt>Address</dt><dd>123 Sunny Street, Anytown ON</dd><dt>Hours</dt><dd>Mon–Sat 10am–6pm · Sun 11am–4pm</dd><dt>Phone</dt><dd>(555) 010-1960</dd><dt>Consignment</dt><dd>Drop off any day, no appointment</dd></dl>
+        <a class="btn or" href="#consign">Learn more</a></div>
+      <div class="ph" id="visitArt"></div>
+    </div>
+  </div></section>
+</div>
+
+<!-- COLLECTION -->
+<div class="page" id="p-shop">
+  <div class="chead"><div class="wrap">
+    <div class="crumb"><a href="#home">Home</a> / <span id="cCrumb"></span></div>
+    <h1 id="cTitle"></h1><p id="cDesc"></p>
+    <div class="dpills" id="dpills"></div>
+  </div></div>
+  <div class="wrap">
+    <div class="cats" id="cats"></div>
+    <div class="clay">
+      <aside class="filters" id="filters">
+        <h4>Age</h4><div data-f="age"></div>
+        <h4>Condition</h4><div data-f="cond"></div>
+        <h4>Price</h4><div data-f="price"></div>
+        <h4>Deals</h4><div data-f="deal"></div>
+      </aside>
+      <div>
+        <div class="ctools"><span id="cCount"></span><select id="sort" aria-label="Sort"><option value="feat">Featured (owner's picks first)</option><option value="lo">Price, low to high</option><option value="hi">Price, high to low</option><option value="new">Newest</option></select></div>
+        <div class="pgrid" id="cgrid"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT -->
+<div class="page" id="p-product"><div class="wrap">
+  <div class="crumbs" id="crumbs"></div>
+  <div class="pp" id="pp"></div>
+  <section class="blk"><div class="sh"><div><span class="kick">From the same shelf</span><h2>You might also <em>like</em></h2></div></div><div class="pgrid" id="more"></div></section>
+</div></div>
+
+<!-- CONSIGN -->
+<div class="page" id="p-consign">
+  <div class="chead"><div class="wrap"><div class="crumb"><a href="#home">Home</a> / Consign with us</div><h1>Consign with us</h1><p>Bring in what your kids have outgrown. We price it, sell it in the shop and online, and you earn 50%, paid in cash or store credit.</p></div></div>
+  <section class="blk"><div class="wrap">
+    <div class="steps">
+      <div class="step"><div class="n">1</div><h3>Drop off</h3><p>Any day, no appointment. Clean, seasonal clothing, gear and toys.</p></div>
+      <div class="step"><div class="n">2</div><h3>We price it</h3><p>Every item gets a tag, a price and a listing, in the shop and online.</p></div>
+      <div class="step"><div class="n">3</div><h3>It sells</h3><p>Pre-loved items show up right next to the new ones, with a "Pre-loved" badge.</p></div>
+      <div class="step"><div class="n">4</div><h3>You earn 50%</h3><p>Check your balance any time and get paid in cash or store credit.</p></div>
+    </div>
+    <div class="portal">
+      <div><span class="kick">Your consignor account</span><h2>See every item, sale and payout</h2>
+        <p>Consignors log in to see what's in the shop, what sold and what they're owed. The store runs it all from Shopify: items, tags, splits and payouts.</p>
+        <p>This part of the store is powered by <b>JustConsignIn</b>, our own consignment app for Shopify.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn or" href="https://apps.shopify.com/" target="_blank" rel="noopener">Get the app</a><a class="btn line" href="https://www.justconsignin.com" target="_blank" rel="noopener">About JustConsignIn</a></div></div>
+      <div class="mock">
+        <div class="hd"><span>Hi, Maya 👋</span><span style="color:var(--pu)">Consignor #1042</span></div>
+        <table><tr><th>Item</th><th>Status</th><th>You earn</th></tr>
+          <tr><td>Snowsuit, 3T</td><td><span class="pill2" style="background:var(--tl)">Sold</span></td><td>$32.50</td></tr>
+          <tr><td>Wooden train set</td><td><span class="pill2" style="background:var(--tl)">Sold</span></td><td>$18.00</td></tr>
+          <tr><td>Rain boots, 9</td><td><span class="pill2" style="background:var(--or)">In shop</span></td><td>—</td></tr>
+          <tr><td>Baby carrier</td><td><span class="pill2" style="background:var(--or)">In shop</span></td><td>—</td></tr>
+        </table>
+        <div class="tot"><span>Balance ready to pay out</span><span>$50.50</span></div>
+      </div>
+    </div>
+  </div></section>
+  <section class="blk"><div class="wrap"><div class="sh"><div><span class="kick">On the rack right now</span><h2>Pre-loved <em>finds</em></h2></div><a class="more" href="#shop/preloved">Shop all →</a></div><div class="pgrid" id="preGrid"></div></div></section>
+</div>
+</main>
+
+<section class="news"><div class="wrap">
+  <h2>Join the community!</h2>
+  <p>Be the first to know when new items arrive, about upcoming events, and when the next clothing swap happens.</p>
+  <form id="newsForm"><input type="email" required placeholder="Your email" aria-label="Your email"><button class="btn or">Sign up</button></form>
+  <div class="thx" id="thx">Thanks! You're on the list.</div>
+</div></section>
+
+<footer><div class="wrap">
+  <div class="cols">
+    <div><a class="logo" href="#home" style="margin-bottom:14px"><b>Sunny Days</b><small>KIDS · TOYS · CONSIGNMENT</small></a><p style="margin-top:12px">A demo store designed and built by Justin DeMatteis Shopify Studio. The products are made up. The features are real.</p></div>
+    <div><h4>Shop</h4><ul><li><a href="#shop/toys">Toys &amp; Games</a></li><li><a href="#shop/clothing">Clothing</a></li><li><a href="#shop/feeding">Feeding</a></li><li><a href="#shop/preloved">Pre-loved</a></li></ul></div>
+    <div><h4>Help</h4><ul><li><a href="#consign">Consign with us</a></li><li><a href="#home">Shipping</a></li><li><a href="#home">Returns &amp; final sale</a></li><li><a href="#home">Contact</a></li></ul></div>
+    <div><h4>Want a store like this?</h4><ul><li><a href="/shopify-studio">Shopify Studio</a></li><li><a href="/shopify-studio/jill-and-the-beanstalk/60s">See the case study</a></li><li><a href="https://www.justconsignin.com" target="_blank" rel="noopener">JustConsignIn app</a></li></ul></div>
+  </div>
+  <div class="fine"><span>© 2026 Sunny Days Kids (demo)</span><span>Built on Shopify · Consignment by JustConsignIn</span></div>
+</div></footer>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Cart">
+  <div class="dh"><h3>Your cart</h3><button id="closeCart" aria-label="Close cart">×</button></div>
+  <div class="ship" id="ship"></div>
+  <div class="dnotes" id="dnotes"></div>
+  <div class="items" id="items"></div>
+  <div class="dfoot" id="dfoot">
+    <div class="code"><input id="codeIn" placeholder="Discount code (try fun10)" aria-label="Discount code"><button class="btn sm" id="codeBtn">Apply</button></div>
+    <div class="cmsg" id="cmsg"></div>
+    <div class="tot" id="tot"></div>
+    <button class="btn or" id="checkout">Check out</button>
+  </div>
+</aside>
+<div class="toast" id="toast"></div>
+
+<script>
+const C={pu:'#5b2a86',pu2:'#47206b',pu3:'#331650',or:'#f26b1d',pk:'#e94e8a',tl:'#2a9d9a',go:'#f4b223',cr:'#f6e9cf',cr2:'#ecd6ad',ink:'#2a1838'};
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const money=n=>'$'+n.toFixed(2);
+
+/* ---------- fake product art (no photos needed) ---------- */
+const ICON={
+ blocks:'<rect x="22" y="58" width="26" height="22" rx="3" fill="F1"/><rect x="52" y="58" width="26" height="22" rx="3" fill="F2"/><rect x="37" y="34" width="26" height="22" rx="3" fill="F3"/><g fill="#fff" opacity=".7"><circle cx="30" cy="58" r="3"/><circle cx="40" cy="58" r="3"/><circle cx="60" cy="58" r="3"/><circle cx="70" cy="58" r="3"/><circle cx="45" cy="34" r="3"/><circle cx="55" cy="34" r="3"/></g>',
+ bear:'<circle cx="34" cy="32" r="10" fill="F1"/><circle cx="66" cy="32" r="10" fill="F1"/><circle cx="50" cy="48" r="22" fill="F1"/><ellipse cx="50" cy="56" rx="10" ry="7" fill="#fff" opacity=".8"/><circle cx="42" cy="44" r="3" fill="#2a1838"/><circle cx="58" cy="44" r="3" fill="#2a1838"/><circle cx="50" cy="53" r="3" fill="#2a1838"/><ellipse cx="50" cy="80" rx="18" ry="10" fill="F1"/>',
+ ball:'<circle cx="50" cy="52" r="28" fill="F1"/><path d="M22 52a28 28 0 0 1 56 0" fill="F2"/><path d="M22 52h56" stroke="#fff" stroke-width="4"/><circle cx="50" cy="52" r="7" fill="#fff"/>',
+ rocket:'<path d="M50 16c14 10 18 30 14 50H36c-4-20 0-40 14-50z" fill="F1"/><circle cx="50" cy="42" r="7" fill="#fff"/><path d="M36 56l-10 16h12zM64 56l10 16H62z" fill="F2"/><path d="M42 68h16l-8 16z" fill="F3"/>',
+ car:'<path d="M18 60l8-16h40l12 16h6v12H14V60z" fill="F1"/><rect x="32" y="48" width="14" height="10" fill="#fff" opacity=".8"/><rect x="50" y="48" width="14" height="10" fill="#fff" opacity=".8"/><circle cx="32" cy="74" r="8" fill="#2a1838"/><circle cx="68" cy="74" r="8" fill="#2a1838"/>',
+ sock:'<path d="M38 16h22v38l14 14c6 6 2 18-8 18H48c-8 0-12-6-12-12z" fill="F1"/><rect x="38" y="16" width="22" height="10" fill="F2"/><circle cx="66" cy="76" r="6" fill="F3"/>',
+ bottle:'<rect x="40" y="16" width="20" height="10" rx="4" fill="F2"/><path d="M36 28h28l2 8v42a8 8 0 0 1-8 8H42a8 8 0 0 1-8-8V36z" fill="F1"/><g stroke="#fff" stroke-width="3"><path d="M40 48h8M40 58h8M40 68h8"/></g>',
+ bowl:'<path d="M16 46h68a34 34 0 0 1-68 0z" fill="F1"/><ellipse cx="50" cy="46" rx="34" ry="8" fill="F2"/><path d="M62 18l-6 30" stroke="F3" stroke-width="5" stroke-linecap="round"/>',
+ squish:'<path d="M50 20c20 0 32 16 30 34s-14 28-30 28-30-10-30-28 10-34 30-34z" fill="F1"/><circle cx="40" cy="48" r="4" fill="#2a1838"/><circle cx="60" cy="48" r="4" fill="#2a1838"/><path d="M42 60q8 7 16 0" stroke="#2a1838" stroke-width="3" fill="none"/><circle cx="34" cy="58" r="4" fill="F2" opacity=".8"/><circle cx="66" cy="58" r="4" fill="F2" opacity=".8"/>',
+ puzzle:'<path d="M20 30h20a8 8 0 1 1 16 0h20v20a8 8 0 1 0 0 16v18H56a8 8 0 1 0-16 0H20V66a8 8 0 1 1 0-16z" fill="F1"/>',
+ mitten:'<path d="M34 20c12-6 26 0 28 14l2 14 8-6c6-4 12 4 8 10L66 70v10H36V64c-6-12-12-34-2-44z" fill="F1"/><rect x="36" y="72" width="30" height="12" fill="F2"/>',
+ hat:'<path d="M20 66c0-24 14-38 30-38s30 14 30 38z" fill="F1"/><rect x="16" y="62" width="68" height="14" rx="5" fill="F2"/><circle cx="50" cy="24" r="9" fill="F3"/>',
+ book:'<path d="M16 26h30a6 6 0 0 1 4 2v54a6 6 0 0 0-4-2H16z" fill="F1"/><path d="M84 26H54a6 6 0 0 0-4 2v54a6 6 0 0 1 4-2h30z" fill="F2"/>',
+ duck:'<ellipse cx="50" cy="64" rx="28" ry="16" fill="F1"/><circle cx="40" cy="38" r="14" fill="F1"/><path d="M26 38l-12 4 12 4z" fill="F2"/><circle cx="37" cy="35" r="3" fill="#2a1838"/>',
+ brush:'<rect x="44" y="40" width="12" height="44" rx="5" fill="F1"/><path d="M38 18h24v22H38z" fill="F2"/><g stroke="#fff" stroke-width="2"><path d="M42 18v22M50 18v22M58 18v22"/></g>',
+ shoe:'<path d="M16 54c10 0 16-12 18-22h14c2 10 8 14 20 18l12 4c6 2 6 16-4 16H16z" fill="F1"/><rect x="16" y="66" width="64" height="8" rx="3" fill="F2"/>',
+ doll:'<circle cx="50" cy="30" r="14" fill="#f5d0b5"/><path d="M36 26c2-12 26-12 28 0-6-4-22-4-28 0z" fill="F2"/><path d="M34 84l6-40h20l6 40z" fill="F1"/><circle cx="45" cy="30" r="2" fill="#2a1838"/><circle cx="55" cy="30" r="2" fill="#2a1838"/>'
+};
+const PAL=[[C.or,C.go,C.pk],[C.pk,C.go,C.pu],[C.tl,C.go,C.or],[C.pu,C.pk,C.go],[C.go,C.or,C.tl],[C.tl,C.pk,C.go]];
+const BGS=['#fbe3c8','#f9d6e3','#d7eeec','#e6dcf2','#fcecc0','#f6e9cf'];
+function art(icon,seed=0,bgOverride){
+  const p=PAL[seed%PAL.length],bg=bgOverride||BGS[(seed*7)%BGS.length];
+  let g=(ICON[icon]||ICON.ball).replace(/F1/g,p[0]).replace(/F2/g,p[1]).replace(/F3/g,p[2]);
+  const fl=`<g opacity=".35"><circle cx="88" cy="12" r="5" fill="${p[1]}"/><circle cx="8" cy="90" r="6" fill="${p[2]}"/></g>`;
+  return `<svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;background:${bg}">${fl}${g}</svg>`;
+}
+function flower(color,center,size,style){return `<svg class="flower" style="${style};width:${size}px" viewBox="0 0 100 100"><g fill="${color}"><circle cx="50" cy="22" r="20"/><circle cx="78" cy="42" r="20"/><circle cx="68" cy="76" r="20"/><circle cx="32" cy="76" r="20"/><circle cx="22" cy="42" r="20"/></g><circle cx="50" cy="52" r="13" fill="${center}"/></svg>`}
+function scene(icon,seed,bg){ // big decorative picture for panels
+  return `<div style="position:absolute;inset:0;background:${bg}"></div>
+  <div style="position:absolute;right:-120px;top:-120px;width:420px;height:420px;border-radius:50%;background:repeating-conic-gradient(${C.or} 0 8deg,transparent 8deg 16deg,${C.go} 16deg 24deg,transparent 24deg 32deg,${C.pk} 32deg 40deg,transparent 40deg 48deg);-webkit-mask:radial-gradient(circle,transparent 90px,#000 91px);mask:radial-gradient(circle,transparent 90px,#000 91px);opacity:.85"></div>
+  ${flower(C.pk,C.go,80,'position:absolute;left:6%;bottom:10%')}${flower(C.go,C.cr,50,'position:absolute;left:40%;top:10%')}
+  <div style="position:absolute;left:50%;top:50%;width:62%;max-width:260px;aspect-ratio:1;transform:translate(-50%,-45%);border-radius:50%;overflow:hidden;border:6px solid #fff">${art(icon,seed)}</div>`;
+}
+
+/* ---------- catalogue ---------- */
+const DEPTS={
+ toys:{name:'Toys & Games',desc:'Building sets, plush, puzzles, board games and sensory toys for every age.',cats:['Building','Plush & dolls','Puzzles','Board games','Squishies','Vehicles']},
+ clothing:{name:'Clothing & Accessories',desc:'Everyday comfort and style: socks, sleepwear, shoes and winter gear.',cats:['Socks','Sleepwear','Shoes','Boots','Mittens','Hats']},
+ feeding:{name:'Feeding & Mealtime',desc:'Bottles, sippy cups, plates, bowls and lunch gear.',cats:['Bottles & cups','Dishwear','Bibs']},
+ baby:{name:'Baby Essentials',desc:'Clean, safe and caring: oral care, hair care, teething and bath time.',cats:['Oral care','Hair care','Teething','Bath']},
+ preloved:{name:'Pre-loved',desc:'Consigned by local families. Checked, steamed and priced by hand. Consignors earn 50%.',cats:[]}
+};
+const CATICON={'Building':'blocks','Plush & dolls':'bear','Puzzles':'puzzle','Board games':'ball','Squishies':'squish','Vehicles':'car','Socks':'sock','Sleepwear':'hat','Shoes':'shoe','Boots':'shoe','Mittens':'mitten','Hats':'hat','Bottles & cups':'bottle','Dishwear':'bowl','Bibs':'bowl','Oral care':'brush','Hair care':'brush','Teething':'duck','Bath':'duck'};
+// [title, brand, dept, cat, price, compareAt, ages, flags] flags: p=owner's pick, u=pre-loved, x=no fun10/free shipping, n=new
+const RAW=[
+ ['Fire Ladder Truck Set','Brickworks','toys','Building',54.99,0,'6-8','pn','car'],
+ ['Rainbow Stacking Blocks','Little Maple','toys','Building',32,0,'0-2','p','blocks'],
+ ['Space Station Builder','Brickworks','toys','Building',89.99,0,'9-12','n','rocket'],
+ ['Light-up Glow Cubes, 4 pack','Glo Pals','toys','Building',24.99,0,'3-5','','blocks'],
+ ['Cuddle Bear, Honey','Aurora Bay','toys','Plush & dolls',29.99,0,'0-2','p','bear'],
+ ['Sunny the Duck Plush','Aurora Bay','toys','Plush & dolls',19.99,0,'0-2','n','duck'],
+ ['Rag Doll, Marigold','Miyo','toys','Plush & dolls',36,0,'3-5','','doll'],
+ ['Wooden Safari Puzzle','Mudpup','toys','Puzzles',22,0,'3-5','p','puzzle'],
+ ['World Map Floor Puzzle','Mudpup','toys','Puzzles',34.99,0,'6-8','','puzzle'],
+ ['Retro Family Board Game','Groovy Games','toys','Board games',27.99,34.99,'6-8','p','ball'],
+ ['Spot-the-Match Card Game','Groovy Games','toys','Board games',16.99,0,'6-8','','ball'],
+ ['Gummy Bear Squish','SquishCo','toys','Squishies',7.99,0,'3-5','px','squish'],
+ ['Colour-changing Squish Cube','SquishCo','toys','Squishies',9.99,0,'6-8','x','squish'],
+ ['Mystery Dumpling Squish','SquishCo','toys','Squishies',5.99,0,'3-5','x','squish'],
+ ['Die-cast School Bus','Wheelie','toys','Vehicles',12.99,0,'3-5','','car'],
+ ['Pull-back Chicken Racer','Wheelie','toys','Vehicles',8.99,0,'3-5','p','car'],
+ ['Grippy Socks, 3 pack','GoBaby','clothing','Socks',18,0,'0-2','n','sock'],
+ ['Rainbow Stripe Socks','GoBaby','clothing','Socks',12,0,'3-5','','sock'],
+ ['Bamboo Sleeper, Sunrise','Hush Little','clothing','Sleepwear',38,0,'0-2','p','hat'],
+ ['First Walker Sneakers','Tiny Toes','clothing','Shoes',49.99,0,'0-2','n','shoe'],
+ ['Fleece-lined Rain Boots','Puddle Co','clothing','Boots',44,0,'3-5','','shoe'],
+ ['Stay-on Mittens','Mitty','clothing','Mittens',26,0,'0-2','p','mitten'],
+ ['Pom-pom Beanie, Olive','Mitty','clothing','Hats',24,0,'3-5','','hat'],
+ ['Plaited Knit Beanie','Heritage Kids','clothing','Hats',28,0,'6-8','','hat'],
+ ['Silicone Sippy Cup','Easy Eats','feeding','Bottles & cups',16,0,'0-2','p','bottle'],
+ ['Glass Baby Bottle, 2 pack','Easy Eats','feeding','Bottles & cups',29.99,0,'0-2','n','bottle'],
+ ['Suction Happy Bowl','Easy Eats','feeding','Dishwear',22,0,'0-2','','bowl'],
+ ['Bento Lunch Box','Lunchbug','feeding','Dishwear',39.99,0,'3-5','p','bowl'],
+ ['Catch-all Silicone Bib','Easy Eats','feeding','Bibs',14,0,'0-2','','bowl'],
+ ['Strawberry Kids Toothpaste','Smile Bright','baby','Oral care',8.99,0,'3-5','','brush'],
+ ['Training Toothbrush','Smile Bright','baby','Oral care',6.99,0,'0-2','p','brush'],
+ ['Detangling Spray','Curly Q','baby','Hair care',14.99,0,'3-5','','brush'],
+ ['Teething Ring, Daisy','Chew Crew','baby','Teething',12,0,'0-2','p','duck'],
+ ['Bath Duck Trio','Splashy','baby','Bath',15,0,'0-2','n','duck'],
+ // pre-loved (consigned)
+ ['Snowsuit, size 3T','Puddle Co','preloved','Pre-loved',65,140,'3-5','u','mitten'],
+ ['Wooden Train Set','Little Maple','preloved','Pre-loved',36,90,'3-5','u','car'],
+ ['Rain Boots, size 9','Puddle Co','preloved','Pre-loved',18,44,'3-5','u','shoe'],
+ ['Baby Carrier','Hush Little','preloved','Pre-loved',58,159,'0-2','u','bear'],
+ ['Picture Book Bundle, 6','Story Time','preloved','Pre-loved',15,60,'3-5','u','book'],
+ ['Knit Cardigan, 18m','Heritage Kids','preloved','Pre-loved',14,48,'0-2','u','hat'],
+ ['Dollhouse Furniture Set','Little Maple','preloved','Pre-loved',28,75,'6-8','u','blocks'],
+ ['Winter Boots, size 11','Tiny Toes','preloved','Pre-loved',22,70,'6-8','u','shoe']
+];
+const P=RAW.map((r,i)=>({id:i,title:r[0],brand:r[1],dept:r[2],cat:r[3],price:r[4],was:r[5],age:r[6],pick:r[7].includes('p'),pre:r[7].includes('u'),excl:r[7].includes('x'),isNew:r[7].includes('n'),icon:r[8]}));
+const byId=id=>P.find(p=>p.id==id);
+
+function card(p,opts={}){
+  const b=[];if(p.pick&&opts.picks!==false)b.push('<span class="b-pick">Owner\'s pick</span>');if(p.pre)b.push('<span class="b-pre">Pre-loved</span>');if(p.was&&!p.pre)b.push('<span class="b-sale">Sale</span>');if(p.excl&&opts.excl)b.push('<span class="b-nod">No codes</span>');
+  return `<div class="pc"><div class="badge">${b.join('')}</div><a class="pic" href="#product/${p.id}">${art(p.icon,p.id)}</a><div class="b"><span class="br">${p.brand}</span><a class="t" href="#product/${p.id}">${p.title}</a><div class="pr"><span><b>${money(p.price)}</b>${p.was?`<s>${money(p.was)}</s>`:''}</span><button class="add" data-add="${p.id}" aria-label="Add ${p.title} to cart">+</button></div></div></div>`;
+}
+
+/* ---------- announcement + open-now ---------- */
+const ANN=['Free shipping in Canada on orders over $150 (some remote areas excluded). <a href="#home">Learn more</a>','Use code <b>fun10</b> for 10% off select items','Consignors earn 50%. <a href="#consign">Drop off any day</a>','Pick up in store at 123 Sunny Street'];
+let ai=0;const showAnn=()=>$('#annMsg').innerHTML=ANN[ai];
+$$('[data-ann]').forEach(b=>b.onclick=()=>{ai=(ai+ +b.dataset.ann+ANN.length)%ANN.length;showAnn()});
+showAnn();setInterval(()=>{ai=(ai+1)%ANN.length;showAnn()},6000);
+(function(){const d=new Date(),day=d.getDay(),h=d.getHours()+d.getMinutes()/60;const [o,c]=day===0?[11,16]:[10,18];const open=h>=o&&h<c;const f=x=>x>12?x-12:x;$('#openNow').innerHTML=open?`<b>Open today</b> · ${f(o)}–${f(c)} · Sunny Street`:`<b class="shut">Closed now</b> · opens ${day===6?'Sun 11':'10'}am`})();
+
+/* ---------- slideshow ---------- */
+const SLIDES=[
+ {h:'Stocking stuffers &amp; <em>little gifts</em>',p:'Cards, books, squishies and small surprises, all waiting at the front counter.',a:['Shop gifts','#shop/toys'],b:['Gift cards','#home'],icon:'squish',c:[C.or,C.go,C.pk],rot:0},
+ {h:'Bundle up for <em>winter</em>',p:'Mittens that stay on, fleece-lined boots and snowsuits, new and pre-loved.',a:['Shop winter','#shop/clothing'],b:['Pre-loved rack','#shop/preloved'],icon:'mitten',c:[C.tl,C.go,C.pk],rot:20},
+ {h:'Outgrown it? <em>Earn 50%</em>',p:'Drop off clean, seasonal kids\' things any day. We sell them, you get half.',a:['Consign with us','#consign'],b:['See what\'s in','#shop/preloved'],icon:'bear',c:[C.pk,C.or,C.go],rot:40}
+];
+const waves=`<svg class="waves" viewBox="0 0 800 200" preserveAspectRatio="none"><path d="M0 120 C150 40 300 200 450 110 S700 60 800 140 L800 200 L0 200Z" fill="${C.pu}"/><path d="M0 150 C150 80 300 220 450 140 S700 100 800 170 L800 200 L0 200Z" fill="${C.pk}"/><path d="M0 175 C150 120 300 230 450 170 S700 140 800 190 L800 200 L0 200Z" fill="${C.go}"/></svg>`;
+$('#slides').innerHTML=SLIDES.map((s,i)=>`<div class="slide${i?'':' on'}" style="--c1:${s.c[0]};--c2:${s.c[1]};--c3:${s.c[2]};--rot:${s.rot}deg"><span class="rays"></span><span class="sun"></span>${waves}${flower(C.pk,C.go,90,'left:2%;top:62%')}${flower(C.or,C.cr,56,'left:46%;top:8%')}<div class="art"><div style="aspect-ratio:1;border-radius:50%;overflow:hidden;border:8px solid #fff;box-shadow:0 0 0 4px ${C.pu}">${art(s.icon,i+2)}</div></div><div class="in"><div class="card"><h1>${s.h}</h1><p>${s.p}</p><div class="row"><a class="btn" href="${s.a[1]}">${s.a[0]}</a><a class="btn or" href="${s.b[1]}">${s.b[0]}</a></div></div></div></div>`).join('');
+$('#dots').innerHTML=SLIDES.map((_,i)=>`<button aria-label="Slide ${i+1}" data-dot="${i}" class="${i?'':'on'}"></button>`).join('');
+let si=0,st;function goSlide(n){si=(n+SLIDES.length)%SLIDES.length;$$('.slide').forEach((s,i)=>s.classList.toggle('on',i===si));$$('[data-dot]').forEach((d,i)=>d.classList.toggle('on',i===si));clearInterval(st);st=setInterval(()=>goSlide(si+1),7000)}
+$$('[data-sl]').forEach(b=>b.onclick=()=>goSlide(si+ +b.dataset.sl));$$('[data-dot]').forEach(b=>b.onclick=()=>goSlide(+b.dataset.dot));goSlide(0);
+
+/* ---------- home sections ---------- */
+$('#perks').innerHTML=[['No shipping to the United States. Sorry for any trouble.',C.go,'#home'],['Free shipping in Canada over $150',C.tl,'#home'],['Use fun10 for 10% off select items. Codes can\'t be combined.',C.or,'#shop/toys'],['Pick up at 123 Sunny Street',C.pk,'#home'],['Consignors earn 50%',C.pu,'#consign']].map(p=>`<a href="${p[2]}"><i class="bean" style="background:${p[1]}"></i><span>${p[0]}</span></a>`).join('');
+$('#brands').innerHTML=['Brickworks','Aurora Bay','Little Maple','Mudpup','Easy Eats','GoBaby','Puddle Co','SquishCo'].map(b=>`<a href="#shop/toys">${b}</a>`).join('');
+$('#welcomeArt').innerHTML=scene('blocks',3,C.pu2);
+$('#visitArt').innerHTML=scene('rocket',5,C.pu2);
+$('#tgrid').innerHTML=[['Brickworks',0],['Space',2],['Plush',4],['Puzzles',7],['Squishies',11],['Vehicles',15]].map(t=>{const p=byId(t[1]);return `<a class="tile" href="#shop/toys/${p.cat}"><div class="pic">${art(p.icon,p.id)}</div>${t[0]}</a>`}).join('');
+$('#ages').innerHTML=[['0','2',C.pk],['3','5',C.or],['6','8',C.tl],['9','12',C.pu],['13','+',C.go]].map(a=>`<a class="age" href="#shop/toys?age=${a[0]}-${a[1]==='+'?'12':a[1]}"><div class="c" style="background:${a[2]}">${a[0]}${a[1]==='+'?'+':'–'+a[1]}<small>years</small></div><span>Ages ${a[0]}${a[1]==='+'?' and up':' to '+a[1]}</span></a>`).join('');
+$('#shelves').innerHTML=[['toys','Play, learn &amp; explore','Toys &amp; Activities','Sensory toys, building sets, games, puzzles and pretend play for every age.',C.or,'blocks'],['clothing','Everyday comfort &amp; style','Clothing &amp; Accessories','Sleepwear, socks, shoes, boots, mittens and hats.',C.pk,'sock'],['feeding','Easy, practical &amp; fun','Feeding &amp; Mealtime','Bottles, sippy cups, bowls, bibs and lunch gear.',C.tl,'bottle'],['baby','Clean, safe &amp; caring','Baby Essentials','Toothpaste, hair care, teething and bath time.',C.pu,'duck'],['preloved','Checked &amp; priced by hand','Pre-loved','Consigned by local families. New stuff on the rack every day.',C.go,'mitten'],['consign','Earn 50% in cash or credit','Consign with us','Drop off any day, no appointment. Track your sales online.',C.pu3,'bear']].map((s,i)=>`<a class="shelf" href="${s[0]==='consign'?'#consign':'#shop/'+s[0]}"><div class="top" style="background:${s[4]};${s[4]===C.go?'color:'+C.ink:''}"><small>${s[1]}</small><h3>${s[2]}</h3></div><div class="body"><p>${s[3]}</p><div class="pic">${art(s[5],i+9)}</div></div><span class="go">Shop now →</span></a>`).join('');
+$('#why').innerHTML=[['In store only','Become a consignor','Drop off your items any day of the week. Earn 50% of the sale in cash or store credit, and track it all online.','bear'],['','Free shipping across Canada','Spend $150 or more and shipping is on us. Squishies don\'t count toward free shipping.','car'],['','Free local delivery','Free delivery in town on orders over $150, plus curbside pickup at the shop.','rocket']].map((w,i)=>`<div class="w"><div class="ph">${art(w[3],i+20,BGS[i+1])}${w[0]?`<span class="pill">${w[0]}</span>`:''}</div><div class="tx"><h3>${w[1]}</h3><p>${w[2]}</p></div></div>`).join('');
+$('#gaz').innerHTML=[['Nov 18','The great winter clothing swap is back','Bring a bag, take a bag. Everything left over goes to a local shelter.','mitten'],['Nov 4','Our top 10 stocking stuffers under $15','Small, fun and not made of plastic junk. Promise.','squish'],['Oct 21','How we price consigned items','What we look for, how prices are set, and when you get paid.','book']].map((g,i)=>`<a href="#home"><div class="ph">${art(g[3],i+30)}</div><div class="tx"><small>${g[0]}</small><h3>${g[1]}</h3><p>${g[2]}</p></div></a>`).join('');
+
+// product tabs (owner's picks first, 4 per tab)
+const TABS={clothing:[['Socks','clothing','Socks'],['Sleepwear','clothing','Sleepwear'],['Shoes','clothing','Shoes'],['Boots','clothing','Boots']],plush:[['Shop all','toys','Plush & dolls'],['Aurora Bay','toys','Plush & dolls','Aurora Bay'],['Miyo','toys','Plush & dolls','Miyo']],feeding:[['Bottles & cups','feeding','Bottles & cups'],['Dishwear','feeding','Dishwear'],['Bibs','feeding','Bibs']]};
+const pickFirst=a=>[...a].sort((x,y)=>y.pick-x.pick);
+$$('[data-tabs]').forEach(sec=>{const t=TABS[sec.dataset.tabs];const render=i=>{sec.querySelectorAll('.tabs button').forEach((b,j)=>b.classList.toggle('on',i===j));let list=P.filter(p=>p.dept===t[i][1]&&p.cat===t[i][2]&&(!t[i][3]||p.brand===t[i][3]));if(list.length<4)list=list.concat(P.filter(p=>p.dept===t[i][1]&&!list.includes(p)));sec.querySelector('.pgrid').innerHTML=pickFirst(list).slice(0,4).map(p=>card(p)).join('')};sec.querySelector('.tabs').innerHTML=t.map((x,i)=>`<button data-i="${i}">${x[0]}</button>`).join('');sec.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>render(+b.dataset.i));render(0)});
+
+// toy rows (pills switch rows, 6 visible, scroll for more)
+const ROWS={winter:[['Mittens & hats',p=>['Mittens','Hats'].includes(p.cat)],['Boots & shoes',p=>['Boots','Shoes'].includes(p.cat)],['Pre-loved snow gear',p=>p.pre]],picks:[['Squishies',p=>p.cat==='Squishies'],['Building',p=>p.cat==='Building'],['Vehicles & trucks',p=>p.cat==='Vehicles'],['Puzzles & games',p=>['Puzzles','Board games'].includes(p.cat)]]};
+$$('[data-rows]').forEach(sec=>{const r=ROWS[sec.dataset.rows],picks=sec.dataset.rows==='picks';const tr=sec.querySelector('.track');const render=i=>{sec.querySelectorAll('.rowpills button').forEach((b,j)=>b.classList.toggle('on',i===j));let list=P.filter(r[i][1]);if(picks)list=pickFirst(list);list=list.concat(P.filter(p=>!list.includes(p)&&p.dept==='toys')).slice(0,10);tr.innerHTML=list.map(p=>card(p,{excl:true})).join('');tr.scrollLeft=0};sec.querySelector('.rowpills').innerHTML=r.map((x,i)=>`<button>${x[0]}</button>`).join('');sec.querySelectorAll('.rowpills button').forEach((b,i)=>b.onclick=()=>render(i));sec.querySelector('.arr.l').onclick=()=>tr.scrollBy({left:-tr.clientWidth,behavior:'smooth'});sec.querySelector('.arr.r').onclick=()=>tr.scrollBy({left:tr.clientWidth,behavior:'smooth'});render(0)});
+
+/* ---------- collection page ---------- */
+const F={age:['0-2','3-5','6-8','9-12'],cond:['New','Pre-loved'],price:['Under $15','$15 – $40','Over $40'],deal:['Works with fun10','On sale']};
+Object.entries(F).forEach(([k,v])=>$(`[data-f="${k}"]`).innerHTML=v.map(o=>`<label><input type="checkbox" data-fk="${k}" value="${o}"> ${o}</label>`).join(''));
+let cur={dept:'toys',cat:''};
+function renderShop(){const d=DEPTS[cur.dept];$('#cTitle').textContent=cur.cat||d.name;$('#cCrumb').textContent=d.name+(cur.cat?' / '+cur.cat:'');$('#cDesc').textContent=d.desc;
+ $('#dpills').innerHTML=Object.entries(DEPTS).map(([k,v])=>`<button data-dept="${k}" class="${k===cur.dept?'on':''}">${v.name}</button>`).join('');
+ $('#cats').style.display=d.cats.length?'':'none';
+ $('#cats').innerHTML=d.cats.map((c,i)=>`<button data-cat="${c}" class="${c===cur.cat?'on':''}"><div class="pic">${art(CATICON[c],i+40)}</div>${c}</button>`).join('');
+ const sel={};$$('[data-fk]:checked').forEach(c=>(sel[c.dataset.fk]=sel[c.dataset.fk]||[]).push(c.value));
+ let list=P.filter(p=>(cur.dept==='preloved'?p.pre:p.dept===cur.dept)&&(!cur.cat||p.cat===cur.cat));
+ if(sel.age)list=list.filter(p=>sel.age.includes(p.age));
+ if(sel.cond)list=list.filter(p=>sel.cond.includes(p.pre?'Pre-loved':'New'));
+ if(sel.price)list=list.filter(p=>sel.price.some(r=>r==='Under $15'?p.price<15:r==='Over $40'?p.price>40:p.price>=15&&p.price<=40));
+ if(sel.deal)list=list.filter(p=>sel.deal.every(r=>r==='On sale'?p.was>0:!p.excl&&!p.pre));
+ const s=$('#sort').value;list=s==='lo'?list.sort((a,b)=>a.price-b.price):s==='hi'?list.sort((a,b)=>b.price-a.price):s==='new'?list.sort((a,b)=>b.isNew-a.isNew):pickFirst(list);
+ $('#cCount').textContent=list.length+' product'+(list.length===1?'':'s');
+ $('#cgrid').innerHTML=list.length?list.map(p=>card(p,{excl:true})).join(''):'<div class="empty" style="grid-column:1/-1">Nothing matches those filters. Try taking one off.</div>';
+}
+$('#dpills').onclick=e=>{const b=e.target.closest('[data-dept]');if(b)location.hash='shop/'+b.dataset.dept};
+$('#cats').onclick=e=>{const b=e.target.closest('[data-cat]');if(b)location.hash='shop/'+cur.dept+(b.dataset.cat===cur.cat?'':'/'+b.dataset.cat)};
+$('#filters').onchange=renderShop;$('#sort').onchange=renderShop;
+
+/* ---------- product page ---------- */
+function renderProduct(id){const p=byId(id)||P[0],d=DEPTS[p.dept];
+ $('#crumbs').innerHTML=`<a href="#home">Home</a> / <a href="#shop/${p.dept}">${d.name}</a>${p.pre?'':` / <a href="#shop/${p.dept}/${p.cat}">${p.cat}</a>`} / ${p.title}`;
+ const b=[];if(p.pick)b.push('<span class="b-pick">Owner\'s pick</span>');if(p.pre)b.push('<span class="b-pre">Pre-loved</span>');
+ $('#pp').innerHTML=`<div class="gal"><div class="main"><div class="badge">${b.join('')}</div><div id="mainPic" style="aspect-ratio:1">${art(p.icon,p.id)}</div></div><div class="thumbs">${[0,1,2,3].map(i=>`<button class="${i?'':'on'}" data-th="${i}">${art(p.icon,p.id+i*3)}</button>`).join('')}</div></div>
+ <div class="info"><span class="br">${p.brand}</span><h1>${p.title}</h1>
+ <div class="price">${money(p.price)}${p.was?`<s>${p.pre?'New ':''}${money(p.was)}</s>`:''}</div>
+ ${p.pick?`<div class="why-pick"><b>Why the owner picked it:</b> ${p.pre?'In great shape and half the price of new.':'Kids grab this off the shelf every time they visit. It holds up, too.'}</div>`:''}
+ ${p.pre?`<div class="cons"><b>Pre-loved, consigned locally</b>Checked, cleaned and priced by hand. One of a kind, so once it's gone, it's gone. Have things like this at home? <a href="#consign">Consignors earn 50%</a>.</div>`:''}
+ ${p.excl?`<div class="pnote"><b>Heads up:</b> discount codes don't work on this item and it doesn't count toward free shipping.</div>`:''}
+ <div class="buy"><div class="qty"><button data-q="-1" aria-label="Less">−</button><span id="pq">1</span><button data-q="1" aria-label="More">+</button></div><button class="btn" data-addq="${p.id}">Add to cart</button></div>
+ <div class="lines"><div><i class="bean" style="background:${C.tl}"></i><span><b>Free shipping</b> in Canada over $150</span></div><div><i class="bean" style="background:${C.pk}"></i><span><b>Pick up today</b> at 123 Sunny Street</span></div><div><i class="bean" style="background:${C.go}"></i><span><b>Ages ${p.age}</b> · ${p.pre?'pre-loved, final sale':'new, 30-day returns'}</span></div></div>
+ <details open><summary>About this item</summary><p>A made-up product for this demo store. On a real store this is the product description, pulled straight from Shopify.</p></details>
+ <details><summary>Shipping &amp; pickup</summary><p>Ships across Canada in 2–4 days. Free over $150. No shipping to the United States.</p></details>
+ <details><summary>Returns &amp; final sale</summary><p>New items: 30 days for store credit. Pre-loved and sale items are final sale.</p></details></div>`;
+ let q=1;$$('[data-q]').forEach(b=>b.onclick=()=>{q=Math.max(1,q+ +b.dataset.q);$('#pq').textContent=q});
+ $('[data-addq]').onclick=()=>addToCart(p.id,q);
+ $$('[data-th]').forEach(b=>b.onclick=()=>{$$('[data-th]').forEach(x=>x.classList.remove('on'));b.classList.add('on');$('#mainPic').innerHTML=art(p.icon,p.id+b.dataset.th*3)});
+ const more=P.filter(x=>x.id!==p.id&&(p.pre?x.pre:x.cat===p.cat||x.dept===p.dept));$('#more').innerHTML=pickFirst(more).slice(0,4).map(x=>card(x)).join('');
+}
+
+/* ---------- cart, free shipping & fun10 ---------- */
+let cart=[],code='';
+try{cart=JSON.parse(sessionStorage.getItem('sd60cart')||'[]');code=sessionStorage.getItem('sd60code')||''}catch(e){}
+const save=()=>{try{sessionStorage.setItem('sd60cart',JSON.stringify(cart));sessionStorage.setItem('sd60code',code)}catch(e){}};
+function addToCart(id,q=1){const p=byId(id);const l=cart.find(x=>x.id==id);if(p.pre&&l){toast('Only one of these. It\'s already in your cart.');return openCart()}if(l)l.q+=q;else cart.push({id:+id,q:p.pre?1:q});save();renderCart();toast(p.title+' added');openCart()}
+function totals(){let sub=0,elig=0,shipElig=0;cart.forEach(l=>{const p=byId(l.id),t=p.price*l.q;sub+=t;if(!p.excl&&!p.pre&&!p.was)elig+=t;if(!p.excl)shipElig+=t});const disc=code==='fun10'?elig*.1:0;return{sub,elig,shipElig,disc}}
+function renderCart(){const n=cart.reduce((a,l)=>a+l.q,0);$('#cartCount').textContent=n;const t=totals();
+ const left=Math.max(0,150-t.shipElig),pct=Math.min(100,t.shipElig/150*100);
+ $('#ship').innerHTML=(left?`You're <b>${money(left)}</b> away from <b>free shipping</b> in Canada.`:`<b>You've got free shipping!</b> 🎉`)+(cart.some(l=>byId(l.id).excl)?'<br><small style="color:var(--mu)">Squishies don\'t count toward free shipping.</small>':'')+`<div class="bar"><i style="width:${pct}%"></i></div>`;
+ $('#dnotes').innerHTML=[['<b>Pre-loved</b> items are one of a kind and final sale.',C.tl],['<b>fun10</b> works on select new items. Codes can\'t be combined.',C.or],['<b>Pick up</b> free at 123 Sunny Street.',C.pk]].map(x=>`<p><i class="bean" style="background:${x[1]}"></i><span>${x[0]}</span></p>`).join('');
+ $('#items').innerHTML=cart.length?cart.map(l=>{const p=byId(l.id);const tags=[p.pre?'Pre-loved · consigned':'',p.excl?'No codes · no free shipping':'',p.was&&!p.pre?'Sale · no codes':''].filter(Boolean).join(' · ');return `<div class="it"><a class="pic" href="#product/${p.id}">${art(p.icon,p.id)}</a><div><a class="t" href="#product/${p.id}">${p.title}</a><small>${p.brand}${tags?' · '+tags:''}</small><div class="q">${p.pre?'<small>Qty 1 (one of a kind)</small>':`<button data-cq="${p.id}" data-d="-1">−</button><b>${l.q}</b><button data-cq="${p.id}" data-d="1">+</button>`}<button class="rm" data-rm="${p.id}">Remove</button></div></div><b>${money(p.price*l.q)}</b></div>`}).join(''):'<div class="dempty"><p style="font-family:Shrikhand;font-size:24px;color:var(--pu)">Your cart is empty</p><p>Let\'s fix that.</p><a class="btn" href="#shop/toys" style="margin-top:14px">Shop toys</a></div>';
+ $('#dfoot').style.display=cart.length?'':'none';
+ $('#cmsg').className='cmsg'+(code?' ok':'');if(code)$('#cmsg').innerHTML=t.elig?`fun10 applied: 10% off ${money(t.elig)} of eligible items.`:'fun10 is on, but nothing in your cart qualifies yet.';
+ $('#codeIn').value=code;
+ $('#tot').innerHTML=`<div><span>Subtotal</span><span>${money(t.sub)}</span></div>${t.disc?`<div style="color:var(--tl)"><span>fun10 (10%)</span><span>−${money(t.disc)}</span></div>`:''}<div><span>Shipping</span><span>${left?'Calculated at checkout':'Free'}</span></div><div class="g"><span>Total</span><span>${money(t.sub-t.disc)}</span></div>`;
+}
+$('#codeBtn').onclick=()=>{const v=$('#codeIn').value.trim().toLowerCase();if(!v){code='';}else if(v==='fun10'){code='fun10'}else{$('#cmsg').className='cmsg bad';$('#cmsg').textContent=`"${v}" isn't a valid code. Try fun10.`;return}save();renderCart()};
+$('#items').onclick=e=>{const a=e.target.closest('[data-cq]'),r=e.target.closest('[data-rm]');if(a){const l=cart.find(x=>x.id==a.dataset.cq);l.q+= +a.dataset.d;if(l.q<1)cart=cart.filter(x=>x!==l)}if(r)cart=cart.filter(x=>x.id!=r.dataset.rm);save();renderCart()};
+$('#checkout').onclick=()=>toast('This is a demo store. Checkout would go to Shopify here.');
+function openCart(){$('#drawer').classList.add('on');$('#scrim').classList.add('on')}
+function closeCart(){$('#drawer').classList.remove('on');$('#scrim').classList.remove('on')}
+$('#cartBtn').onclick=openCart;$('#closeCart').onclick=closeCart;$('#scrim').onclick=closeCart;
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeCart();$('#search').classList.remove('on')}});
+document.addEventListener('click',e=>{const a=e.target.closest('[data-add]');if(a){e.preventDefault();addToCart(a.dataset.add)}});
+let tt;function toast(m){$('#toast').textContent=m;$('#toast').classList.add('on');clearTimeout(tt);tt=setTimeout(()=>$('#toast').classList.remove('on'),2200)}
+
+/* ---------- search ---------- */
+$('#searchBtn').onclick=()=>{$('#search').classList.toggle('on');$('#q').focus()};$('#searchClose').onclick=()=>$('#search').classList.remove('on');
+$('#q').oninput=()=>{const v=$('#q').value.trim().toLowerCase();$('#sres').innerHTML=v?(P.filter(p=>(p.title+' '+p.brand+' '+p.cat).toLowerCase().includes(v)).slice(0,8).map(p=>`<a href="#product/${p.id}">${p.title} · ${money(p.price)}</a>`).join('')||'<span>No matches</span>'):''};
+$('#sres').onclick=e=>{if(e.target.closest('a'))$('#search').classList.remove('on')};
+
+/* ---------- newsletter ---------- */
+$('#newsForm').onsubmit=e=>{e.preventDefault();$('#newsForm').style.display='none';$('#thx').style.display='block'};
+
+/* ---------- router ---------- */
+function route(){const h=decodeURIComponent(location.hash.slice(1)||'home');const [path,qs]=h.split('?');const parts=path.split('/');let page=parts[0];
+ if(page==='shop'){cur={dept:DEPTS[parts[1]]?parts[1]:'toys',cat:parts[2]||''};$$('[data-fk]').forEach(c=>c.checked=false);if(qs&&qs.startsWith('age=')){const a=qs.slice(4);$$(`[data-fk="age"]`).forEach(c=>c.checked=c.value===a||(a==='13-12'&&c.value==='9-12'))}renderShop()}
+ else if(page==='product')renderProduct(parts[1]);
+ else if(page==='consign')$('#preGrid').innerHTML=P.filter(p=>p.pre).slice(0,4).map(p=>card(p)).join('');
+ else page='home';
+ $$('.page').forEach(p=>p.classList.toggle('on',p.id==='p-'+page));
+ $$('[data-nav]').forEach(a=>a.classList.toggle('on',page==='shop'?a.dataset.nav===cur.dept:a.dataset.nav===page));
+ closeCart();window.scrollTo(0,0)}
+window.addEventListener('hashchange',route);route();renderCart();
+</script>
+</body></html>

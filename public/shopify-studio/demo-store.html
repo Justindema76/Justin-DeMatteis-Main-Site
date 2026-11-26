@@ -519,7 +519,7 @@ const THEMES={"50s": {"label": "1950s", "font": "https://fonts.googleapis.com/cs
 function setTheme(t){if(!THEMES[t])t='50s';document.body.className='t-'+t;document.getElementById('themefont').href=THEMES[t].font;
  document.querySelector('.hero .deco').innerHTML=THEMES[t].deco+'<span class="eramark">'+THEMES[t].mark+'</span>';document.getElementById('themeBtn').textContent='Theme: '+THEMES[t].label+' ▾';
  document.querySelectorAll('[data-theme]').forEach(a=>a.classList.toggle('on',a.dataset.theme===t));
- document.getElementById('backlink').href='/shopify-studio/'+t;if(typeof applyHero==='function')applyHero();setTimeout(fixFaint,500);setTimeout(fixFaint,1500);}
+ if(typeof applyHero==='function')applyHero();setTimeout(fixFaint,500);setTimeout(fixFaint,1500);}
 document.addEventListener('click',e=>{const a=e.target.closest('[data-theme]');if(a){e.preventDefault();const u=new URL(location);u.searchParams.set('theme',a.dataset.theme);history.replaceState(null,'',u);setTheme(a.dataset.theme);document.getElementById('themes').classList.remove('open')}});
 setTheme(new URLSearchParams(location.search).get('theme')||'50s');
 </script>

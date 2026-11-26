@@ -270,21 +270,21 @@ export default function ShopifyStudioPage({ kind = 'studio' }) {
       <button type="button" className="ss-burger" aria-label="Menu" aria-expanded={burgerOpen} onClick={() => setBurgerOpen(open => !open)}>{burgerOpen ? '✕' : '☰'}</button>
       {burgerOpen && <div className="ss-burger-panel" onClick={event => { if (event.target.closest('a')) setBurgerOpen(false); }}>
         {navLinks.filter(link => !link.cta).map(link => <a key={link.href + link.label} href={link.href}>{link.label}</a>)}
-        <a href={`/shopify-studio/demo-store?theme=${era}`} data-hard="">Demo store</a>
+        <a href={`/shopify-studio/store.html?theme=${era}`} data-hard="">Demo store</a>
         <div className="ss-burger-themes"><b>🎨 Try a theme</b>
           <div>{enabledEras.map(item => <button type="button" key={item.key} className={item.key === era ? 'on' : ''} onClick={() => switchEra(item.key)}>{item.label}</button>)}</div>
         </div>
         {navLinks.filter(link => link.cta).map(link => <a key={link.href} className="ss-burger-cta" href={link.href}>{link.label}</a>)}
       </div>}
     </>, burgerSlot)}
-    {themeSlot && createPortal(<a className="ss-demo-link" href={`/shopify-studio/demo-store?theme=${era}`} data-hard="">Demo store</a>, themeSlot)}
+    {themeSlot && createPortal(<a className="ss-demo-link" href={`/shopify-studio/store.html?theme=${era}`} data-hard="">Demo store</a>, themeSlot)}
     {themeSlot && settings.showEraSwitcher && enabledEras.length > 1 && createPortal(<span className="ss-themes">
       <a href="#" role="button" aria-expanded={menuOpen} onClick={event => { event.preventDefault(); event.stopPropagation(); setMenuOpen(open => !open); }}>🎨 Try a theme ▾</a>
       {menuOpen && <ul role="menu">
         {enabledEras.map(item => <li key={item.key}>
           <button type="button" role="menuitem" className={item.key === era ? 'on' : ''} onClick={() => switchEra(item.key)}>{item.label}</button>
         </li>)}
-        <li className="ss-demo-item"><a href={`/shopify-studio/demo-store?theme=${era}`} data-hard="">See the demo store →</a></li>
+        <li className="ss-demo-item"><a href={`/shopify-studio/store.html?theme=${era}`} data-hard="">See the demo store →</a></li>
       </ul>}
     </span>, themeSlot)}
   </>;
