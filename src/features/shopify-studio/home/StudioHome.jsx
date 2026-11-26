@@ -1,5 +1,5 @@
 // Shopify Studio main page (/shopify-studio): explains the studio and lets visitors pick an era.
-// The page itself lives in home.html (same file as the public/shopify-studio/home-v1.html preview).
+// The page itself lives in home.html (copy of the public/shopify-studio/home-v6.html preview, with absolute image paths).
 import { useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import raw from './home.html?raw';
@@ -7,9 +7,11 @@ import raw from './home.html?raw';
 function split(html) {
   const style = (html.match(/<style>([\s\S]*?)<\/style>/) || [])[1] || '';
   const fonts = [...html.matchAll(/<link rel="stylesheet" href="([^"]+)"/g)].map(m => m[1]);
-  const body = (html.match(/<body>([\s\S]*?)<\/body>/) || [])[1] || '';
+  const fullBody = (html.match(/<body>([\s\S]*?)<\/body>/) || [])[1] || '';
+  const scripts = [...fullBody.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m => m[1]);
+  const body = fullBody.replace(/<script>[\s\S]*?<\/script>/g, '');
   const title = (html.match(/<title>([\s\S]*?)<\/title>/) || [])[1] || '';
-  return { style, fonts, body, title };
+  return { style, fonts, body, scripts, title };
 }
 
 export default function StudioHome() {
@@ -30,8 +32,16 @@ export default function StudioHome() {
     });
     const oldTitle = document.title;
     if (page.title) document.title = page.title;
-    window.scrollTo(0, 0);
-    return () => { style.remove(); links.forEach(l => l.remove()); document.title = oldTitle; };
+    const hash = window.location.hash.slice(1);
+    if (hash) requestAnimationFrame(() => document.getElementById(hash)?.scrollIntoView());
+    else window.scrollTo(0, 0);
+    // Page scripts (the store walkthrough slider) run once the markup is on the page.
+    page.scripts.forEach(code => new Function(code)());
+    return () => {
+      window.__studioHomeCleanup?.();
+      delete window.__studioHomeCleanup;
+      style.remove(); links.forEach(l => l.remove()); document.title = oldTitle;
+    };
   }, [page]);
 
   // Same-site links move inside the app instead of reloading the page.

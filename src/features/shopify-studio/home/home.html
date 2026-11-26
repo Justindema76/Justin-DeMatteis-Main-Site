@@ -71,6 +71,103 @@ section.block{padding:84px 0}
 .proof div+div{border-left:2px solid var(--line)}
 .proof b{display:block;font-family:Fraunces,serif;font-size:38px;line-height:1}
 .proof span{font-size:14px;font-weight:600}
+/* case study */
+.case{border-top:2px solid var(--line);background:#fff}
+.case .top2{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:end;margin-bottom:36px}
+.case h2{font-size:clamp(34px,4.4vw,52px)}
+.case .top2 p{color:var(--mute);font-size:19px;margin-top:14px}
+.case .where{display:inline-flex;gap:10px;flex-wrap:wrap;margin-top:18px;font-weight:600;font-size:15px}
+.case .where a{border-bottom:2px solid var(--green2)}
+.nums{display:grid;grid-template-columns:repeat(4,1fr);border:2px solid var(--line);background:var(--green2)}
+.nums div{padding:20px;text-align:center}
+.nums div+div{border-left:2px solid var(--line)}
+.nums b{display:block;font-family:Fraunces,serif;font-size:36px;line-height:1}
+.nums span{display:block}
+.nums span{font-size:14px;font-weight:600}
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:40px 0}
+.ba figure{border:2px solid var(--line);background:var(--paper)}
+.ba figcaption{display:flex;justify-content:space-between;padding:10px 14px;border-bottom:2px solid var(--line);font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:.12em}
+.ba figure:last-child figcaption{background:var(--green2)}
+.ba img{width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top}
+.ba ul{list-style:none;padding:16px 18px;font-size:15px;color:var(--mute);display:grid;gap:6px}
+.ba li::before{content:"• ";color:var(--mute);font-weight:700}
+.ba figure:last-child li::before{content:"✓ ";color:var(--green)}
+.feats{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+.feats div{border:2px solid var(--line);background:var(--paper);display:flex;flex-direction:column}
+.feats img{width:100%;aspect-ratio:16/7;object-fit:contain;padding:14px;border-bottom:2px solid var(--line);background:#fff}
+.feats .t{padding:18px 22px;flex:1}
+.feats small{font-weight:700;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--green)}
+.feats h3{font-size:24px;margin:4px 0 6px}
+.feats p{font-size:14.5px;color:var(--mute)}
+.badge-g{display:flex;gap:18px;align-items:center;border:2px solid var(--line);background:var(--paper);padding:20px 24px;margin-top:22px}
+.badge-g b.star{display:grid;place-items:center;width:52px;height:52px;flex:none;border:2px solid var(--ink);background:var(--green2);font-size:24px}
+.badge-g p{color:var(--mute);font-size:16px}
+.badge-g p strong{color:var(--ink)}
+.case .more{margin-top:30px;display:flex;gap:14px;flex-wrap:wrap}
+@media(max-width:980px){.case .top2{grid-template-columns:1fr;gap:10px}}
+@media(max-width:640px){.nums{grid-template-columns:1fr 1fr}.nums div:nth-child(3){border-left:0}.nums div:nth-child(n+3){border-top:2px solid var(--line)}.nums b{font-size:32px}.ba{grid-template-columns:1fr}.feats{grid-template-columns:1fr}}
+/* built beyond shopify */
+.beyond-h{margin:56px 0 22px;max-width:760px}
+.beyond-h h3{font-size:clamp(28px,3.4vw,40px)}
+.beyond-h p{color:var(--mute);font-size:18px;margin-top:10px}
+.catfeat{display:grid;grid-template-columns:1.25fr 1fr;border:2px solid var(--line);background:var(--paper);margin-bottom:22px}
+.catfeat img{width:100%;height:100%;object-fit:cover;object-position:top left;border-right:2px solid var(--line);background:#fff}
+.catfeat .t{padding:26px 28px}
+.catfeat h4{font-family:Fraunces,serif;font-weight:800;font-size:26px;line-height:1.1;margin:6px 0 10px}
+.catfeat ul{list-style:none;display:grid;gap:8px;font-size:15.5px;color:var(--mute)}
+.catfeat li b{color:var(--ink)}
+.tagc{display:inline-block;font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:4px 8px;border:2px solid var(--ink);background:var(--green2);color:var(--ink)}
+.tagc.app{background:var(--ink);color:#fff}
+.custom{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.custom div{border:2px solid var(--line);background:var(--paper);padding:20px 22px}
+.custom h4{font-family:Fraunces,serif;font-weight:800;font-size:20px;line-height:1.15;margin:10px 0 6px}
+.custom p{font-size:14.5px;color:var(--mute)}
+@media(max-width:980px){.catfeat{grid-template-columns:1fr}.catfeat img{border-right:0;border-bottom:2px solid var(--line);height:auto}.custom{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.custom{grid-template-columns:1fr}}
+header .brand{display:block!important;white-space:normal!important}
+header .brand small{display:block!important}
+@media(max-width:640px){header .brand{font-size:19px}header .btn.sm{padding:9px 12px;font-size:13px}}
+/* store walkthrough */
+.walk-h{margin:48px 0 20px;display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap}
+.walk-h h3{font-size:clamp(28px,3.4vw,40px)}
+.walk-h p{color:var(--mute);font-size:18px;margin-top:8px;max-width:640px}
+.walk{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.wcard{border:2px solid var(--line);background:var(--paper);text-align:left;cursor:pointer;font:inherit;color:inherit;padding:0;display:flex;flex-direction:column;transition:transform .15s,box-shadow .15s}
+.wcard:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--green2)}
+.wcard .im{aspect-ratio:16/10;overflow:hidden;border-bottom:2px solid var(--line);background:#fff}
+.wcard img{width:100%;height:100%;object-fit:cover;object-position:top left}
+.wcard .t{padding:14px 16px 16px;display:flex;flex-direction:column;gap:4px;flex:1}
+.wcard small{font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--green)}
+.wcard h4{font-family:Fraunces,serif;font-weight:800;font-size:20px;line-height:1.15}
+.wcard span.go{margin-top:auto;padding-top:8px;font-weight:700;font-size:14px}
+.lb{position:fixed;inset:0;z-index:100;background:rgba(14,15,18,.94);display:none;color:var(--ink)}
+.lb.open{display:flex}
+.lb .box{margin:auto;width:min(1380px,96vw);height:min(860px,92vh);background:var(--paper);border:2px solid var(--line);display:grid;grid-template-columns:1fr 390px;overflow:hidden}
+.lb .stage{overflow:auto;background:#e9e6de;position:relative}
+.lb .pic{position:relative;margin:18px;border:2px solid var(--line);background:#fff;box-shadow:6px 6px 0 var(--ink)}
+.lb .pic img{display:block;width:100%;height:auto}
+.pin{position:absolute;transform:translate(-50%,-50%);width:34px;height:34px;border-radius:50%;background:var(--green2);border:3px solid var(--ink);font:800 15px/28px Inter,sans-serif;text-align:center;color:var(--ink);cursor:pointer;box-shadow:0 2px 0 var(--ink);padding:0}
+.pin.on{background:var(--ink);color:#fff;transform:translate(-50%,-50%) scale(1.25)}
+.lb .side{display:flex;flex-direction:column;border-left:2px solid var(--line);min-height:0}
+.lb .top{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:2px solid var(--line);font-weight:700;font-size:14px}
+.lb .x{background:none;border:2px solid var(--ink);width:36px;height:36px;font-size:20px;line-height:1;cursor:pointer}
+.lb .txt{padding:20px 22px;overflow:auto;flex:1}
+.lb .txt small{font-weight:700;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--green)}
+.lb .txt h3{font-size:28px;margin:4px 0 6px}
+.lb .txt .sub{color:var(--mute);font-size:15px;margin-bottom:14px}
+.lb ol{list-style:none;display:grid;gap:10px}
+.lb li{display:grid;grid-template-columns:30px 1fr;gap:10px;padding:10px;border:2px solid transparent;cursor:pointer}
+.lb li.on{border-color:var(--ink);background:#fff}
+.lb li b.n{width:28px;height:28px;border-radius:50%;background:var(--green2);border:2px solid var(--ink);display:grid;place-items:center;font-size:13px}
+.lb li strong{display:block;font-size:16px;line-height:1.3}
+.lb li p{font-size:14px;color:var(--mute);margin-top:3px;line-height:1.45}
+.lb li p em{font-style:normal;font-weight:700;color:var(--green)}
+.lb .nav{display:flex;gap:10px;padding:14px 18px;border-top:2px solid var(--line)}
+.lb .nav button{flex:1;padding:12px;border:2px solid var(--ink);background:#fff;font:700 15px Inter,sans-serif;cursor:pointer}
+.lb .nav button.next{background:var(--ink);color:#fff;box-shadow:3px 3px 0 var(--green2)}
+.lb .nav button:disabled{opacity:.35;cursor:default}
+@media(max-width:980px){.walk{grid-template-columns:1fr 1fr}.lb .box{grid-template-columns:1fr;grid-template-rows:minmax(0,46%) minmax(0,54%);height:94vh}.lb .side{border-left:0;border-top:2px solid var(--line)}.lb .pic{margin:10px;box-shadow:none}.pin{width:26px;height:26px;font-size:12px;line-height:20px;border-width:2px}}
+@media(max-width:640px){.lb .pic{width:760px;max-width:none}.lb .stage{-webkit-overflow-scrolling:touch}.walk{grid-template-columns:1fr 1fr;gap:10px}.wcard h4{font-size:16px}.wcard .t{padding:10px}.lb .box{width:100vw;height:100dvh;border:0}.lb .txt h3{font-size:22px}}
 /* cta */
 .cta{border-top:2px solid var(--line);padding:80px 0}
 .cta .box{border:2px solid var(--line);background:#fff;box-shadow:10px 10px 0 var(--ink);padding:48px;display:grid;grid-template-columns:1.4fr 1fr;gap:30px;align-items:center}
@@ -105,7 +202,7 @@ footer a{color:#fff}
 
 <header><div class="wrap">
   <a class="brand" href="#">Justin DeMatteis<small>Shopify Studio</small></a>
-  <nav><a href="#how">How it works</a><a href="#eras">Pick a style</a><a href="#get">What you get</a><a class="btn sm" href="/shopify-studio/50s#audit">Free audit</a></nav>
+  <nav><a href="#how">How it works</a><a href="#eras">Pick a style</a><a href="#case">Case study</a><a href="#get">What you get</a><a class="btn sm" href="/shopify-studio/50s#audit">Free audit</a></nav>
 </div></header>
 
 <section class="hero"><div class="wrap">
@@ -146,6 +243,48 @@ footer a{color:#fff}
   </div>
 </div></section>
 
+<section class="block case" id="case"><div class="wrap">
+  <div class="top2">
+    <div><span class="kick">Real client · Case study</span><h2>Jill &amp; The Beanstalk</h2><p>How a Toronto kids' shop went from a free theme to a store that feels like walking into the shop, and nearly doubled its online sales.</p>
+      <div class="where"><a href="https://jillandthebeanstalk.ca" target="_blank" rel="noopener">Visit the live store ↗</a><span>· 814 College St, Toronto</span></div></div>
+    <div class="nums">
+      <div><b>+90%</b><span>online revenue</span></div>
+      <div><b>+109%</b><span>online orders</span></div>
+      <div><b>+25%</b><span>total sales</span></div>
+      <div><b>$0</b><span>spent on ads</span></div>
+    </div>
+  </div>
+  <div class="ba">
+    <figure><figcaption><span>Phase one</span><span>Free theme</span></figcaption><img src="/shopify-studio/img/before-home.jpg" alt="Jill and the Beanstalk homepage on the free theme" loading="lazy">
+      <ul><li>Built within the limits of a free theme</li><li>Colours and layout set by theme options</li><li>Menu and catalog organized for 7,000+ products</li><li>Shop by age and owner's picks needed custom code</li></ul></figure>
+    <figure><figcaption><span>Phase two</span><span>Custom build</span></figcaption><img src="/shopify-studio/img/after-home.jpg" alt="Jill and the Beanstalk homepage after the redesign" loading="lazy">
+      <ul><li>One look from homepage to checkout</li><li>Real photos of the shop</li><li>Shop by age, by shelf and by brand</li><li>Every rule shown before checkout</li></ul></figure>
+  </div>
+  <div class="walk-h"><div><span class="kick">Walk through the store</span><h3>Click through. Every number is something we added.</h3><p>Real screens from jillandthebeanstalk.ca. Open one, then use the arrows. On a phone, drag the picture sideways to see all of it.</p></div><a class="btn" href="#" data-open="0">Start the walkthrough →</a></div>
+  <div class="walk">
+    <button class="wcard" data-i="0"><div class="im"><img src="/shopify-studio/img/case/s1-home-top.webp" alt="" loading="lazy"></div><div class="t"><small>Homepage</small><h4>The first thing shoppers see</h4><span class="go">5 things we added →</span></div></button>
+    <button class="wcard" data-i="1"><div class="im"><img src="/shopify-studio/img/case/s2-age-shelves.webp" alt="" loading="lazy"></div><div class="t"><small>Homepage</small><h4>Shop by age, shop the shelves</h4><span class="go">2 things we added →</span></div></button>
+    <button class="wcard" data-i="2"><div class="im"><img src="/shopify-studio/img/case/s3-category.webp" alt="" loading="lazy"></div><div class="t"><small>Category page</small><h4>Category pages that work like the shop</h4><span class="go">4 things we added →</span></div></button>
+    <button class="wcard" data-i="3"><div class="im"><img src="/shopify-studio/img/case/s5-new-arrivals.webp" alt="" loading="lazy"></div><div class="t"><small>New Arrivals</small><h4>Product lists that help people choose</h4><span class="go">5 things we added →</span></div></button>
+    <button class="wcard" data-i="4"><div class="im"><img src="/shopify-studio/img/case/s8-books.webp" alt="" loading="lazy"></div><div class="t"><small>Books</small><h4>Books, including French titles</h4><span class="go">3 things we added →</span></div></button>
+    <button class="wcard" data-i="5"><div class="im"><img src="/shopify-studio/img/case/s6-gifts.webp" alt="" loading="lazy"></div><div class="t"><small>Gifts</small><h4>A gift page that sells like a person</h4><span class="go">4 things we added →</span></div></button>
+    <button class="wcard" data-i="6"><div class="im"><img src="/shopify-studio/img/case/s4-product.webp" alt="" loading="lazy"></div><div class="t"><small>Product page</small><h4>Her voice on every product</h4><span class="go">4 things we added →</span></div></button>
+    <button class="wcard" data-i="7"><div class="im"><img src="/shopify-studio/img/case/s7-visit-footer.webp" alt="" loading="lazy"></div><div class="t"><small>Every page</small><h4>Built to bring people through the door</h4><span class="go">5 things we added →</span></div></button>
+  </div>
+
+  <div class="beyond-h"><span class="kick">Behind the scenes</span><h3>The parts you can’t see in a screenshot</h3></div>
+  <div class="custom">
+    <div><span class="tagc app">Custom app</span><h4>Free shipping with exclusions</h4><p>Free over $150, with chosen brands left out automatically. Shopify's own setting can't exclude brands.</p></div>
+    <div><span class="tagc app">Checkout rule</span><h4>Discount codes that follow the rules</h4><p>Codes can't stack with each other or with free shipping, enforced at checkout, not by hand.</p></div>
+    <div><span class="tagc">Custom code</span><h4>One set of store rules, everywhere</h4><p>The same rules show in the cart, on the product page and in the FAQ, from one place.</p></div>
+    <div><span class="tagc">Custom code</span><h4>Live "Open today" hours</h4><p>The header shows today's hours and links to Google Maps.</p></div>
+    <div><span class="tagc">Custom code</span><h4>A homepage that updates itself</h4><p>Blog, Instagram and picks rows refresh on their own. Rows slide and pause on touch.</p></div>
+    <div><span class="tagc">Scripts + tools</span><h4>7,788 products cleaned up</h4><p>Scripts sorted tags and types into 145 self-filling collections, with backups and a staff dashboard.</p></div>
+  </div>
+  <div class="badge-g"><b class="star">★</b><p><strong>First page of Google, and Google's Top Quality Store badge.</strong> 7,788 products cleaned up into 145 collections that fill themselves, rated Exceptional in Google Merchant Center.</p></div>
+  <div class="more"><a class="btn" href="#" data-open="0">Walk through the store →</a><a class="btn ghost" href="/shopify-studio/50s#audit">Get a free audit</a></div>
+</div></section>
+
 <section class="block" id="get"><div class="wrap">
   <div class="sh"><span class="kick">What you get</span><h2>More than a pretty theme</h2><p>Most designers stop at the theme. I build what your store actually needs to sell.</p></div>
   <div class="get">
@@ -163,8 +302,43 @@ footer a{color:#fff}
 
 <section class="cta"><div class="wrap"><div class="box">
   <div><h2>Want to see what your store could be?</h2><p>Get a free audit of your Shopify store. I'll send you what to fix first, within 48 hours.</p></div>
-  <div class="ctas"><a class="btn" href="/shopify-studio/50s#audit">Get my free audit</a><a class="btn ghost" href="/shopify-studio/jill-and-the-beanstalk/50s">See a real case study</a></div>
+  <div class="ctas"><a class="btn" href="/shopify-studio/50s#audit">Get my free audit</a><a class="btn ghost" href="#case">See the case study</a></div>
 </div></div></section>
 
 <footer><div class="wrap"><span>© Justin DeMatteis · Shopify Studio · Shopify Partner (JUSTInnovate)</span><a href="/">← justindematteis.com</a></div></footer>
+<div class="lb" id="lb" aria-hidden="true"><div class="box" role="dialog" aria-modal="true" aria-label="Jill and the Beanstalk walkthrough">
+  <div class="stage"><div class="pic"><img alt=""><div class="pins"></div></div></div>
+  <div class="side"><div class="top"><span class="count"></span><button class="x" aria-label="Close">×</button></div>
+    <div class="txt"><small class="where"></small><h3 class="title"></h3><p class="sub"></p><ol></ol></div>
+    <div class="nav"><button class="prev">← Back</button><button class="next">Next →</button></div></div>
+</div></div>
+<script>
+(function(){
+var S=[{"img": "s1-home-top.webp", "where": "Homepage", "title": "The first thing shoppers see", "sub": "Everything a parent needs to decide in the first five seconds.", "pins": [[27, 2.7, "Rotating announcement bar", "The current deal and its fine print on every page.", "Shoppers see the offer and its limits before they shop, not at checkout."], [22, 9.5, "Live \u201cOpen today\u201d hours", "Shows today\u2019s hours and links to Google Maps.", "Many visitors are deciding whether to walk over. This answers it in one glance and sends them to the door."], [45, 21, "A menu built around how parents shop", "Toys, Books, Baby, Clothing, School, Gifts.", "7,788 products, and every one is two taps from the top of the page."], [38.5, 42, "Real photos of the real shop", "A slideshow the owner swaps herself, with seasonal buttons.", "Proves it\u2019s a real local store, not a dropshipper. Trust is what makes a first-time visitor buy."], [52, 93, "Store perks bar", "Free shipping over $150, consignors earn 50%, no US shipping.", "Answers the top questions before they turn into emails or abandoned carts."]]}, {"img": "s2-age-shelves.webp", "where": "Homepage", "title": "Shop by age, shop the shelves", "sub": "Two ways in that match how people actually shop for kids.", "pins": [[21, 7, "Shop by age circles", "0\u20132, 3\u20135, 6\u20138, 9\u201312, 13+. They fill themselves from each product\u2019s age setting.", "\u201cWhat\u2019s good for a 4-year-old?\u201d is the #1 question at the counter. Grandparents and gift buyers don\u2019t know brands, they know the child\u2019s age. One tap answers it."], [29, 49, "\u201cShop the shelves\u201d cards", "Each department with a photo, a tagline and its sub-shelves.", "Browsing feels like walking the aisles, and the sub-shelf links skip the menu entirely."]]}, {"img": "s3-category.webp", "where": "Category page", "title": "Category pages that work like the shop", "sub": "Shopify only has flat collections. We built a real department \u2192 shelf \u2192 product tree.", "pins": [[30, 4.7, "Breadcrumbs", "Home \u203a Toys & Games \u203a Sensory Toys.", "Shoppers always know where they are and can step back up in one click."], [44, 37, "Department header with \u201cRead more\u201d", "The full SEO description, folded to two lines.", "Google reads all of it, shoppers see products first. Better ranking without a wall of text."], [21, 62, "Shelf cards with live counts", "Every shelf in the department, coloured, with its item count.", "Turns 207 products into a few clear choices. Fewer people give up and leave."], [56, 89, "\u201cMore in Toys & Games\u201d", "Jump to the other parts of the department, current one marked.", "Keeps people browsing the next shelf instead of bouncing back to the menu."]]}, {"img": "s5-new-arrivals.webp", "where": "New Arrivals", "title": "Product lists that help people choose", "sub": "Filters and labels built around how this shop\u2019s customers decide.", "pins": [[33.5, 46, "Jill\u2019s pick badges", "Her favourites are marked in every list.", "The same advice she gives in the shop now shows up online, right where people are choosing."], [14, 37.5, "Filter by brand", "Only the brands in this list.", "Regulars who love a brand find it in one click."], [20, 75.6, "Price as simple buttons", "Under $15, $15\u2013$30, $30\u2013$60, $60 and up.", "Gift buyers shop by budget. Buttons are faster than dragging a slider on a phone."], [25, 94, "Pickup at 814 College St", "Show only what\u2019s in the shop today.", "Locals can grab it on the way home. It turns website visits into store visits."], [33, 82, "Size count under the price", "\u201c3 sizes\u201d, \u201c2 sizes\u201d.", "Parents know a size is available before they click."]]}, {"img": "s8-books.webp", "where": "Books", "title": "Books, including French titles", "sub": "A big draw for the neighbourhood\u2019s French-school families.", "pins": [[50, 36, "Plain-language intro", "Board books, picture books and French titles.", "Tells parents in one line that this is the shelf they\u2019re looking for."], [13, 42, "Publisher filter, French included", "L\u2019\u00e9cole des loisirs, Moulin Roty, Eric Carle\u2026", "French-school families find French books in one click instead of scrolling hundreds."], [25.5, 48, "Jill\u2019s picks on books", "Her favourites first.", "Book buyers trust a bookseller\u2019s pick more than any review."]]}, {"img": "s6-gifts.webp", "where": "Gifts", "title": "A gift page that sells like a person", "sub": "Built for the shopper who doesn\u2019t know what to buy.", "pins": [[53, 28.8, "\u201cNot sure? Call the shop\u201d", "An invitation to phone for suggestions.", "A stuck shopper becomes a phone call, and phone calls become sales."], [21.2, 51, "Gift shelves with hints", "Plush & seasonal, Easy to wrap, Shower gifts, Mitts & hats\u2026", "Answers \u201cwho is it for?\u201d before they\u2019ve scrolled."], [41.5, 60.4, "Stocking stuffers under $25", "A budget row, ready to add.", "Quick add-ons raise the order total, and push it toward free shipping."], [58.5, 66, "Jill\u2019s pick badges", "Her favourites stand out in the row.", "Gift buyers want reassurance. A pick from the owner gives it."]]}, {"img": "s4-product.webp", "where": "Product page", "title": "Her voice on every product", "sub": "The product page answers questions before anyone has to ask.", "pins": [[89, 10.4, "Sizes by age", "6\u201312 months, 1\u20132 years, 2\u20133 years\u2026", "Parents pick the right size by age, not by guessing a number."], [70, 53, "\u201cWhy Jill picked it\u201d", "A tick box and a note she writes herself.", "Her recommendation sells in the shop. Now it sells online too, on the exact product."], [64, 81.4, "Shop in person", "Pickup and in-store details on every product.", "Locals know they can see it, try it and take it home today."], [70, 94.6, "Shipping and discount rules", "Free over $150, and which codes can\u2019t be combined.", "No surprises at checkout. Fewer emails, fewer abandoned carts."]]}, {"img": "s7-visit-footer.webp", "where": "Every page", "title": "Built to bring people through the door", "sub": "An online store for a shop people love to visit.", "pins": [[32, 20, "Map to the shop", "The store on a map, right on the page.", "Online visitors become foot traffic."], [68, 18.5, "Hours and contact", "Address, phone, email and hours together.", "Everything a visitor needs to plan a trip, in one place."], [63.5, 28.2, "Get directions", "Opens directions in Google Maps.", "One tap from browsing to on the way."], [61.5, 96.4, "Hours on every page", "Hours and \u201cShips within Canada\u201d in the footer.", "The two most-asked questions answered site-wide."], [97.6, 94.6, "Back to top", "Appears as you scroll.", "Long pages are easy on a phone, where most people shop."]]}];
+var lb=document.getElementById('lb'); if(!lb) return;
+var img=lb.querySelector('.pic img'), pins=lb.querySelector('.pins'), ol=lb.querySelector('ol'), cur=0;
+function sel(n){ lb.querySelectorAll('.pin').forEach(function(p,i){p.classList.toggle('on',i===n)}); lb.querySelectorAll('li').forEach(function(l,i){l.classList.toggle('on',i===n)}); var p=lb.querySelectorAll('.pin')[n]; if(p&&n>=0) p.scrollIntoView({block:'center',inline:'center'}); var l=lb.querySelectorAll('li')[n]; if(l&&n>=0) l.scrollIntoView({block:'nearest',behavior:'smooth'}); }
+function show(i){ cur=(i+S.length)%S.length; var s=S[cur];
+  img.src='/shopify-studio/img/case/'+s.img; img.alt=s.title;
+  lb.querySelector('.count').textContent=(cur+1)+' / '+S.length+' · Jill & The Beanstalk';
+  lb.querySelector('.where').textContent=s.where; lb.querySelector('.title').textContent=s.title; lb.querySelector('.sub').textContent=s.sub;
+  pins.innerHTML=''; ol.innerHTML='';
+  s.pins.forEach(function(p,n){ var b=document.createElement('button'); b.className='pin'; b.textContent=n+1; b.style.left=p[0]+'%'; b.style.top=p[1]+'%'; b.setAttribute('aria-label',p[2]); b.onclick=function(){sel(n)}; pins.appendChild(b);
+    var li=document.createElement('li'); li.innerHTML='<b class="n">'+(n+1)+'</b><div><strong></strong><p></p><p></p></div>'; li.querySelector('strong').textContent=p[2]; var ps=li.querySelectorAll('p'); ps[0].textContent=p[3]; ps[1].innerHTML='<em>Why it helps:</em> '; ps[1].appendChild(document.createTextNode(p[4])); li.onclick=function(){sel(n)}; ol.appendChild(li); });
+  lb.querySelector('.stage').scrollTop=0; lb.querySelector('.txt').scrollTop=0;
+  lb.querySelector('.prev').disabled=cur===0; lb.querySelector('.next').textContent=cur===S.length-1?'Done ✓':'Next →'; }
+function open(i){ show(i); lb.classList.add('open'); lb.setAttribute('aria-hidden','false'); document.documentElement.style.overflow='hidden'; }
+function close(){ lb.classList.remove('open'); lb.setAttribute('aria-hidden','true'); document.documentElement.style.overflow=''; }
+document.querySelectorAll('.wcard').forEach(function(c){ c.addEventListener('click',function(){open(+c.dataset.i)}) });
+document.querySelectorAll('[data-open]').forEach(function(a){ a.addEventListener('click',function(e){e.preventDefault(); open(+a.dataset.open)}) });
+lb.querySelector('.x').onclick=close; lb.onclick=function(e){ if(e.target===lb) close(); };
+lb.querySelector('.prev').onclick=function(){ show(cur-1) };
+lb.querySelector('.next').onclick=function(){ if(cur===S.length-1) close(); else show(cur+1) };
+function key(e){ if(!lb.classList.contains('open')) return; if(e.key==='Escape') close(); if(e.key==='ArrowRight'&&cur<S.length-1) show(cur+1); if(e.key==='ArrowLeft'&&cur>0) show(cur-1); }
+document.addEventListener('keydown',key);
+var sx=null; var side=lb.querySelector('.side'); side.addEventListener('touchstart',function(e){sx=e.touches[0].clientX},{passive:true});
+side.addEventListener('touchend',function(e){ if(sx===null) return; var dx=e.changedTouches[0].clientX-sx; if(Math.abs(dx)>60){ if(dx<0&&cur<S.length-1) show(cur+1); if(dx>0&&cur>0) show(cur-1);} sx=null; },{passive:true});
+window.__studioHomeCleanup=function(){ document.removeEventListener('keydown',key); document.documentElement.style.overflow=''; };
+})();
+</script>
 </body></html>

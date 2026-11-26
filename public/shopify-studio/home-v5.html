@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Shopify Studio · Justin DeMatteis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+:root{--ink:#16181d;--mute:#5b6070;--paper:#f7f3ea;--line:#16181d;--green:#5e8e3e;--green2:#95bf47;--card:#fff}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,sans-serif;color:var(--ink);background:var(--paper);font-size:17px;line-height:1.6}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:Fraunces,serif;font-weight:800;line-height:1.04;letter-spacing:-.01em}
+.top{background:var(--ink);color:#e9e7e1;font-size:14px}
+.top .wrap{display:flex;justify-content:space-between;align-items:center;min-height:40px;gap:12px}
+header{border-bottom:2px solid var(--line);background:var(--paper);position:sticky;top:0;z-index:20}
+header .wrap{display:flex;align-items:center;justify-content:space-between;min-height:72px;gap:16px}
+.brand{font-family:Fraunces,serif;font-weight:800;font-size:22px;line-height:1}
+.brand small{display:block;font-family:Inter,sans-serif;font-weight:600;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--green);margin-top:4px}
+header nav{display:flex;gap:26px;align-items:center;font-weight:600;font-size:15px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:16px;padding:14px 24px;border:2px solid var(--ink);background:var(--ink);color:#fff;box-shadow:4px 4px 0 var(--green2);transition:transform .12s,box-shadow .12s}
+.btn:hover{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--green2)}
+.btn.ghost{background:transparent;color:var(--ink);box-shadow:4px 4px 0 var(--ink)}
+.btn.sm{padding:10px 16px;font-size:14px}
+/* hero */
+.hero{padding:76px 0 56px;border-bottom:2px solid var(--line)}
+.hero .wrap{display:grid;grid-template-columns:1.15fr 1fr;gap:56px;align-items:center}
+.kick{display:inline-block;font-weight:700;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--green);margin-bottom:18px}
+.hero h1{font-size:clamp(44px,6vw,78px)}
+.hero h1 em{font-style:normal;background:linear-gradient(transparent 62%,var(--green2) 62%)}
+.hero p.lead{font-size:20px;color:var(--mute);margin:22px 0 30px;max-width:560px}
+.hero .ctas{display:flex;gap:16px;flex-wrap:wrap}
+.strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.strip a{border:2px solid var(--line);aspect-ratio:3/4;overflow:hidden;background:#fff;transition:transform .15s}
+.strip a:nth-child(odd){transform:translateY(22px)}
+.strip a:hover{transform:translateY(-4px)}
+.strip img{width:100%;height:100%;object-fit:cover}
+/* explainer */
+section.block{padding:84px 0}
+.sh{max-width:760px;margin-bottom:40px}
+.sh h2{font-size:clamp(34px,4.4vw,52px)}
+.sh p{color:var(--mute);font-size:19px;margin-top:14px}
+.how{display:grid;grid-template-columns:repeat(3,1fr);border:2px solid var(--line);background:var(--card)}
+.how div{padding:30px 28px}
+.how div+div{border-left:2px solid var(--line)}
+.how b{display:block;font-family:Fraunces,serif;font-size:44px;color:var(--green);line-height:1}
+.how h3{font-size:24px;margin:10px 0 8px}
+.how p{color:var(--mute);font-size:16px}
+/* era picker */
+.eras{background:var(--ink);color:#f2efe8;border-top:2px solid var(--line);border-bottom:2px solid var(--line)}
+.eras .sh p{color:#b9b6ae}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.era{background:#fff;color:var(--ink);border:2px solid #fff;display:flex;flex-direction:column;transition:transform .15s,box-shadow .15s}
+.era:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--green2)}
+.era .pic{aspect-ratio:3/4;overflow:hidden;border-bottom:2px solid var(--ink)}
+.era .pic img{width:100%;height:100%;object-fit:cover}
+.era .tx{padding:16px 18px 18px;display:flex;flex-direction:column;gap:4px;flex:1}
+.era h3{font-size:26px}
+.era p{font-size:14.5px;color:var(--mute);flex:1}
+.era .go{display:flex;justify-content:space-between;align-items:center;margin-top:12px;font-weight:700;font-size:14px}
+.era .go span{color:var(--green)}
+.era .demo{font-weight:600;font-size:13px;color:var(--mute);text-decoration:underline;text-underline-offset:3px}
+/* what you get */
+.get{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.get div{border:2px solid var(--line);background:var(--card);padding:28px}
+.get i{font-style:normal;display:grid;place-items:center;width:46px;height:46px;border:2px solid var(--ink);background:var(--green2);font-size:22px;margin-bottom:16px}
+.get h3{font-size:24px;margin-bottom:8px}
+.get p{color:var(--mute);font-size:16px}
+.proof{display:grid;grid-template-columns:repeat(4,1fr);border:2px solid var(--line);background:var(--green2);margin-top:40px}
+.proof div{padding:22px;text-align:center}
+.proof div+div{border-left:2px solid var(--line)}
+.proof b{display:block;font-family:Fraunces,serif;font-size:38px;line-height:1}
+.proof span{font-size:14px;font-weight:600}
+/* case study */
+.case{border-top:2px solid var(--line);background:#fff}
+.case .top2{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:end;margin-bottom:36px}
+.case h2{font-size:clamp(34px,4.4vw,52px)}
+.case .top2 p{color:var(--mute);font-size:19px;margin-top:14px}
+.case .where{display:inline-flex;gap:10px;flex-wrap:wrap;margin-top:18px;font-weight:600;font-size:15px}
+.case .where a{border-bottom:2px solid var(--green2)}
+.nums{display:grid;grid-template-columns:repeat(4,1fr);border:2px solid var(--line);background:var(--green2)}
+.nums div{padding:20px;text-align:center}
+.nums div+div{border-left:2px solid var(--line)}
+.nums b{display:block;font-family:Fraunces,serif;font-size:36px;line-height:1}
+.nums span{display:block}
+.nums span{font-size:14px;font-weight:600}
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:40px 0}
+.ba figure{border:2px solid var(--line);background:var(--paper)}
+.ba figcaption{display:flex;justify-content:space-between;padding:10px 14px;border-bottom:2px solid var(--line);font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:.12em}
+.ba figure:last-child figcaption{background:var(--green2)}
+.ba img{width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top}
+.ba ul{list-style:none;padding:16px 18px;font-size:15px;color:var(--mute);display:grid;gap:6px}
+.ba li::before{content:"• ";color:var(--mute);font-weight:700}
+.ba figure:last-child li::before{content:"✓ ";color:var(--green)}
+.feats{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+.feats div{border:2px solid var(--line);background:var(--paper);display:flex;flex-direction:column}
+.feats img{width:100%;aspect-ratio:16/7;object-fit:contain;padding:14px;border-bottom:2px solid var(--line);background:#fff}
+.feats .t{padding:18px 22px;flex:1}
+.feats small{font-weight:700;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--green)}
+.feats h3{font-size:24px;margin:4px 0 6px}
+.feats p{font-size:14.5px;color:var(--mute)}
+.badge-g{display:flex;gap:18px;align-items:center;border:2px solid var(--line);background:var(--paper);padding:20px 24px;margin-top:22px}
+.badge-g b.star{display:grid;place-items:center;width:52px;height:52px;flex:none;border:2px solid var(--ink);background:var(--green2);font-size:24px}
+.badge-g p{color:var(--mute);font-size:16px}
+.badge-g p strong{color:var(--ink)}
+.case .more{margin-top:30px;display:flex;gap:14px;flex-wrap:wrap}
+@media(max-width:980px){.case .top2{grid-template-columns:1fr;gap:10px}}
+@media(max-width:640px){.nums{grid-template-columns:1fr 1fr}.nums div:nth-child(3){border-left:0}.nums div:nth-child(n+3){border-top:2px solid var(--line)}.nums b{font-size:32px}.ba{grid-template-columns:1fr}.feats{grid-template-columns:1fr}}
+/* built beyond shopify */
+.beyond-h{margin:56px 0 22px;max-width:760px}
+.beyond-h h3{font-size:clamp(28px,3.4vw,40px)}
+.beyond-h p{color:var(--mute);font-size:18px;margin-top:10px}
+.catfeat{display:grid;grid-template-columns:1.25fr 1fr;border:2px solid var(--line);background:var(--paper);margin-bottom:22px}
+.catfeat img{width:100%;height:100%;object-fit:cover;object-position:top left;border-right:2px solid var(--line);background:#fff}
+.catfeat .t{padding:26px 28px}
+.catfeat h4{font-family:Fraunces,serif;font-weight:800;font-size:26px;line-height:1.1;margin:6px 0 10px}
+.catfeat ul{list-style:none;display:grid;gap:8px;font-size:15.5px;color:var(--mute)}
+.catfeat li b{color:var(--ink)}
+.tagc{display:inline-block;font-weight:700;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding:4px 8px;border:2px solid var(--ink);background:var(--green2);color:var(--ink)}
+.tagc.app{background:var(--ink);color:#fff}
+.custom{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.custom div{border:2px solid var(--line);background:var(--paper);padding:20px 22px}
+.custom h4{font-family:Fraunces,serif;font-weight:800;font-size:20px;line-height:1.15;margin:10px 0 6px}
+.custom p{font-size:14.5px;color:var(--mute)}
+@media(max-width:980px){.catfeat{grid-template-columns:1fr}.catfeat img{border-right:0;border-bottom:2px solid var(--line);height:auto}.custom{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.custom{grid-template-columns:1fr}}
+/* cta */
+.cta{border-top:2px solid var(--line);padding:80px 0}
+.cta .box{border:2px solid var(--line);background:#fff;box-shadow:10px 10px 0 var(--ink);padding:48px;display:grid;grid-template-columns:1.4fr 1fr;gap:30px;align-items:center}
+.cta h2{font-size:clamp(32px,4vw,48px)}
+.cta p{color:var(--mute);margin-top:12px}
+.cta .ctas{display:flex;gap:14px;flex-wrap:wrap;justify-content:flex-end}
+footer{background:var(--ink);color:#b9b6ae;font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:26px 24px}
+footer a{color:#fff}
+@media(max-width:980px){
+ .hero .wrap{grid-template-columns:1fr;gap:40px}
+ .grid{grid-template-columns:repeat(2,1fr)}
+ .get{grid-template-columns:1fr}
+ .cta .box{grid-template-columns:1fr}.cta .ctas{justify-content:flex-start}
+ header nav a:not(.btn){display:none}
+}
+@media(max-width:640px){
+ .wrap{padding:0 16px}
+ .hero{padding:44px 0 40px}.hero p.lead{font-size:18px}
+ section.block{padding:56px 0}
+ .how{grid-template-columns:1fr}.how div+div{border-left:0;border-top:2px solid var(--line)}
+ .grid{gap:12px}.era h3{font-size:20px}.era p{display:none}.era .tx{padding:12px}
+ .era .go{flex-direction:column;align-items:flex-start;gap:6px}
+ .proof{grid-template-columns:1fr 1fr}.proof div:nth-child(3){border-left:0}.proof div:nth-child(n+3){border-top:2px solid var(--line)}
+ .cta .box{padding:28px;box-shadow:6px 6px 0 var(--ink)}
+ .top .wrap span:last-child{display:none}
+ .btn{padding:12px 18px;font-size:15px}
+}
+</style></head><body>
+
+<div class="top"><div class="wrap"><a href="/">← justindematteis.com</a><span>Shopify Partner · Ontario, Canada</span></div></div>
+
+<header><div class="wrap">
+  <a class="brand" href="#">Justin DeMatteis<small>Shopify Studio</small></a>
+  <nav><a href="#how">How it works</a><a href="#eras">Pick a style</a><a href="#case">Case study</a><a href="#get">What you get</a><a class="btn sm" href="/shopify-studio/50s#audit">Free audit</a></nav>
+</div></header>
+
+<section class="hero"><div class="wrap">
+  <div>
+    <span class="kick">Custom Shopify stores</span>
+    <h1>One store. <em>Eight decades</em> of style.</h1>
+    <p class="lead">I build Shopify stores for independent retailers: better-looking themes, smarter features and custom apps you won't find off the shelf. To show you what's possible, I built the same store in eight different styles. Pick one and look around.</p>
+    <div class="ctas"><a class="btn" href="#eras">Pick a style →</a><a class="btn ghost" href="/shopify-studio/50s#audit">Get a free audit</a></div>
+  </div>
+  <div class="strip">
+    <a href="/shopify-studio/50s"><img src="img/hero-phone-50s.webp" alt="1950s style"></a>
+    <a href="/shopify-studio/60s"><img src="img/hero-phone-60s.webp" alt="1960s style"></a>
+    <a href="/shopify-studio/80s"><img src="img/hero-phone-80s.webp" alt="1980s neon style"></a>
+    <a href="/shopify-studio/2000s"><img src="img/hero-phone-2000s.webp" alt="2000s Y2K style"></a>
+  </div>
+</div></section>
+
+<section class="block" id="how"><div class="wrap">
+  <div class="sh"><span class="kick">How this works</span><h2>Same content. Same features. Only the look changes.</h2><p>Every style below says the same thing and does the same things. That's the point: your store's design can be anything you want, and the clever stuff underneath comes with it.</p></div>
+  <div class="how">
+    <div><b>1</b><h3>Pick a decade</h3><p>Choose a style below. The whole page switches: colours, fonts, buttons, corners, even the banner art.</p></div>
+    <div><b>2</b><h3>Click through the store</h3><p>Every style has a working demo store: home page, collection and product pages, styled to match.</p></div>
+    <div><b>3</b><h3>Picture your own</h3><p>Your store gets its own look, built for your products and your customers. No templates, no copy-paste.</p></div>
+  </div>
+</div></section>
+
+<section class="block eras" id="eras"><div class="wrap">
+  <div class="sh"><span class="kick">Choose your theme</span><h2>Pick a style to explore</h2><p>Each one opens the full Shopify Studio page in that style, with a demo store to click through.</p></div>
+  <div class="grid">
+    <a class="era" href="/shopify-studio/50s"><div class="pic"><img src="img/hero-phone-50s.webp" alt=""></div><div class="tx"><h3>1950s</h3><p>Atomic diner: teal, cherry red, chrome and starbursts.</p><div class="go">Explore <span>→</span></div></div></a>
+    <a class="era" href="/shopify-studio/60s"><div class="pic"><img src="img/hero-phone-60s.webp" alt=""></div><div class="tx"><h3>1960s</h3><p>Flower power: sunbursts, round pills and groovy waves.</p><div class="go">Explore <span>→</span></div></div></a>
+    <a class="era" href="/shopify-studio/70s"><div class="pic"><img src="img/hero-phone-70s.webp" alt=""></div><div class="tx"><h3>1970s</h3><p>Warm and earthy: rust, mustard, olive and big soft type.</p><div class="go">Explore <span>→</span></div></div></a>
+    <a class="era" href="/shopify-studio/80s"><div class="pic"><img src="img/hero-phone-80s.webp" alt=""></div><div class="tx"><h3>1980s Neon</h3><p>Synthwave nights: neon grids, hot pink and electric blue.</p><div class="go">Explore <span>→</span></div></div></a>
+    <a class="era" href="/shopify-studio/80s-memphis"><div class="pic"><img src="img/hero-phone-80s-memphis.webp" alt=""></div><div class="tx"><h3>1980s Memphis</h3><p>Bold shapes, squiggles and loud primary colour.</p><div class="go">Explore <span>→</span></div></div></a>
+    <a class="era" href="/shopify-studio/90s"><div class="pic"><img src="img/hero-phone-90s.webp" alt=""></div><div class="tx"><h3>1990s</h3><p>Paint splats, halftone dots and zig-zag attitude.</p><div class="go">Explore <span>→</span></div></div></a>
+    <a class="era" href="/shopify-studio/2000s"><div class="pic"><img src="img/hero-phone-2000s.webp" alt=""></div><div class="tx"><h3>2000s / Y2K</h3><p>Glossy bubbles, chrome stars and dreamy blue.</p><div class="go">Explore <span>→</span></div></div></a>
+    <a class="era" href="/shopify-studio/2010s"><div class="pic"><img src="img/bag-2010s-v1.webp" alt="" style="object-position:78% center"></div><div class="tx"><h3>2010s</h3><p>Clean, bright and modern with gradient swooshes.</p><div class="go">Explore <span>→</span></div></div></a>
+  </div>
+</div></section>
+
+<section class="block case" id="case"><div class="wrap">
+  <div class="top2">
+    <div><span class="kick">Real client · Case study</span><h2>Jill &amp; The Beanstalk</h2><p>How a Toronto kids' shop went from a free theme to a store that feels like walking into the shop, and nearly doubled its online sales.</p>
+      <div class="where"><a href="https://jillandthebeanstalk.ca" target="_blank" rel="noopener">Visit the live store ↗</a><span>· 814 College St, Toronto</span></div></div>
+    <div class="nums">
+      <div><b>+90%</b><span>online revenue</span></div>
+      <div><b>+109%</b><span>online orders</span></div>
+      <div><b>+25%</b><span>total sales</span></div>
+      <div><b>$0</b><span>spent on ads</span></div>
+    </div>
+  </div>
+  <div class="ba">
+    <figure><figcaption><span>Phase one</span><span>Free theme</span></figcaption><img src="/shopify-studio/img/before-home.jpg" alt="Jill and the Beanstalk homepage on the free theme" loading="lazy">
+      <ul><li>Built within the limits of a free theme</li><li>Colours and layout set by theme options</li><li>Menu and catalog organized for 7,000+ products</li><li>Shop by age and owner's picks needed custom code</li></ul></figure>
+    <figure><figcaption><span>Phase two</span><span>Custom build</span></figcaption><img src="/shopify-studio/img/after-home.jpg" alt="Jill and the Beanstalk homepage after the redesign" loading="lazy">
+      <ul><li>One look from homepage to checkout</li><li>Real photos of the shop</li><li>Shop by age, by shelf and by brand</li><li>Every rule shown before checkout</li></ul></figure>
+  </div>
+  <div class="feats">
+    <div><img src="/shopify-studio/img/crop-age.png" alt="" loading="lazy"><div class="t"><small>Shop by age</small><h3>Gifts by age, in two taps</h3><p>Age circles take parents straight to toys for their child, filled from Shopify's own data.</p></div></div>
+    <div><img src="/shopify-studio/img/crop-jillpick.png" alt="" loading="lazy"><div class="t"><small>Owner's picks</small><h3>Her voice on every product</h3><p>A "Jill's pick" badge and note, and picks jump to the front of the homepage.</p></div></div>
+    <div><img src="/shopify-studio/img/crop-sale.png" alt="" loading="lazy"><div class="t"><small>Sale badges</small><h3>Deals people can see</h3><p>A tag adds a "35% Off" badge that switches itself off on the end date.</p></div></div>
+    <div><img src="/shopify-studio/img/after-age-shelves.jpg" alt="" loading="lazy"><div class="t"><small>Shop the shelves</small><h3>Browse like the aisles</h3><p>Picture cards for each part of the store, plus tabbed product rows.</p></div></div>
+  </div>
+  <div class="beyond-h"><span class="kick">Built beyond Shopify</span><h3>Things Shopify doesn't give you. We coded them.</h3><p>Everything below is custom work: theme code, Shopify Functions and a custom app. None of it comes with Shopify or a free theme.</p></div>
+  <div class="catfeat"><img src="/shopify-studio/img/after-category.jpg" alt="Jill and the Beanstalk Sensory Toys category page" loading="lazy">
+    <div class="t"><span class="tagc">Custom code</span><h4>Category pages that work like the shop</h4>
+      <ul><li><b>A real department tree.</b> Shopify only has flat collections. We built department → shelves → products across 7,788 products.</li>
+      <li><b>"Shop the shelves" cards</b> with their own colours and live item counts.</li>
+      <li><b>"More in Toys &amp; Games"</b> to jump between departments, with the current one marked.</li>
+      <li><b>A styled header</b> with breadcrumbs and a "Read more" description that keeps the page short.</li></ul></div></div>
+  <div class="custom">
+    <div><span class="tagc app">Custom app</span><h4>Free shipping with exclusions</h4><p>Free over $150, with chosen brands left out automatically. Shopify's own setting can't exclude brands.</p></div>
+    <div><span class="tagc app">Checkout rule</span><h4>Discount codes that follow the rules</h4><p>Codes can't stack with each other or with free shipping, enforced at checkout, not by hand.</p></div>
+    <div><span class="tagc">Custom code</span><h4>One set of store rules, everywhere</h4><p>The same rules show in the cart, on the product page and in the FAQ, from one place.</p></div>
+    <div><span class="tagc">Custom code</span><h4>Live "Open today" hours</h4><p>The header shows today's hours and links to Google Maps.</p></div>
+    <div><span class="tagc">Custom code</span><h4>A homepage that updates itself</h4><p>Blog, Instagram and picks rows refresh on their own. Rows slide and pause on touch.</p></div>
+    <div><span class="tagc">Scripts + tools</span><h4>7,788 products cleaned up</h4><p>Scripts sorted tags and types into 145 self-filling collections, with backups and a staff dashboard.</p></div>
+  </div>
+  <div class="badge-g"><b class="star">★</b><p><strong>First page of Google, and Google's Top Quality Store badge.</strong> 7,788 products cleaned up into 145 collections that fill themselves, rated Exceptional in Google Merchant Center.</p></div>
+  <div class="more"><a class="btn" href="/shopify-studio/jill-and-the-beanstalk/50s">Read the full case study →</a><a class="btn ghost" href="/shopify-studio/50s#audit">Get a free audit</a></div>
+</div></section>
+
+<section class="block" id="get"><div class="wrap">
+  <div class="sh"><span class="kick">What you get</span><h2>More than a pretty theme</h2><p>Most designers stop at the theme. I build what your store actually needs to sell.</p></div>
+  <div class="get">
+    <div><i>🎨</i><h3>Store redesigns</h3><p>A custom look that fits your shop, fast on phones, easy for your staff to update.</p></div>
+    <div><i>⚙️</i><h3>Custom features</h3><p>Discount rules, free-shipping bars, consignment, bundles. The things apps can't quite do.</p></div>
+    <div><i>🧩</i><h3>Shopify apps</h3><p>Custom apps built for your workflow, including one live on the Shopify App Store.</p></div>
+  </div>
+  <div class="proof">
+    <div><b>+90%</b><span>online revenue for a client</span></div>
+    <div><b>+109%</b><span>more online orders</span></div>
+    <div><b>$0</b><span>spent on ads</span></div>
+    <div><b>1</b><span>app on the Shopify App Store</span></div>
+  </div>
+</div></section>
+
+<section class="cta"><div class="wrap"><div class="box">
+  <div><h2>Want to see what your store could be?</h2><p>Get a free audit of your Shopify store. I'll send you what to fix first, within 48 hours.</p></div>
+  <div class="ctas"><a class="btn" href="/shopify-studio/50s#audit">Get my free audit</a><a class="btn ghost" href="#case">See the case study</a></div>
+</div></div></section>
+
+<footer><div class="wrap"><span>© Justin DeMatteis · Shopify Studio · Shopify Partner (JUSTInnovate)</span><a href="/">← justindematteis.com</a></div></footer>
+</body></html>
