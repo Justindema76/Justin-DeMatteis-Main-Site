@@ -1,11 +1,14 @@
-// Shopify Studio main page (/shopify-studio): explains the studio and lets visitors pick an era.
-// The page itself lives in home.html (copy of the public/shopify-studio/home-v8.html preview, with absolute image paths).
+// Shopify Studio pages that aren't era pages: the main page (/shopify-studio, home.html = public home-v9.html)
+// and the Jill case study (/shopify-studio/case-study, case-study.html = public case-study-v1.html).
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loadSetting } from '../../../lib/content';
 import { STUDIO_DEFAULTS, STUDIO_SETTING_KEY } from '../studioConfig';
 import { fillTokens, wireForm } from '../studioShared';
-import raw from './home.html?raw';
+import homeRaw from './home.html?raw';
+import caseRaw from './case-study.html?raw';
+
+const PAGES = { home: homeRaw, case: caseRaw };
 
 function split(html) {
   const style = (html.match(/<style>([\s\S]*?)<\/style>/) || [])[1] || '';
@@ -13,12 +16,12 @@ function split(html) {
   const fullBody = (html.match(/<body>([\s\S]*?)<\/body>/) || [])[1] || '';
   const scripts = [...fullBody.matchAll(/<script>([\s\S]*?)<\/script>/g)].map(m => m[1]);
   const body = fullBody.replace(/<script>[\s\S]*?<\/script>/g, '');
-  const title = (html.match(/<title>([\s\S]*?)<\/title>/) || [])[1] || '';
+  const title = ((html.match(/<title>([\s\S]*?)<\/title>/) || [])[1] || '').replace(/&amp;/g, '&');
   return { style, fonts, body, scripts, title };
 }
 
-export default function StudioHome() {
-  const page = useMemo(() => split(raw), []);
+export default function StudioHome({ page: pageKey = 'home' }) {
+  const page = useMemo(() => split(PAGES[pageKey] || homeRaw), [pageKey]);
   const navigate = useNavigate();
   const rootRef = useRef(null);
   // Package prices and "spots left" come from the Shopify Studio admin settings.

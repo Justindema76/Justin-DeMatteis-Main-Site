@@ -363,10 +363,41 @@ body.t-2010s .hero .s10.c{left:-70px;bottom:40px;width:230px;height:40px;backgro
 body.t-2010s .hero .d10{position:absolute;width:150px;height:150px;background:radial-gradient(circle,#ff2e9a 2.5px,transparent 3px) 0 0/14px 14px;opacity:.35}
 body.t-2010s .hero .d10.a{right:0;bottom:0}
 body.t-2010s .hero .d10.b{left:0;top:0;background-image:radial-gradient(circle,#1fa3ff 2.5px,transparent 3px)}
+
+/* Shopify Studio menu in the demo store's top bar (Studio look, not the store's) */
+/* Studio header on top of the demo store: hidden, slides down on hover (tap the tab on phones) */
+.studio-bar{position:fixed;top:0;left:0;right:0;z-index:150;pointer-events:none;font-family:Inter,system-ui,sans-serif}
+.sb-in{background:#f7f3ea;border-bottom:2px solid #16181d;transform:translateY(-100%);transition:transform .25s ease;pointer-events:auto}
+.studio-bar:hover .sb-in,.studio-bar.open .sb-in,.studio-bar:focus-within .sb-in{transform:none}
+.sb-wrap{max-width:1180px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;min-height:72px;gap:16px}
+.sb-brand{font:800 22px/1 Georgia,"Fraunces",serif;color:#16181d!important;text-decoration:none}
+.sb-brand small{display:block;font:600 11px Inter,system-ui,sans-serif;letter-spacing:.24em;text-transform:uppercase;color:#5e8e3e;margin-top:4px}
+.sb-right{display:flex;align-items:center;gap:12px}
+.sb-audit{font:700 14px Inter,system-ui,sans-serif;padding:10px 16px;background:#16181d;color:#fff!important;border:2px solid #16181d;box-shadow:4px 4px 0 #95bf47;text-decoration:none}
+.sb-handle{position:absolute;left:50%;top:0;transform:translateX(-50%);pointer-events:auto;font:700 12px Inter,system-ui,sans-serif;background:#16181d;color:#fff;border:0;border-radius:0 0 10px 10px;padding:4px 14px 6px;cursor:pointer;transition:opacity .2s}
+.studio-bar:hover .sb-handle,.studio-bar.open .sb-handle{opacity:0;pointer-events:none}
+.studio-bar::before{content:"";position:absolute;left:0;right:0;top:0;height:14px;pointer-events:auto}
+@media(max-width:560px){.sb-wrap{padding:0 14px;min-height:62px}.sb-brand{font-size:18px}.sb-audit{padding:8px 12px;font-size:13px}}
+.studio-btn{width:46px;height:46px;justify-content:center;background:#fff!important;border:2px solid #16181d!important;border-radius:0!important;box-shadow:3px 3px 0 #95bf47;color:#16181d!important;padding:0!important}
+.studio-btn .hb i{width:20px!important}
+.studio-btn{display:inline-flex;align-items:center;gap:8px;font:700 13px Inter,system-ui,sans-serif;color:inherit;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.35);border-radius:6px;padding:5px 10px;cursor:pointer}
+.studio-btn .hb{display:grid;gap:3px}.studio-btn .hb i{display:block;width:14px;height:2px;background:currentColor}
+.studio-menu{position:fixed;inset:0;z-index:200;display:none;font-family:Inter,system-ui,sans-serif;color:#16181d}
+.studio-menu.open{display:block}
+.sm-shade{position:absolute;inset:0;background:rgba(14,15,18,.55)}
+.sm-panel{position:absolute;top:0;right:0;height:100%;width:min(380px,92vw);background:#f7f3ea;border-left:2px solid #16181d;padding:20px 22px;overflow:auto;display:flex;flex-direction:column;gap:4px}
+.sm-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.sm-top b{font:800 21px Georgia,serif;color:#16181d!important;text-transform:none!important}
+.sm-x{width:38px;height:38px;border:2px solid #16181d;background:#fff;font-size:20px;cursor:pointer}
+.sm-panel>a{font-weight:700;font-size:17px;padding:10px 0;border-bottom:1px solid #dcd6c8;color:#16181d}
+.sm-panel small{font-weight:700;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:#5e8e3e;margin-top:12px}
+.sm-styles{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:4px}
+.sm-styles a{border:2px solid #16181d;background:#fff;padding:7px 9px;font-weight:700;font-size:13.5px;line-height:1.2;color:#16181d}
+.sm-styles a span{display:block;font-weight:500;font-size:11.5px;color:#5b6070}
+.sm-panel>a.sm-cta{margin-top:14px;text-align:center;background:#16181d;color:#fff;border:2px solid #16181d;box-shadow:4px 4px 0 #95bf47}
 </style></head>
 <body>
 
-<div class="demo"><div class="wrap"><span>Demo store built by <a href="/shopify-studio">Justin DeMatteis Shopify Studio</a> · fake products, real features</span><span class="erasw">Style: <select id="eraPick" aria-label="Pick a style"></select> <span class="open" id="openNow"></span></span></div></div>
+<div class="studio-bar" id="studioBar"><div class="sb-in"><div class="sb-wrap"><a class="sb-brand" href="/shopify-studio">Justin DeMatteis<small>Shopify Studio</small></a><div class="sb-right"><a class="sb-audit" href="/shopify-studio#audit">Free audit</a><button class="studio-btn" type="button" aria-label="Open the Shopify Studio menu" aria-expanded="false"><span class="hb"><i></i><i></i><i></i></span></button></div></div></div><button class="sb-handle" type="button" aria-label="Show the Shopify Studio bar">Shopify Studio ▾</button></div><span id="openNow" hidden></span><select id="eraPick" hidden></select>
 
 <div class="ann"><div class="wrap"><button aria-label="Previous message" data-ann="-1">‹</button><div class="msg" id="annMsg"></div><button aria-label="Next message" data-ann="1">›</button></div></div>
 
@@ -558,7 +589,7 @@ body.t-2010s .hero .d10.b{left:0;top:0;background-image:radial-gradient(circle,#
     <div><h4>Help</h4><ul><li><a href="#consign">Consign with us</a></li><li><a href="#home">Shipping</a></li><li><a href="#home">Returns &amp; final sale</a></li><li><a href="#home">Contact</a></li></ul></div>
     <div><h4>Want a store like this?</h4><ul><li><a href="/shopify-studio">Shopify Studio</a></li><li><a href="/shopify-studio/jill-and-the-beanstalk/60s">See the case study</a></li><li><a href="https://www.justconsignin.com" target="_blank" rel="noopener">JustConsignIn app</a></li></ul></div>
   </div>
-  <div class="fine"><span>© 2026 Sunny Days Kids (demo) · Built by <a href="/shopify-studio">Justin DeMatteis Shopify Studio</a></span><span>Built on Shopify · Consignment by <a href="https://www.justconsignin.com" target="_blank" rel="noopener">JustConsignIn</a></span></div>
+  <div class="fine"><span>© 2026 Sunny Days Kids · Demo store built by <a href="/shopify-studio">Justin DeMatteis Shopify Studio</a> · fake products, real features</span><span>Built on Shopify · Consignment by <a href="https://www.justconsignin.com" target="_blank" rel="noopener">JustConsignIn</a></span></div>
 </div></footer>
 
 <div class="scrim" id="scrim"></div>
@@ -839,4 +870,4 @@ function route(){const h=decodeURIComponent(location.hash.slice(1)||'home');cons
  closeCart();$('#mnav').classList.remove('on');window.scrollTo(0,0)}
 window.addEventListener('hashchange',route);route();renderCart();
 </script>
-</body></html>
+<script>(function(){var bar=document.getElementById('studioBar');if(bar){bar.querySelector('.sb-handle').onclick=function(){bar.classList.toggle('open')};}})();(function(){var m=document.getElementById('studioMenu'),b=document.querySelector('.studio-btn');if(!m||!b)return;function o(){m.classList.add('open');m.setAttribute('aria-hidden','false');b.setAttribute('aria-expanded','true')}function c(){m.classList.remove('open');m.setAttribute('aria-hidden','true');b.setAttribute('aria-expanded','false')}b.onclick=o;m.querySelectorAll('[data-sclose]').forEach(function(x){x.onclick=c});document.addEventListener('keydown',function(e){if(e.key==='Escape')c()});})();</script></body></html>

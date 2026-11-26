@@ -150,6 +150,18 @@ function wireSlider(root) {
 }
 
 // The free store review form posts into the existing Service Requests inbox.
+// One Shopify Studio menu, the same on the main page, case study, every era page and the demo store.
+const STUDIO_MENU = [
+  { href: '/shopify-studio', label: 'Home' },
+  { href: '/shopify-studio/case-study', label: 'Case study: Jill & The Beanstalk' },
+  { href: '/shopify-studio#packages', label: 'Packages' },
+  { href: '/shopify-studio#faq', label: 'Questions' },
+];
+const ERA_NAMES = {
+  '50s': ['1950s', 'Atomic diner'], '60s': ['1960s', 'Flower power'], '70s': ['1970s', 'Warm & earthy'], '80s': ['1980s', 'Neon'],
+  '80s-memphis': ['1980s', 'Memphis'], '90s': ['1990s', 'Paint & attitude'], '2000s': ['2000s', 'Y2K'], '2010s': ['2010s', 'Clean & modern'],
+};
+
 export default function ShopifyStudioPage({ kind = 'studio' }) {
   const { era: requestedEra } = useParams();
   const navigate = useNavigate();
@@ -162,6 +174,9 @@ export default function ShopifyStudioPage({ kind = 'studio' }) {
   const [burgerSlot, setBurgerSlot] = useState(null);
   const [navLinks, setNavLinks] = useState([]);
   const [burgerOpen, setBurgerOpen] = useState(false);
+  const fabRef = useRef(null);
+  const [fabOn, setFabOn] = useState(false);
+
 
   useEffect(() => {
     let live = true;
@@ -261,31 +276,45 @@ export default function ShopifyStudioPage({ kind = 'studio' }) {
     navigate(kind === 'case' ? `/shopify-studio/jill-and-the-beanstalk/${key}` : `/shopify-studio/${key}`);
   }
 
+  // Floating "Explore the demo store" button: appears once you scroll past the hero, dressed like this era's main button.
+  useEffect(() => {
+    const root = rootRef.current;
+    const fab = fabRef.current;
+    if (!root || !fab || kind !== 'studio') return undefined;
+    const twin = root.querySelector('.hero .btn.red') || root.querySelector('.hero .btn') || root.querySelector('.btn');
+    if (twin) {
+      const ts = getComputedStyle(twin);
+      ['backgroundColor', 'backgroundImage', 'color', 'fontFamily', 'fontWeight', 'textTransform', 'letterSpacing', 'borderTopLeftRadius', 'borderColor', 'borderStyle', 'borderWidth', 'boxShadow']
+        .forEach(key => { fab.style[key] = ts[key]; });
+      fab.style.setProperty('--fab-r', ts.borderTopLeftRadius);
+    }
+    const hero = root.querySelector('.hero');
+    const onScroll = () => setFabOn(window.scrollY > (hero ? hero.offsetTop + hero.offsetHeight * 0.6 : 400));
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [html, kind, era]);
+
   if (!html) return <div className="ssp-loading" aria-busy="true" />;
+
 
   return <>
     <style>{page.css + heroCss(kind, era, settings) + lookCss(kind, era, heroLook(), phonePicture(era, settings))}</style>
     <div ref={rootRef} className={`ssp ssp-${pageKey}`} dangerouslySetInnerHTML={{ __html: html }} />
+    {kind === 'studio' && <a ref={fabRef} className="ss-demo-fab show" href={`/shopify-studio/store.html?theme=${era}`} data-hard=""><i aria-hidden="true" />Demo store</a>}
     {burgerSlot && createPortal(<>
       <button type="button" className="ss-burger" aria-label="Menu" aria-expanded={burgerOpen} onClick={() => setBurgerOpen(open => !open)}>{burgerOpen ? '✕' : '☰'}</button>
-      {burgerOpen && <div className="ss-burger-panel" onClick={event => { if (event.target.closest('a')) setBurgerOpen(false); }}>
-        {navLinks.filter(link => !link.cta).map(link => <a key={link.href + link.label} href={link.href}>{link.label}</a>)}
-        <a href={`/shopify-studio/store.html?theme=${era}`} data-hard="">Demo store</a>
-        <div className="ss-burger-themes"><b>🎨 Try a theme</b>
-          <div>{enabledEras.map(item => <button type="button" key={item.key} className={item.key === era ? 'on' : ''} onClick={() => switchEra(item.key)}>{item.label}</button>)}</div>
+      {burgerOpen && <div className="ss-menu" onClick={event => { if (event.target.closest('a') || event.target.classList.contains('ss-menu-shade') || event.target.closest('[data-close]')) setBurgerOpen(false); }}>
+        <div className="ss-menu-shade" />
+        <div className="ss-menu-panel" role="dialog" aria-label="Shopify Studio menu">
+          <div className="ss-menu-top"><b>Shopify Studio</b><button type="button" data-close aria-label="Close menu">×</button></div>
+          {STUDIO_MENU.map(item => <a key={item.href} href={item.href}>{item.label}</a>)}
+          <small>Pick a style</small>
+          <div className="ss-menu-styles">{STUDIO_ERAS.map(item => <a key={item.key} className={item.key === era ? 'on' : ''} href={`/shopify-studio/${item.key}`}>{ERA_NAMES[item.key]?.[0] || item.label}<span>{ERA_NAMES[item.key]?.[1] || ''}</span></a>)}</div>
+          <a className="ss-menu-cta" href="/shopify-studio#audit">Get a free audit</a>
+          <a href="/">← justindematteis.com</a>
         </div>
-        {navLinks.filter(link => link.cta).map(link => <a key={link.href} className="ss-burger-cta" href={link.href}>{link.label}</a>)}
       </div>}
     </>, burgerSlot)}
-    {themeSlot && createPortal(<a className="ss-demo-link" href={`/shopify-studio/store.html?theme=${era}`} data-hard="">Demo store</a>, themeSlot)}
-    {themeSlot && settings.showEraSwitcher && enabledEras.length > 1 && createPortal(<span className="ss-themes">
-      <a href="#" role="button" aria-expanded={menuOpen} onClick={event => { event.preventDefault(); event.stopPropagation(); setMenuOpen(open => !open); }}>🎨 Try a theme ▾</a>
-      {menuOpen && <ul role="menu">
-        {enabledEras.map(item => <li key={item.key}>
-          <button type="button" role="menuitem" className={item.key === era ? 'on' : ''} onClick={() => switchEra(item.key)}>{item.label}</button>
-        </li>)}
-        <li className="ss-demo-item"><a href={`/shopify-studio/store.html?theme=${era}`} data-hard="">See the demo store →</a></li>
-      </ul>}
-    </span>, themeSlot)}
   </>;
 }

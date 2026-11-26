@@ -17,6 +17,7 @@ export default function App() {
     <SEO />
     <Routes>
       <Route path="/shopify-studio" element={<Suspense fallback={<div className="ssp-loading" />}><StudioHome /></Suspense>} />
+      <Route path="/shopify-studio/case-study" element={<Suspense fallback={<div className="ssp-loading" />}><StudioHome page="case" /></Suspense>} />
       <Route path="/shopify-studio/jill-and-the-beanstalk" element={studio('case')} />
       <Route path="/shopify-studio/jill-and-the-beanstalk/:era" element={studio('case')} />
       <Route path="/shopify-studio/:era" element={studio('studio')} />
