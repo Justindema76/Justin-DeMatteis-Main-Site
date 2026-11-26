@@ -45,7 +45,8 @@ function heroCss(kind, era, settings) {
   const scope = `.ssp-${kind}-${era} .hero`;
   let css = '';
   if (desktop) css += `@media(min-width:601px){${scope} .bg{background-image:url("${safe(desktop)}")!important}}`;
-  if (phone) css += `@media(max-width:600px){${scope}{flex-wrap:wrap!important}${scope} .ssp-phone-hero{display:block!important;flex:0 0 100%}}`;
+  // Phone: the picture becomes the hero background. The CSS art (.bg/.mdeco) stays in the code, just hidden on phones.
+  if (phone) css += `@media(max-width:600px){${scope} .mdeco,${scope} .bg>*,${scope} .bg::before,${scope} .bg::after{display:none!important}${scope} .bg{background-image:none!important}${scope} .ssp-phone-hero{display:block!important;position:absolute!important;top:0;left:0;width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;z-index:0}${scope} .in{position:relative;z-index:1}}`;
   return css;
 }
 
@@ -299,11 +300,25 @@ export default function ShopifyStudioPage({ kind = 'studio' }) {
       phonePic.loading = 'eager';
       heroIn.appendChild(phonePic);
     }
+    // Phone: title sits on the picture's empty top; the paragraph and buttons start below the picture.
+    const lead = phonePic ? heroIn.querySelector('.in p') : null;
+    const placeLead = () => {
+      if (!lead) return;
+      lead.style.marginTop = '';
+      if (window.innerWidth > 600) return;
+      const picH = heroIn.offsetWidth * 4 / 3;
+      const top = lead.getBoundingClientRect().top - heroIn.getBoundingClientRect().top;
+      const extra = picH - top + 24;
+      if (extra > 0) lead.style.marginTop = `${extra}px`;
+    };
+    placeLead();
+    const leadTimer = setTimeout(placeLead, 600);
+    window.addEventListener('resize', placeLead);
     const fixTimer = setTimeout(() => { stripGlows(root); fixFaintText(root); }, 400);
     const hash = window.location.hash.slice(1);
     if (hash) requestAnimationFrame(() => document.getElementById(hash)?.scrollIntoView());
     else window.scrollTo(0, 0);
-    return () => { phonePic?.remove(); offSlider(); offForm(); root.removeEventListener('click', onClick); slot?.remove(); setThemeSlot(null); burger?.remove(); setBurgerSlot(null); setBurgerOpen(false); clearTimeout(fixTimer); };
+    return () => { phonePic?.remove(); if (lead) lead.style.marginTop = ''; clearTimeout(leadTimer); window.removeEventListener('resize', placeLead); offSlider(); offForm(); root.removeEventListener('click', onClick); slot?.remove(); setThemeSlot(null); burger?.remove(); setBurgerSlot(null); setBurgerOpen(false); clearTimeout(fixTimer); };
   }, [html, era, navigate, settings]);
 
   useEffect(() => {
