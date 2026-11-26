@@ -175,6 +175,7 @@ export default function ShopifyStudioPage({ kind = 'studio' }) {
   const [navLinks, setNavLinks] = useState([]);
   const [burgerOpen, setBurgerOpen] = useState(false);
   const fabRef = useRef(null);
+  const [auditBtnClass, setAuditBtnClass] = useState('btn red');
   const [fabOn, setFabOn] = useState(false);
 
 
@@ -245,6 +246,8 @@ export default function ShopifyStudioPage({ kind = 'studio' }) {
       nav.insertBefore(slot, nav.querySelector('.btn') || null);
     }
     setThemeSlot(slot);
+    // Desktop "Demo store" button copies the header's Free audit button exactly.
+    setAuditBtnClass(nav?.querySelector('.btn')?.className || 'btn red');
     // Phone menu: hamburger in the header with the same links
     let burger = null;
     const headerWrap = root.querySelector('header .wrap');
@@ -304,7 +307,18 @@ export default function ShopifyStudioPage({ kind = 'studio' }) {
     {kind === 'studio' && <a ref={fabRef} className="ss-demo-fab show" href={`/shopify-studio/store.html?theme=${era}`} data-hard=""><i aria-hidden="true" />Demo store</a>}
     {burgerSlot && createPortal(<>
       <button type="button" className="ss-burger" aria-label="Menu" aria-expanded={burgerOpen} onClick={() => setBurgerOpen(open => !open)}>{burgerOpen ? '✕' : '☰'}</button>
-      {burgerOpen && <div className="ss-menu" onClick={event => { if (event.target.closest('a') || event.target.classList.contains('ss-menu-shade') || event.target.closest('[data-close]')) setBurgerOpen(false); }}>
+    </>, burgerSlot)}
+    {themeSlot && kind === 'studio' && createPortal(<a className={`${auditBtnClass} ss-demo-top`} href={`/shopify-studio/store.html?theme=${era}`} data-hard="">Demo store</a>, themeSlot)}
+    {burgerOpen && createPortal(<div className="ss-menu" onClick={event => {
+      const link = event.target.closest('a');
+      if (link) {
+        const href = link.getAttribute('href') || '';
+        if (href.startsWith('/') && !link.hasAttribute('data-hard')) { event.preventDefault(); navigate(href); }
+        setBurgerOpen(false);
+        return;
+      }
+      if (event.target.classList.contains('ss-menu-shade') || event.target.closest('[data-close]')) setBurgerOpen(false);
+    }}>
         <div className="ss-menu-shade" />
         <div className="ss-menu-panel" role="dialog" aria-label="Shopify Studio menu">
           <div className="ss-menu-top"><b>Shopify Studio</b><button type="button" data-close aria-label="Close menu">×</button></div>
@@ -314,7 +328,6 @@ export default function ShopifyStudioPage({ kind = 'studio' }) {
           <a className="ss-menu-cta" href="/shopify-studio#audit">Get a free audit</a>
           <a href="/">← justindematteis.com</a>
         </div>
-      </div>}
-    </>, burgerSlot)}
+      </div>, document.body)}
   </>;
 }
