@@ -17,8 +17,9 @@ export function lookCss(kind, era, look, phoneUrl) {
   const s = `.ssp-${kind}-${era} .hero`;
   let css = `${s} .ssp-eramark{position:absolute;right:2%;bottom:-4%;font-weight:900;line-height:.9;letter-spacing:-.03em;font-size:clamp(120px,22vw,320px);opacity:.14;pointer-events:none;white-space:nowrap;z-index:1}`
     + `${s} .in{position:relative;z-index:2}`
-    + `${s} .ssp-shopify-mark{display:inline-flex;align-items:center;gap:8px;margin:0 0 26px;padding:6px 12px 6px 8px;background:#fff;color:#1b1b1b;font:700 13px/1 Inter,system-ui,sans-serif;letter-spacing:.02em;border:2px solid #1b1b1b}`
+    + `${s} .ssp-shopify-mark{position:absolute;top:14px;left:14px;z-index:3;display:inline-flex;align-items:center;gap:8px;margin:0;padding:6px 12px 6px 8px;background:#fff;color:#1b1b1b;font:700 13px/1 Inter,system-ui,sans-serif;letter-spacing:.02em;border:2px solid #1b1b1b}`
     + `${s} .ssp-shopify-mark svg{width:20px;height:23px}`
+    + `@media(max-width:600px){${s} .in{margin-top:46px}${s} .ssp-shopify-mark{top:22px;left:16px;padding:4px 10px 4px 6px;font-size:12px}${s} .ssp-shopify-mark svg{width:16px;height:18px}}`
     + `@media(max-width:600px){${s} .ssp-eramark{font-size:150px;right:-6px;bottom:auto;top:40%;opacity:.2}}`;
   if (look === 'b' && phoneUrl) {
     const url = phoneUrl.replace(/["\\()\s]/g, encodeURIComponent);
@@ -49,7 +50,7 @@ export function applyLook(root, era, look, phoneUrl) {
   const logo = document.createElement('div');
   logo.className = 'ssp-shopify-mark';
   logo.innerHTML = `${BAG}<span>Shopify stores &amp; apps</span>`;
-  inner.prepend(logo);
+  hero.append(logo);
   // Match the era: same corners, border and font as the hero's outline button.
   const twin = inner.querySelector('.btn.ghost, .btn:not(.red)') || inner.querySelector('.btn');
   if (twin) {

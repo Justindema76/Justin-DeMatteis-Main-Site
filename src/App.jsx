@@ -9,13 +9,14 @@ import WorkPost from './pages/WorkPost';
 import AiPost from './pages/AiPost';
 
 const ShopifyStudioPage = lazy(() => import('./features/shopify-studio/ShopifyStudioPage'));
+const StudioHome = lazy(() => import('./features/shopify-studio/home/StudioHome'));
 const studio = kind => <Suspense fallback={<div className="ssp-loading" />}><ShopifyStudioPage kind={kind} /></Suspense>;
 
 export default function App() {
   return <>
     <SEO />
     <Routes>
-      <Route path="/shopify-studio" element={studio('studio')} />
+      <Route path="/shopify-studio" element={<Suspense fallback={<div className="ssp-loading" />}><StudioHome /></Suspense>} />
       <Route path="/shopify-studio/jill-and-the-beanstalk" element={studio('case')} />
       <Route path="/shopify-studio/jill-and-the-beanstalk/:era" element={studio('case')} />
       <Route path="/shopify-studio/:era" element={studio('studio')} />
