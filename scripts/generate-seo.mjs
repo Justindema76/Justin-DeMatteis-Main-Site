@@ -263,8 +263,12 @@ const studioPosts = (await supabase('blog_posts', 'select=slug,title,excerpt,seo
 
 // Fixed Studio pages (main, pricing, case study, about, privacy, terms, blog list once it has posts).
 for (const route of Object.keys(PAGE_SEO)) {
-  if (route === '/shopify-studio/blog' && !studioPosts.length) continue;
   const meta = pageSeo(route, studioSettings);
+  // Empty blog: the page still exists (no 404), but stays out of Google until the first article.
+  if (route === '/shopify-studio/blog' && !studioPosts.length) {
+    await writeRoute(route, sourceHtml.replace(marker, seoBlock(route, meta, studioGraph(route, meta), 'noindex,follow')));
+    continue;
+  }
   const extra = route === '/shopify-studio/case-study' ? { projectName: 'Jill & The Beanstalk' } : {};
   await writeRoute(route, sourceHtml.replace(marker, seoBlock(route, meta, studioGraph(route, meta, extra))));
   sitemapEntries.push({ loc: `${BASE}${route}`, lastmod: new Date().toISOString(), priority: route === '/shopify-studio' ? '0.9' : /privacy|terms/.test(route) ? '0.3' : '0.7' });
