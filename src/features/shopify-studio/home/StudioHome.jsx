@@ -5,7 +5,9 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loadSetting } from '../../../lib/content';
 import { STUDIO_DEFAULTS, STUDIO_SETTING_KEY } from '../studioConfig';
-import { fillTokens, wireForm } from '../studioShared';
+import { fillTokens, wireForm, wireTracking } from '../studioShared';
+import { pageSeo, wireFooter } from '../studioSite';
+import { INFO_PAGE_KEYS, infoPageHtml } from './infoPages';
 import { renderPricing } from './pricingRender';
 import homeRaw from './home.html?raw';
 import caseRaw from './case-study.html?raw';
@@ -24,17 +26,25 @@ function split(html) {
 }
 
 export default function StudioHome({ page: pageKey = 'home' }) {
-  const page = useMemo(() => split(PAGES[pageKey] || homeRaw), [pageKey]);
+  // About / Privacy / Terms use the main page's header, menu and footer with their own middle.
+  const info = INFO_PAGE_KEYS.includes(pageKey);
+  const page = useMemo(() => {
+    const parts = split(info ? homeRaw : (PAGES[pageKey] || homeRaw));
+    return info ? { ...parts, title: pageSeo(`/shopify-studio/${pageKey}`)?.title || parts.title } : parts;
+  }, [pageKey, info]);
   const navigate = useNavigate();
   const rootRef = useRef(null);
   // Package prices and "spots left" come from the Shopify Studio admin settings.
   const [settings, setSettings] = useState(STUDIO_DEFAULTS);
   useEffect(() => {
     let live = true;
-    loadSetting(STUDIO_SETTING_KEY, STUDIO_DEFAULTS).then(value => { if (live) setSettings({ ...STUDIO_DEFAULTS, ...(value || {}) }); });
+    Promise.all([loadSetting(STUDIO_SETTING_KEY, STUDIO_DEFAULTS), loadSetting('social_links', {})]).then(([value, social]) => { if (live) setSettings({ ...STUDIO_DEFAULTS, ...(value || {}), __social: social || {} }); });
     return () => { live = false; };
   }, []);
-  const html = useMemo(() => fillTokens(pageKey === 'pricing' ? renderPricing(page.body, settings.pricing || {}) : page.body, settings), [page.body, settings, pageKey]);
+  const html = useMemo(() => {
+    const body = pageKey === 'pricing' ? renderPricing(page.body, settings.pricing || {}) : info ? infoPageHtml(page.body, pageKey, settings) : page.body;
+    return fillTokens(body, settings);
+  }, [page.body, settings, pageKey, info]);
 
   useEffect(() => {
     const style = document.createElement('style');
@@ -60,7 +70,11 @@ export default function StudioHome({ page: pageKey = 'home' }) {
   useEffect(() => {
     page.scripts.forEach(code => new Function(code)());
     const offForm = rootRef.current ? wireForm(rootRef.current, '') : () => {};
+    const offFooter = rootRef.current ? wireFooter(rootRef.current) : () => {};
+    const offTrack = wireTracking(rootRef.current);
     return () => {
+      offFooter();
+      offTrack();
       window.__studioHomeCleanup?.();
       delete window.__studioHomeCleanup;
       offForm();
@@ -71,7 +85,7 @@ export default function StudioHome({ page: pageKey = 'home' }) {
   const onClick = event => {
     const a = event.target.closest('a');
     const href = a?.getAttribute('href');
-    if (!href || href.startsWith('#') || /^https?:/.test(href) || a.target) return;
+    if (!href || href.startsWith('#') || /^https?:/.test(href) || a.target || a.hasAttribute('data-hard')) return;
     event.preventDefault();
     navigate(href);
   };

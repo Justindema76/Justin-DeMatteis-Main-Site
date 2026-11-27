@@ -2,7 +2,8 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useNavigate, useParams } from 'react-router-dom';
 import { loadSetting } from '../../lib/content';
-import { fillTokens, wireForm } from './studioShared';
+import { fillTokens, track, wireForm, wireTracking } from './studioShared';
+import { wireFooter } from './studioSite';
 import { HERO_DEFAULTS, STUDIO_DEFAULTS, STUDIO_ERAS, STUDIO_SETTING_KEY } from './studioConfig';
 import fonts from './fonts.json';
 import { applyLook, heroLook, lookCss, phonePicture } from './heroLook';
@@ -182,8 +183,8 @@ export default function ShopifyStudioPage({ kind = 'studio' }) {
 
   useEffect(() => {
     let live = true;
-    loadSetting(STUDIO_SETTING_KEY, STUDIO_DEFAULTS).then(value => {
-      if (live) { setSettings({ ...STUDIO_DEFAULTS, ...value }); setLoaded(true); }
+    Promise.all([loadSetting(STUDIO_SETTING_KEY, STUDIO_DEFAULTS), loadSetting('social_links', {})]).then(([value, social]) => {
+      if (live) { setSettings({ ...STUDIO_DEFAULTS, ...value, __social: social || {} }); setLoaded(true); }
     });
     return () => { live = false; };
   }, []);
@@ -200,6 +201,11 @@ export default function ShopifyStudioPage({ kind = 'studio' }) {
     });
     return () => { live = false; };
   }, [pageKey, loaded]);
+
+  // Analytics: which design people actually look at (case-study versions count too).
+  useEffect(() => {
+    if (loaded) track(kind === 'case' ? 'case_study_view' : 'design_view', { design: era });
+  }, [era, kind, loaded]);
 
   // Era fonts
   useEffect(() => {
@@ -221,6 +227,8 @@ export default function ShopifyStudioPage({ kind = 'studio' }) {
     if (!root || !html) return undefined;
     const offSlider = wireSlider(root);
     const offForm = wireForm(root, era);
+    const offFooter = wireFooter(root);
+    const offTrack = wireTracking(root);
     const onClick = event => {
       const link = event.target.closest('a[href]');
       if (!link || link.target === '_blank' || link.hasAttribute('data-hard')) return;
@@ -269,7 +277,7 @@ export default function ShopifyStudioPage({ kind = 'studio' }) {
       if (hash) requestAnimationFrame(() => document.getElementById(hash)?.scrollIntoView());
       else window.scrollTo(0, 0);
     }
-    return () => { offLook(); offSlider(); offForm(); root.removeEventListener('click', onClick); slot?.remove(); setThemeSlot(null); burger?.remove(); setBurgerSlot(null); setBurgerOpen(false); clearTimeout(fixTimer); };
+    return () => { offTrack(); offFooter(); offLook(); offSlider(); offForm(); root.removeEventListener('click', onClick); slot?.remove(); setThemeSlot(null); burger?.remove(); setBurgerSlot(null); setBurgerOpen(false); clearTimeout(fixTimer); };
   }, [html, era, navigate, settings]);
 
   useEffect(() => {

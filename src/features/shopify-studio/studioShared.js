@@ -1,6 +1,7 @@
 // Shared by the Shopify Studio main page and the era pages: prices from the admin and the free-audit form.
 import { submitServiceRequest } from '../../lib/serviceRequests';
 import { catalogue, startingPrice } from './home/pricingRender';
+import { renderStudioFooter, STUDIO_FOOTER_CSS } from './studioSite';
 
 function price(value) {
   const clean = String(value || '').trim().replace(/^\$/, '');
@@ -15,7 +16,9 @@ export function fillTokens(html, settings) {
     .replaceAll('{{PRICE2}}', price(startingPrice(settings.pricing, 'redesign')))
     .replaceAll('{{PRICE3}}', price(startingPrice(settings.pricing, 'backend')))
     .replaceAll('{{SPOTS}}', spots ? ` · ${spots} spots left this month` : '')
-    .replaceAll('{{SPOTS_BADGE}}', spots ? `${spots} spots left` : 'Free');
+    .replaceAll('{{SPOTS_BADGE}}', spots ? `${spots} spots left` : 'Free')
+    // One footer for every Studio page (main, pricing, case studies, all designs), built from the shared config.
+    .replace(/<footer>[\s\S]*?<\/footer>/, () => `<style>${STUDIO_FOOTER_CSS}</style>${renderStudioFooter(settings, catalogue(settings.pricing), settings.__social || {})}`);
 }
 
 export function tracking() {
@@ -54,6 +57,7 @@ export function wireForm(root, era) {
     const title = form.querySelector('h3');
     const button = form.querySelector('button[type="submit"]');
     if (title) title.textContent = 'Request a quote';
+    track('quote_start', { service: picked().replace(/^\nInterested in: /, '') });
     if (button) button.textContent = 'Request a quote';
     const sub = form.querySelector('.sub');
     if (sub) sub.textContent = `Takes 30 seconds · ${picked().replace(/^\nInterested in: /, '')}`;
@@ -94,6 +98,8 @@ export function wireForm(root, era) {
         fax_number: String(data.get('fax_number') || ''),
         ...tracking(),
       });
+      // Counted only after the server confirms. No names or emails go to analytics.
+      track(picked() ? 'quote_submit' : 'free_review_submit', { location: era || 'main' });
       form.innerHTML = '<h3>Got it, thank you.</h3><p class="sub">Your free store review will be in your inbox within 48 hours.</p>';
     } catch (error) {
       button.disabled = false;
@@ -104,3 +110,33 @@ export function wireForm(root, era) {
   return () => form.removeEventListener('submit', onSubmit);
 }
 
+
+// GA4 events for Shopify Studio (feeds the analytics dashboard later). One listener per page.
+// design_view: a design page opened · design_click: a design picked · demo_store_open
+// cta_free_review: any "free store review" button · select_package: "Select package"/"Get a quote"
+// service_view: a service opened on the pricing page · pricing_click: a link to the pricing page
+export function track(name, params = {}) {
+  if (typeof window !== 'undefined' && typeof window.gtag === 'function') window.gtag('event', name, { ...params, page_path: window.location.pathname });
+}
+
+export function wireTracking(root) {
+  if (!root) return () => {};
+  const onClick = event => {
+    const a = event.target.closest('a[href]');
+    if (!a) return;
+    const href = a.getAttribute('href') || '';
+    const text = (a.textContent || '').trim().slice(0, 60);
+    const where = a.closest('footer') ? 'footer' : a.closest('header, .smenu, .ss-menu-panel') ? 'menu' : 'page';
+    let m;
+    if (a.closest('.ssf-social')) track('social_click', { network: a.getAttribute('aria-label') || '' });
+    else if (/^\/contact\b|^mailto:|^tel:/.test(href)) track('contact_click', { location: where });
+    else if ((m = href.match(/^\/shopify-studio\?service=([^&#]+)(?:&package=([^&#]+))?/))) track('select_package', { service: decodeURIComponent(m[1]), package: decodeURIComponent(m[2] || 'custom') });
+    else if (/#audit$/.test(href)) track('cta_free_review', { link_text: text, location: where });
+    else if (/^\/shopify-studio\/(store|demo-store)\b/.test(href)) track('demo_store_open', { location: where });
+    else if (/^\/shopify-studio\/pricing/.test(href) && !a.dataset.nav) track('pricing_click', { link_text: text, location: where, service: href.split('#')[1] || '' });
+    else if (a.dataset.nav) track('service_view', { service: a.dataset.nav });
+    else if ((m = href.match(/^\/shopify-studio\/([a-z0-9-]+)$/)) && !['pricing', 'case-study', 'about', 'privacy', 'terms', 'store'].includes(m[1])) track('design_click', { design: m[1], location: where });
+  };
+  root.addEventListener('click', onClick);
+  return () => root.removeEventListener('click', onClick);
+}

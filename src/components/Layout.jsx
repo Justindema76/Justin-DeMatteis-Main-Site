@@ -129,7 +129,8 @@ export default function Layout() {
 
   const links = useMemo(() => withStudio(navItems(header)), [header]);
   const activeSocial = useMemo(
-    () => SOCIAL_NETWORKS.filter(network => social?.[network.key]?.url && social?.[network.key]?.enabled !== false),
+    // Only icons ticked for the main site (admin → Social Links). No saved choice = main site, as before.
+    () => SOCIAL_NETWORKS.filter(network => social?.[network.key]?.url && social?.[network.key]?.enabled !== false && social?.[network.key]?.sections?.main !== false),
     [social]
   );
   const brandFirst = header.brandFirst || DEFAULT_HEADER.brandFirst || 'Justin';

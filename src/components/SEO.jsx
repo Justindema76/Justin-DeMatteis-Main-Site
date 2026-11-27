@@ -1,4 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { loadSetting } from '../lib/content';
+import { DESIGNS, designSeo, pageSeo } from '../features/shopify-studio/studioSite';
 import { useLocation } from 'react-router-dom';
 
 const BASE = 'https://www.justindematteis.com';
@@ -85,18 +87,22 @@ function setCanonical(href) {
 
 export default function SEO() {
   const location = useLocation();
+  // Shopify Studio SEO overrides from the admin (loaded once, only on Studio pages).
+  const [studio, setStudio] = useState(null);
+  const onStudio = location.pathname.startsWith('/shopify-studio');
+  useEffect(() => {
+    if (!onStudio || studio) return;
+    loadSetting('global_shopify-studio', {}).then(value => setStudio(value || {}));
+  }, [onStudio, studio]);
 
   useEffect(() => {
     // Shopify Studio: pricing and case study have their own tags; era pages share the main page's;
     // the old /jill-and-the-beanstalk addresses point at the case study.
     const studioPath = META[location.pathname] ? '' : location.pathname.startsWith('/shopify-studio/jill-and-the-beanstalk') ? '/shopify-studio/case-study'
       : location.pathname.startsWith('/shopify-studio') ? '/shopify-studio' : '';
-    const eraMatch = location.pathname.match(/^\/shopify-studio\/(50s|60s|70s|80s|80s-memphis|90s|2000s|2010s)$/);
-    const ERA_NAMES = { '50s': '1950s', '60s': '1960s', '70s': '1970s', '80s': '1980s neon', '80s-memphis': '1980s Memphis', '90s': '1990s', '2000s': '2000s Y2K', '2010s': '2010s' };
-    const eraMeta = eraMatch && {
-      title: `Shopify Studio in ${ERA_NAMES[eraMatch[1]]} style | Justin DeMatteis`,
-      description: `Custom Shopify stores, features and apps for independent retailers, shown in a ${ERA_NAMES[eraMatch[1]]} design. Same services and pricing in every style. Get a free store review.`,
-    };
+    const design = DESIGNS.find(d => location.pathname === `/shopify-studio/${d.key}`);
+    const eraMatch = design ? [location.pathname, design.key] : null;
+    const eraMeta = design ? designSeo(design, studio || {}) : pageSeo(location.pathname, studio || {});
     const meta = eraMeta || META[location.pathname] || META[studioPath] || (location.pathname.startsWith('/blog/')
       ? {
           title: 'Development Blog | Justin DeMatteis',
@@ -107,7 +113,7 @@ export default function SEO() {
           description: 'Web, mobile, ecommerce and AI-assisted product development portfolio.',
         });
 
-    const canonicalPath = eraMatch ? location.pathname : (studioPath || location.pathname);
+    const canonicalPath = (eraMatch || pageSeo(location.pathname)) ? location.pathname : (studioPath || location.pathname);
     const canonical = `${BASE}${canonicalPath === '/' ? '/' : canonicalPath}`;
 
     document.title = meta.title;
@@ -136,7 +142,7 @@ export default function SEO() {
         page_path: `${location.pathname}${location.search || ''}`,
       });
     }
-  }, [location.pathname, location.search]);
+  }, [location.pathname, location.search, studio]);
 
   return null;
 }
