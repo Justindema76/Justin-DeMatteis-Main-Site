@@ -166,6 +166,7 @@ export default function ShopifyStudioPage({ kind = 'studio' }) {
   const { era: requestedEra } = useParams();
   const navigate = useNavigate();
   const rootRef = useRef(null);
+  const scrolledFor = useRef('');
   const [settings, setSettings] = useState(STUDIO_DEFAULTS);
   const [loaded, setLoaded] = useState(false);
   const [page, setPage] = useState({ html: '', css: '' });
@@ -260,9 +261,14 @@ export default function ShopifyStudioPage({ kind = 'studio' }) {
     setBurgerSlot(burger);
     const offLook = applyLook(root, era, heroLook(), phonePicture(era, settings));
     const fixTimer = setTimeout(() => { stripGlows(root); fixFaintText(root); }, 400);
-    const hash = window.location.hash.slice(1);
-    if (hash) requestAnimationFrame(() => document.getElementById(hash)?.scrollIntoView());
-    else window.scrollTo(0, 0);
+    // Scroll once per page, not every time settings finish loading (that threw people back to the top).
+    const placeKey = window.location.pathname + window.location.hash;
+    if (scrolledFor.current !== placeKey && root.childElementCount) {
+      scrolledFor.current = placeKey;
+      const hash = window.location.hash.slice(1);
+      if (hash) requestAnimationFrame(() => document.getElementById(hash)?.scrollIntoView());
+      else window.scrollTo(0, 0);
+    }
     return () => { offLook(); offSlider(); offForm(); root.removeEventListener('click', onClick); slot?.remove(); setThemeSlot(null); burger?.remove(); setBurgerSlot(null); setBurgerOpen(false); clearTimeout(fixTimer); };
   }, [html, era, navigate, settings]);
 

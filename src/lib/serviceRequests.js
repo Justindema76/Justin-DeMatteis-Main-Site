@@ -1,8 +1,19 @@
+// Spam check: the server drops requests sent faster than a person can fill a form,
+// or sent straight to the API without anyone typing on the page.
+let firstTyped = 0;
+const pageLoaded = typeof performance !== 'undefined' ? Date.now() - performance.now() : Date.now();
+if (typeof document !== 'undefined') {
+  const mark = event => {
+    if (!firstTyped && event.target?.closest?.('form')) firstTyped = Date.now();
+  };
+  ['focusin', 'input', 'pointerdown', 'keydown'].forEach(type => document.addEventListener(type, mark, true));
+}
+
 export async function submitServiceRequest(payload) {
   const response = await fetch('/api/service-request', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
+    body: JSON.stringify({ ...payload, form_ms: Date.now() - (firstTyped || pageLoaded) }),
   });
 
   const data = await response.json().catch(() => ({}));

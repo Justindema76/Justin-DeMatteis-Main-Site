@@ -199,7 +199,11 @@ header .brand small{display:block!important}
 .auditsec form h3{font-size:26px}
 .auditsec form .sub{color:var(--mute);font-size:15px;margin-bottom:8px}
 .auditsec label{font-weight:700;font-size:14px;margin-top:8px}
-.auditsec input,.auditsec select{font:inherit;font-size:16px;padding:12px 14px;border:2px solid var(--ink);background:var(--paper);width:100%}
+.auditsec input,.auditsec select,.auditsec textarea{font:inherit;font-size:16px;padding:12px 14px;border:2px solid var(--ink);background:var(--paper);width:100%}
+.auditsec select{-webkit-appearance:none;appearance:none;border-radius:0;padding-right:40px;text-overflow:ellipsis;color:var(--ink);background:var(--paper) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%2316181d' stroke-width='2.5'/%3E%3C/svg%3E") no-repeat right 14px center}
+.auditsec select:invalid{color:#5b6070}.auditsec textarea{resize:vertical;min-height:84px;border-radius:0}
+.auditsec ::placeholder{color:#6b6f7a;opacity:1}.auditsec label .opt{font-weight:500;color:var(--mute)}
+.auditsec button.btn{width:100%;font-size:18px;padding:16px 24px;background:var(--green2);color:var(--ink);border-color:var(--ink);box-shadow:5px 5px 0 var(--ink)}
 .auditsec .ss-consent{display:flex;gap:10px;align-items:flex-start;font-weight:500;font-size:14px;color:var(--mute)}
 .auditsec .ss-consent input{width:auto;margin-top:3px}
 .auditsec .ss-hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
@@ -374,7 +378,8 @@ footer a{color:#fff}
     <label for="a-name">Your name</label><input id="a-name" name="name" autocomplete="name" required>
     <label for="a-site">Your store URL</label><input id="a-site" name="website" placeholder="yourstore.com" required>
     <label for="a-email">Email</label><input id="a-email" name="email" type="email" autocomplete="email" placeholder="you@yourstore.com" required>
-    <label for="a-head">Biggest headache</label><select id="a-head" name="headache"><option>My theme looks like everyone else's</option><option>Customers can't find products</option><option>Shopify can't do something I need</option><option>Sales are flat</option><option>Something else</option></select>
+    <label for="a-head">What would you like to improve?</label><select id="a-head" name="headache" required><option value="" selected disabled>Select an option</option><option>My theme looks like everyone else's</option><option>Customers can't find products</option><option>Shopify can't do something I need</option><option>Sales are flat</option><option>Something else</option></select>
+    <label for="a-more">Anything else? <span class="opt">(optional)</span></label><textarea id="a-more" name="details" rows="3" maxlength="1500" placeholder="Links, goals, deadlines, anything that helps"></textarea>
     <label class="ss-consent"><input type="checkbox" name="contact_consent" required> You can contact me about my store.</label>
     <input class="ss-hp" name="fax_number" tabindex="-1" autocomplete="off" aria-hidden="true">
     <button class="btn" type="submit">Get my free store review</button>
@@ -414,5 +419,16 @@ function close(){m.classList.remove('open');m.setAttribute('aria-hidden','true')
 b.onclick=open;m.querySelectorAll('[data-close]').forEach(function(x){x.onclick=close});m.querySelectorAll('a').forEach(function(a){a.addEventListener('click',close)});
 function key(e){if(e.key==='Escape')close()}document.addEventListener('keydown',key);
 var prev=window.__studioHomeCleanup;window.__studioHomeCleanup=function(){document.removeEventListener('keydown',key);if(prev)prev()};})();
+(function(){var row=document.querySelector('.eras8');if(!row)return;if(row.__carStop)row.__carStop();
+// Phone only: the design cards slide on their own every 3s, loop, pause while touched, and respect reduced motion.
+var mq=window.matchMedia('(max-width:640px)'),rm=window.matchMedia('(prefers-reduced-motion: reduce)'),seen=true;row.__hold=0;
+function step(){if(!mq.matches||rm.matches||Date.now()<row.__hold||!seen||document.hidden)return;var c=[].slice.call(row.children);if(!c.length)return;var base=c[0].offsetLeft,x=row.scrollLeft;
+var next=c.filter(function(k){return k.offsetLeft-base>x+4})[0];if(!next||x+row.clientWidth>=row.scrollWidth-4)row.scrollTo({left:0,behavior:'smooth'});else row.scrollTo({left:next.offsetLeft-base,behavior:'smooth'})}
+function pause(){row.__hold=Date.now()+6000}
+var evs=['touchstart','touchmove','pointerdown','wheel','focusin'];evs.forEach(function(e){row.addEventListener(e,pause,{passive:true})});
+var io='IntersectionObserver' in window?new IntersectionObserver(function(es){seen=es[0].isIntersecting}):null;if(io)io.observe(row);
+var t=setInterval(step,3000);
+row.__carStop=function(){clearInterval(t);if(io)io.disconnect();evs.forEach(function(e){row.removeEventListener(e,pause)});row.__carStop=null};
+var prev=window.__studioHomeCleanup;window.__studioHomeCleanup=function(){if(row.__carStop)row.__carStop();if(prev)prev()};})();
 </script>
 </body></html>

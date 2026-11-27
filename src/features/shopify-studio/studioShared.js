@@ -58,6 +58,20 @@ export function wireForm(root, era) {
     const sub = form.querySelector('.sub');
     if (sub) sub.textContent = `Takes 30 seconds · ${picked().replace(/^\nInterested in: /, '')}`;
   }
+  // The notes box and dropdown take the look of this era's own text fields.
+  const model = form.querySelector('input[name="email"]');
+  if (model) {
+    const cs = getComputedStyle(model);
+    form.querySelectorAll('textarea, select').forEach(el => {
+      ['borderTopWidth', 'borderTopStyle', 'borderTopColor', 'borderRadius', 'backgroundColor', 'color', 'fontFamily', 'paddingLeft'].forEach(k => {
+        if (k.startsWith('borderTop')) el.style[k.replace('Top', '')] = cs[k]; else el.style[k] = cs[k];
+      });
+      el.style.boxSizing = 'border-box';
+      el.style.width = '100%';
+      if (el.tagName === 'SELECT') el.style.paddingRight = '36px';
+      if (el.tagName === 'TEXTAREA' && parseFloat(cs.borderRadius) > 20) el.style.borderRadius = '18px';
+    });
+  }
   const onSubmit = async event => {
     event.preventDefault();
     const data = new FormData(form);
@@ -65,6 +79,8 @@ export function wireForm(root, era) {
     const button = form.querySelector('button[type="submit"]');
     const website = String(data.get('website') || '').trim();
     const headache = String(data.get('headache') || '').trim();
+    const details = String(data.get('details') || '').trim();
+    if (!headache) { msg.textContent = 'Please choose what you would like to improve.'; return; }
     button.disabled = true;
     msg.textContent = 'Sending…';
     try {
@@ -73,7 +89,7 @@ export function wireForm(root, era) {
         email: String(data.get('email') || '').trim(),
         website,
         service: 'shopify_ecommerce',
-        message: `${picked() ? 'Quote request' : 'Free store review request'}.${picked()}\nStore: ${website}\nBiggest headache: ${headache}\nSeen on: Shopify Studio (${era ? `${era} style` : 'main page'})`,
+        message: `${picked() ? 'Quote request' : 'Free store review request'}.${picked()}\nStore: ${website}\nWants to improve: ${headache}${details ? `\nNotes: ${details}` : ''}\nSeen on: Shopify Studio (${era ? `${era} style` : 'main page'})`,
         contact_consent: data.get('contact_consent') === 'on',
         fax_number: String(data.get('fax_number') || ''),
         ...tracking(),

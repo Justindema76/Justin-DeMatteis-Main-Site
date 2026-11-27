@@ -310,3 +310,10 @@
 .ssp header nav .ss-demo-top{display:inline-flex!important}
 @media (min-width:981px){.ss-demo-fab,.ss-demo-fab.show{display:none!important}}
 .ssp .ss-viewall{text-align:center;margin-top:34px!important}
+
+/* Free store review form: optional notes, readable placeholders, select that fits on phones, full-width submit */
+.ssp form[data-ss-review] textarea{font:inherit;font-size:16px;width:100%;min-height:84px;resize:vertical;padding:12px 14px;border:inherit;border-width:2px;border-style:solid;box-sizing:border-box}
+.ssp form[data-ss-review] select{max-width:100%;text-overflow:ellipsis;font-size:16px}
+.ssp form[data-ss-review] ::placeholder{color:#6b6f7a;opacity:1}
+.ssp form[data-ss-review] label .opt{font-weight:500;opacity:.75;text-transform:none;letter-spacing:0}
+.ssp form[data-ss-review] button[type=submit]{width:100%;justify-content:center;font-size:18px}

@@ -126,7 +126,8 @@
       <label>Your name</label><input name="name" autocomplete="name" required>
       <label>Your store URL</label><input name="website" placeholder="yourstore.com" required>
       <label>Email</label><input name="email" type="email" autocomplete="email" placeholder="you@yourstore.com" required>
-      <label>Biggest headache</label><select name="headache"><option>My theme looks like everyone else's</option><option>Customers can't find products</option><option>Shopify can't do something I need</option><option>Sales are flat</option><option>Something else</option></select>
+      <label>What would you like to improve?</label><select name="headache" required><option value="" selected disabled>Select an option</option><option>My theme looks like everyone else's</option><option>Customers can't find products</option><option>Shopify can't do something I need</option><option>Sales are flat</option><option>Something else</option></select>
+      <label>Anything else? <span class="opt">(optional)</span></label><textarea name="details" rows="3" maxlength="1500" placeholder="Links, goals, deadlines, anything that helps"></textarea>
       <label class="ss-consent"><input type="checkbox" name="contact_consent" required> You can contact me about my store.</label>
       <input class="ss-hp" name="fax_number" tabindex="-1" autocomplete="off" aria-hidden="true">
       <button class="btn red" type="submit">Free store review</button>

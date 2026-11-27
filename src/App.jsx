@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Layout from './components/Layout';
 import SEO from './components/SEO';
+import ScrollManager from './components/ScrollManager';
 import ManagedPage from './pages/ManagedPage';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
@@ -15,6 +16,7 @@ const studio = kind => <Suspense fallback={<div className="ssp-loading" />}><Sho
 export default function App() {
   return <>
     <SEO />
+    <ScrollManager />
     <Routes>
       <Route path="/shopify-studio" element={<Suspense fallback={<div className="ssp-loading" />}><StudioHome /></Suspense>} />
       <Route path="/shopify-studio/pricing" element={<Suspense fallback={<div className="ssp-loading" />}><StudioHome page="pricing" /></Suspense>} />
