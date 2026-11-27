@@ -163,9 +163,9 @@ header .brand small{display:block!important}
 .lb li p{font-size:14px;color:var(--mute);margin-top:3px;line-height:1.45}
 .lb li p em{font-style:normal;font-weight:700;color:var(--green)}
 .lb .nav{display:flex;gap:10px;padding:14px 18px;border-top:2px solid var(--line)}
-.lb .nav button{flex:1;padding:12px;border:2px solid var(--ink);background:#fff;font:700 15px Inter,sans-serif;cursor:pointer}
+.lb .nav button{flex:1;padding:12px;border:2px solid var(--ink);background:#fff;color:var(--ink);font:700 15px Inter,sans-serif;cursor:pointer;box-shadow:3px 3px 0 var(--ink);-webkit-appearance:none;appearance:none;border-radius:0}
 .lb .nav button.next{background:var(--ink);color:#fff;box-shadow:3px 3px 0 var(--green2)}
-.lb .nav button:disabled{opacity:.35;cursor:default}
+.lb .nav button:disabled{opacity:1;cursor:default;background:#eeebe4;color:#6b6f7a;border-color:#8a8e98;box-shadow:3px 3px 0 #8a8e98;-webkit-text-fill-color:#6b6f7a}
 @media(max-width:980px){.walk{grid-template-columns:1fr 1fr}.lb .box{grid-template-columns:1fr;grid-template-rows:minmax(0,46%) minmax(0,54%);height:94vh}.lb .side{border-left:0;border-top:2px solid var(--line)}.lb .pic{margin:10px;box-shadow:none}.pin{width:26px;height:26px;font-size:12px;line-height:20px;border-width:2px}}
 @media(max-width:640px){.lb .pic{width:760px;max-width:none}.lb .stage{-webkit-overflow-scrolling:touch}.walk{grid-template-columns:1fr 1fr;gap:10px}.wcard h4{font-size:16px}.wcard .t{padding:10px}.lb .box{width:100vw;height:100dvh;border:0}.lb .txt h3{font-size:22px}}
 /* packages, steps, audit form, faq */
@@ -182,6 +182,7 @@ header .brand small{display:block!important}
 .pkg.pop li::before{color:var(--green2)}
 .pkg .badge{position:absolute;top:-14px;right:18px;background:var(--green2);color:var(--ink);border:2px solid var(--ink);font-weight:800;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px}
 .pkg.pop .btn{background:var(--green2);color:var(--ink);border-color:var(--green2);box-shadow:4px 4px 0 #fff}
+.btn.go{background:var(--green2);color:var(--ink);border-color:var(--ink);box-shadow:4px 4px 0 var(--ink)}
 .steps{display:grid;grid-template-columns:repeat(4,1fr);border:2px solid var(--line);background:var(--card);margin-top:40px}
 .steps div{padding:24px}
 .steps div+div{border-left:2px solid var(--line)}
@@ -353,11 +354,11 @@ footer a{color:#fff}
 <section class="block" id="packages"><div class="wrap">
   <div class="sh"><span class="kick">Packages</span><h2>Clear prices. No surprises.</h2><p>Every project starts with a free store review, so you know exactly what you're getting before you pay anything.</p></div>
   <div class="pk">
-    <div class="pkg"><small>New store</small><h3>Shopify Launch</h3><div class="pr">{{PRICE1}}</div><ul><li>Opening your first online store</li><li>Design, setup, payments &amp; shipping</li><li>3 tiers, from small to advanced</li><li>Launch, training &amp; bug warranty</li></ul><a class="btn ghost" href="/shopify-studio/pricing#new">See the 3 tiers</a></div>
+    <div class="pkg"><small>New store</small><h3>Shopify Launch</h3><div class="pr">{{PRICE1}}</div><ul><li>Opening your first online store</li><li>Design, setup, payments &amp; shipping</li><li>3 tiers, from small to advanced</li><li>Launch, training &amp; bug warranty</li></ul><a class="btn go" href="/shopify-studio/pricing#new">See the 3 tiers</a></div>
     <div class="pkg pop"><span class="badge">Most popular</span><small>Existing store</small><h3>Store Redesign</h3><div class="pr">{{PRICE2}}</div><ul><li>Already on Shopify</li><li>Keeps your products, customers &amp; orders</li><li>From a refresh to a full transformation</li><li>SEO kept, mobile-first</li></ul><a class="btn" href="/shopify-studio/pricing#redesign">See the 3 tiers</a></div>
-    <div class="pkg"><small>Behind the scenes</small><h3>Product &amp; Backend Cleanup</h3><div class="pr">{{PRICE3}}</div><ul><li>Messy products &amp; collections</li><li>Titles, tags, SEO &amp; images</li><li>Inventory, shipping &amp; discounts</li><li>Large catalogues welcome</li></ul><a class="btn ghost" href="/shopify-studio/pricing#backend">See the 3 tiers</a></div>
+    <div class="pkg"><small>Behind the scenes</small><h3>Product &amp; Backend Cleanup</h3><div class="pr">{{PRICE3}}</div><ul><li>Messy products &amp; collections</li><li>Titles, tags, SEO &amp; images</li><li>Inventory, shipping &amp; discounts</li><li>Large catalogues welcome</li></ul><a class="btn go" href="/shopify-studio/pricing#backend">See the 3 tiers</a></div>
   </div>
-  <p class="viewall"><a class="btn ghost" href="/shopify-studio/pricing">View all pricing →</a><span>Plus custom apps, single services, large catalogues and monthly care</span></p>
+  <p class="viewall"><a class="btn go" href="/shopify-studio/pricing">View all pricing →</a><span>Plus custom apps, single services, large catalogues and monthly care</span></p>
   <div class="steps">
     <div><b>1</b><h4>Free store review</h4><p>A recorded video of your store with the 3 things I'd fix first.</p></div>
     <div><b>2</b><h4>Plan &amp; price</h4><p>A fixed price and timeline. No surprises later.</p></div>
