@@ -3,6 +3,8 @@
 <title>Sunny Days Kids · Shopify Studio demo store</title>
 <meta name="description" content="One demo Shopify store shown in 8 decade styles. Click through the home page, collections, product pages and cart, built by Justin DeMatteis Shopify Studio.">
 <link rel="canonical" href="https://www.justindematteis.com/shopify-studio/store">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-66VTKST2J0"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-66VTKST2J0');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link id="eraFont" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shrikhand&family=DM+Sans:wght@400;500;700&display=swap">
 <style>
@@ -630,7 +632,7 @@ const ET=ERA_THEMES[ERA];
  if(ERA!=='60s'){r.setProperty('--fw','700');}
  const f=document.getElementById('eraFont'); if(f) f.href=ET.font;
  document.body.classList.add('t-'+ERA);
- const sel=document.getElementById('eraPick'); if(sel){sel.innerHTML=Object.entries(ERA_THEMES).map(([k,t])=>`<option value="${k}"${k===ERA?' selected':''}>${t.label}</option>`).join('');sel.onchange=()=>{const u=new URL(location.href);u.searchParams.set('theme',sel.value);location.href=u.toString()}}
+ const sel=document.getElementById('eraPick'); if(sel){sel.innerHTML=Object.entries(ERA_THEMES).map(([k,t])=>`<option value="${k}"${k===ERA?' selected':''}>${t.label}</option>`).join('');sel.onchange=()=>{const u=new URL(location.href);u.searchParams.set('theme',sel.value);let gone=0;const go=()=>{if(gone++)return;location.href=u.toString()};if(typeof gtag==='function'){gtag('event','demo_theme_switch',{from_theme:ERA,to_theme:sel.value,transport_type:'beacon',event_callback:go});setTimeout(go,600)}else go()}}
  document.querySelectorAll('a[href^="/shopify-studio/60s"]').forEach(a=>a.setAttribute('href','/shopify-studio'));
 })();
 const C=Object.assign({pu:'#5b2a86',pu2:'#47206b',pu3:'#331650',or:'#f26b1d',pk:'#e94e8a',tl:'#2a9d9a',go:'#f4b223',cr:'#f6e9cf',cr2:'#ecd6ad',ink:'#2a1838'},ET.c);
