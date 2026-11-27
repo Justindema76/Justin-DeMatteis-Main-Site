@@ -309,3 +309,4 @@
 /* Desktop: Demo store button in the header (copy of Free audit); phones: the side tab instead */
 .ssp header nav .ss-demo-top{display:inline-flex!important}
 @media (min-width:981px){.ss-demo-fab,.ss-demo-fab.show{display:none!important}}
+.ssp .ss-viewall{text-align:center;margin-top:34px!important}

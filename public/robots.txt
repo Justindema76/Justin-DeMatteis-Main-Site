@@ -1,4 +1,13 @@
 User-agent: *
 Allow: /
+# Design previews and mockups (not real pages)
+Disallow: /shopify-studio/home-v
+Disallow: /shopify-studio/case-study-v
+Disallow: /shopify-studio/pricing-v
+Disallow: /shopify-studio/all-eras-
+Disallow: /shopify-studio/demo-stores-
+Disallow: /shopify-studio/hero-options-
+Disallow: /shopify-studio/store-60s
+Disallow: /shopify-studio/demo-store.html
 
 Sitemap: https://www.justindematteis.com/sitemap.xml

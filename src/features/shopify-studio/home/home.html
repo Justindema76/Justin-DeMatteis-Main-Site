@@ -231,6 +231,7 @@ header .dnav{display:none}
 .smenu .styles a{border:2px solid var(--ink);background:#fff;padding:8px 10px;font-weight:700;font-size:14px;line-height:1.2}
 .smenu .styles a span{display:block;font-weight:500;font-size:12px;color:var(--mute)}
 .smenu .styles a:hover{background:var(--green2)}
+@media(max-width:640px){header .btn.sm{white-space:nowrap;font-size:12.5px;padding:9px 10px}header .brand{font-size:17px!important}header .right{gap:8px}.smenu-btn{width:42px;height:42px}}
 /* hero: all 8 styles */
 .hero .wrap{grid-template-columns:1fr 1.05fr}
 .eras8{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
@@ -244,6 +245,8 @@ header .dnav{display:none}
 .hero .wrap>*{min-width:0}
 @media(max-width:640px){.eras8{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;margin:0 -16px;padding:4px 16px 12px;-webkit-overflow-scrolling:touch}.eras8 a{flex:0 0 42%;scroll-snap-align:start}.eras8::-webkit-scrollbar{display:none}.swipehint{display:block!important}}
 .swipehint{display:none;font-size:13px;color:var(--mute);margin-top:6px}
+.viewall{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:30px}
+.viewall span{color:var(--mute);font-size:15px}
 /* case study teaser */
 .teaser{border-top:2px solid var(--line);background:#fff}
 .teaser .top2{margin-bottom:0}
@@ -282,7 +285,7 @@ footer a{color:#fff}
 <header><div class="wrap">
   <a class="brand" href="/shopify-studio">Justin DeMatteis<small>Shopify Studio</small></a>
   <nav class="dnav"><a href="/shopify-studio#eras">Pick a style</a><a href="/shopify-studio/case-study">Case study</a><a href="/shopify-studio#packages">Packages</a><a href="/shopify-studio#faq">Questions</a></nav>
-  <div class="right"><a class="btn sm" href="/shopify-studio#audit">Free audit</a><button class="smenu-btn" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button></div>
+  <div class="right"><a class="btn sm" href="/shopify-studio#audit">Free store review</a><button class="smenu-btn" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button></div>
 </div></header>
 
 <section class="hero"><div class="wrap">
@@ -290,7 +293,7 @@ footer a{color:#fff}
     <span class="kick">Custom Shopify stores</span>
     <h1>One store. <em>Eight decades</em> of style.</h1>
     <p class="lead">I build Shopify stores for independent retailers: better-looking themes, smarter features and custom apps you won't find off the shelf. To show you what's possible, I built the same store in eight different styles. Pick one and look around.</p>
-    <div class="ctas"><a class="btn" href="#eras">Pick a style →</a><a class="btn ghost" href="#audit">Get a free audit</a></div>
+    <div class="ctas"><a class="btn" href="#eras">Pick a style →</a><a class="btn ghost" href="#audit">Get a free store review</a></div>
   </div>
   <div><div class="eras8"><a href="/shopify-studio/50s"><div class="im"><img src="/shopify-studio/img/hero-phone-50s.webp" alt="1950s Atomic diner style"></div><b>1950s</b><span>Atomic diner</span></a><a href="/shopify-studio/60s"><div class="im"><img src="/shopify-studio/img/hero-phone-60s.webp" alt="1960s Flower power style"></div><b>1960s</b><span>Flower power</span></a><a href="/shopify-studio/70s"><div class="im"><img src="/shopify-studio/img/hero-phone-70s.webp" alt="1970s Warm & earthy style"></div><b>1970s</b><span>Warm & earthy</span></a><a href="/shopify-studio/80s"><div class="im"><img src="/shopify-studio/img/hero-phone-80s.webp" alt="1980s Neon style"></div><b>1980s</b><span>Neon</span></a><a href="/shopify-studio/80s-memphis"><div class="im"><img src="/shopify-studio/img/hero-phone-80s-memphis.webp" alt="1980s Memphis style"></div><b>1980s</b><span>Memphis</span></a><a href="/shopify-studio/90s"><div class="im"><img src="/shopify-studio/img/hero-phone-90s.webp" alt="1990s Paint & attitude style"></div><b>1990s</b><span>Paint & attitude</span></a><a href="/shopify-studio/2000s"><div class="im"><img src="/shopify-studio/img/hero-phone-2000s.webp" alt="2000s Y2K style"></div><b>2000s</b><span>Y2K</span></a><a href="/shopify-studio/2010s"><div class="im"><img src="/shopify-studio/img/bag-2010s-v1.webp" alt="2010s Clean & modern style" style="object-position:78% center"></div><b>2010s</b><span>Clean & modern</span></a></div><p class="swipehint">Swipe to see all 8 styles →</p></div>
 </div></section>
@@ -348,14 +351,15 @@ footer a{color:#fff}
 </div></section>
 
 <section class="block" id="packages"><div class="wrap">
-  <div class="sh"><span class="kick">Packages</span><h2>Clear prices. No surprises.</h2><p>Every project starts with a free audit, so you know exactly what you're getting before you pay anything.</p></div>
+  <div class="sh"><span class="kick">Packages</span><h2>Clear prices. No surprises.</h2><p>Every project starts with a free store review, so you know exactly what you're getting before you pay anything.</p></div>
   <div class="pk">
-    <div class="pkg"><small>The quick fix</small><h3>Store Tune-Up</h3><div class="pr">{{PRICE1}}</div><ul><li>Catalog &amp; collection cleanup</li><li>Navigation &amp; mobile fixes</li><li>Sale badges &amp; cart notes</li><li>About 2 weeks</li></ul><a class="btn ghost" href="#audit">Free audit</a></div>
-    <div class="pkg pop"><span class="badge">Most popular</span><small>The full works</small><h3>Custom Store Redesign</h3><div class="pr">{{PRICE2}}</div><ul><li>Custom homepage &amp; product pages</li><li>Shop by age, style &amp; brand</li><li>Owner's picks &amp; cart rules</li><li>Full catalog cleanup</li><li>30 days of support</li></ul><a class="btn" href="#audit">Free audit</a></div>
-    <div class="pkg"><small>Made to order</small><h3>Custom App or Feature</h3><div class="pr">{{PRICE3}}</div><ul><li>Shipping &amp; discount rules</li><li>Shopify Functions</li><li>Consignment setup</li><li>Built, tested &amp; installed</li></ul><a class="btn ghost" href="#audit">Tell me what you need</a></div>
+    <div class="pkg"><small>New store</small><h3>Shopify Launch</h3><div class="pr">{{PRICE1}}</div><ul><li>Opening your first online store</li><li>Design, setup, payments &amp; shipping</li><li>3 tiers, from small to advanced</li><li>Launch, training &amp; bug warranty</li></ul><a class="btn ghost" href="/shopify-studio/pricing#new">See the 3 tiers</a></div>
+    <div class="pkg pop"><span class="badge">Most popular</span><small>Existing store</small><h3>Store Redesign</h3><div class="pr">{{PRICE2}}</div><ul><li>Already on Shopify</li><li>Keeps your products, customers &amp; orders</li><li>From a refresh to a full transformation</li><li>SEO kept, mobile-first</li></ul><a class="btn" href="/shopify-studio/pricing#redesign">See the 3 tiers</a></div>
+    <div class="pkg"><small>Behind the scenes</small><h3>Product &amp; Backend Cleanup</h3><div class="pr">{{PRICE3}}</div><ul><li>Messy products &amp; collections</li><li>Titles, tags, SEO &amp; images</li><li>Inventory, shipping &amp; discounts</li><li>Large catalogues welcome</li></ul><a class="btn ghost" href="/shopify-studio/pricing#backend">See the 3 tiers</a></div>
   </div>
+  <p class="viewall"><a class="btn ghost" href="/shopify-studio/pricing">View all pricing →</a><span>Plus custom apps, single services, large catalogues and monthly care</span></p>
   <div class="steps">
-    <div><b>1</b><h4>Free audit</h4><p>A recorded video of your store with the 3 things I'd fix first.</p></div>
+    <div><b>1</b><h4>Free store review</h4><p>A recorded video of your store with the 3 things I'd fix first.</p></div>
     <div><b>2</b><h4>Plan &amp; price</h4><p>A fixed price and timeline. No surprises later.</p></div>
     <div><b>3</b><h4>Preview &amp; build</h4><p>You see the new store before anything goes live.</p></div>
     <div><b>4</b><h4>Launch &amp; grow</h4><p>We go live, then keep tuning what works.</p></div>
@@ -363,16 +367,16 @@ footer a{color:#fff}
 </div></section>
 
 <section class="block auditsec" id="audit"><div class="wrap">
-  <div class="l"><span class="kick">Free, no strings</span><h2>Get a free audit of your Shopify store</h2><p>I'll record a 10-minute video going through your store and show you the 3 changes that would make the biggest difference to sales.</p><ul><li>A real person, not a robot report</li><li>In your inbox within 48 hours</li><li>Yours to keep, either way</li></ul></div>
+  <div class="l"><span class="kick">Free, no strings</span><h2>Get a free review of your Shopify store</h2><p>A complimentary preliminary review of your Shopify store: I'll record a 10-minute video going through it, point out the 3 changes that would make the biggest difference to sales, and we can discuss the right solution for your business.</p><ul><li>A real person, not a robot report</li><li>In your inbox within 48 hours</li><li>Yours to keep, either way</li></ul></div>
   <form data-ss-review>
-    <h3>Request my free audit</h3><p class="sub">Takes 30 seconds{{SPOTS}}</p>
+    <h3>Request my free store review</h3><p class="sub">Takes 30 seconds{{SPOTS}}</p>
     <label for="a-name">Your name</label><input id="a-name" name="name" autocomplete="name" required>
     <label for="a-site">Your store URL</label><input id="a-site" name="website" placeholder="yourstore.com" required>
     <label for="a-email">Email</label><input id="a-email" name="email" type="email" autocomplete="email" placeholder="you@yourstore.com" required>
     <label for="a-head">Biggest headache</label><select id="a-head" name="headache"><option>My theme looks like everyone else's</option><option>Customers can't find products</option><option>Shopify can't do something I need</option><option>Sales are flat</option><option>Something else</option></select>
     <label class="ss-consent"><input type="checkbox" name="contact_consent" required> You can contact me about my store.</label>
     <input class="ss-hp" name="fax_number" tabindex="-1" autocomplete="off" aria-hidden="true">
-    <button class="btn" type="submit">Get my free audit</button>
+    <button class="btn" type="submit">Get my free store review</button>
     <p class="ss-form-msg" role="status" aria-live="polite"></p>
   </form>
 </div></section>
@@ -380,7 +384,7 @@ footer a{color:#fff}
 <section class="block" id="faq"><div class="wrap">
   <div class="sh"><span class="kick">Questions</span><h2>Before you ask</h2></div>
   <div class="faq">
-    <details open><summary>How much does it cost?</summary><p>Most projects are a fixed price based on how many products and pages you have. You get an exact number after your free audit, before you commit.</p></details>
+    <details open><summary>How much does it cost?</summary><p>Most projects are a fixed price based on how many products and pages you have. You get an exact number after your free store review, before you commit.</p></details>
     <details><summary>Do I need a premium theme?</summary><p>Not necessarily. I can take the theme you have well past what it does now, and I'll tell you if a different one would save you money.</p></details>
     <details><summary>Will my store go down while you work?</summary><p>No. I build on a copy, you review a private preview, and it goes live only when you're happy.</p></details>
     <details><summary>Can my staff still update things?</summary><p>Yes. Everything is editable in Shopify's theme editor with no code, and you get a how-to guide.</p></details>
@@ -394,11 +398,11 @@ footer a{color:#fff}
   <div class="ptop"><b>Shopify Studio</b><button class="x" data-close aria-label="Close menu">×</button></div>
   <a href="/shopify-studio">Home</a>
   <a href="/shopify-studio/case-study">Case study: Jill &amp; The Beanstalk</a>
-  <a href="/shopify-studio#packages">Packages</a>
+  <a href="/shopify-studio/pricing">Pricing</a>
   <a href="/shopify-studio#faq">Questions</a>
   <small>Pick a style</small>
   <div class="styles"><a href="/shopify-studio/50s">1950s<span>Atomic diner</span></a><a href="/shopify-studio/60s">1960s<span>Flower power</span></a><a href="/shopify-studio/70s">1970s<span>Warm & earthy</span></a><a href="/shopify-studio/80s">1980s<span>Neon</span></a><a href="/shopify-studio/80s-memphis">1980s<span>Memphis</span></a><a href="/shopify-studio/90s">1990s<span>Paint & attitude</span></a><a href="/shopify-studio/2000s">2000s<span>Y2K</span></a><a href="/shopify-studio/2010s">2010s<span>Clean & modern</span></a></div>
-  <a class="btn" href="/shopify-studio#audit">Get a free audit</a>
+  <a class="btn" href="/shopify-studio#audit">Get a free store review</a>
   <a href="/">← justindematteis.com</a>
 </div></div>
 <footer><div class="wrap"><span>© Justin DeMatteis · Shopify Studio · Shopify Partner (JUSTInnovate)</span><a href="/">← justindematteis.com</a></div></footer>

@@ -12,10 +12,15 @@ const SUPABASE_KEY = 'sb_publishable_AZbVouJ6gN00dQGdZwPjog_GTQR0J-w';
 const routeMeta = {
   '/shopify-studio': {
     title: 'Custom Shopify Stores & Apps for Independent Retailers | Justin DeMatteis',
-    description: 'Custom Shopify store design, features and apps for independent retailers in Ontario and across Canada. Get a free store review.',
+    description: 'Custom Shopify store design, features and apps for independent retailers in Ontario and across Canada. See one store in eight styles and get a free store audit.',
     type: 'WebPage',
   },
-  '/shopify-studio/jill-and-the-beanstalk': {
+  '/shopify-studio/pricing': {
+    title: 'Shopify Pricing: Store Builds, Redesigns, SEO, Apps & Monthly Care | Justin DeMatteis',
+    description: 'Shopify pricing in CAD: new stores from $3,500, redesigns from $2,500, product and backend cleanup from $1,500, custom apps from $1,000, SEO from $500 and monthly store management from $375/month. Free store review first.',
+    type: 'WebPage',
+  },
+  '/shopify-studio/case-study': {
     title: 'Jill & The Beanstalk Shopify Case Study: +90% Online Revenue | Justin DeMatteis',
     description: 'How a Toronto kids\' shop went from a free theme to a custom Shopify store, reached the first page of Google and grew online revenue 90% with no ad spend.',
     type: 'WebPage',
@@ -255,14 +260,28 @@ for (const [route, meta] of Object.entries(routeMeta)) {
   });
 }
 
-// Shopify Studio era versions: same content as the main studio/case-study page, so they
-// share its SEO block and canonical URL and stay out of the sitemap.
+// Shopify Studio era pages: each style has its own title, description and canonical, and is in the sitemap.
 const STUDIO_ERAS = ['50s', '60s', '70s', '80s', '80s-memphis', '90s', '2000s', '2010s'];
-for (const base of ['/shopify-studio', '/shopify-studio/jill-and-the-beanstalk']) {
-  const meta = routeMeta[base];
-  for (const era of STUDIO_ERAS) {
-    await writeRoute(`${base}/${era}`, sourceHtml.replace(marker, seoBlock(base, meta, baseGraph(base, meta))));
-  }
+const ERA_NAMES = { '50s': '1950s', '60s': '1960s', '70s': '1970s', '80s': '1980s neon', '80s-memphis': '1980s Memphis', '90s': '1990s', '2000s': '2000s Y2K', '2010s': '2010s' };
+for (const era of STUDIO_ERAS) {
+  const route = `/shopify-studio/${era}`;
+  const meta = {
+    title: `Shopify Studio in ${ERA_NAMES[era]} style | Justin DeMatteis`,
+    description: `Custom Shopify stores, features and apps for independent retailers, shown in a ${ERA_NAMES[era]} design. Same services and pricing in every style. Get a free store review.`,
+    type: 'WebPage',
+  };
+  await writeRoute(route, sourceHtml.replace(marker, seoBlock(route, meta, baseGraph(route, meta))));
+  sitemapEntries.push({ loc: `${BASE}${route}`, lastmod: new Date().toISOString(), priority: '0.6' });
+}
+// Demo store (static file public/shopify-studio/store.html, served at /shopify-studio/store by cleanUrls).
+sitemapEntries.push({ loc: `${BASE}/shopify-studio/store`, lastmod: new Date().toISOString(), priority: '0.5' });
+// Old case-study addresses point at the new case study page.
+{
+  const route = '/shopify-studio/case-study';
+  const meta = routeMeta[route];
+  const block = sourceHtml.replace(marker, seoBlock(route, meta, baseGraph(route, meta)));
+  await writeRoute('/shopify-studio/jill-and-the-beanstalk', block);
+  for (const era of STUDIO_ERAS) await writeRoute(`/shopify-studio/jill-and-the-beanstalk/${era}`, block);
 }
 
 for (const post of workPosts) {

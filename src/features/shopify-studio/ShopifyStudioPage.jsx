@@ -154,7 +154,7 @@ function wireSlider(root) {
 const STUDIO_MENU = [
   { href: '/shopify-studio', label: 'Home' },
   { href: '/shopify-studio/case-study', label: 'Case study: Jill & The Beanstalk' },
-  { href: '/shopify-studio#packages', label: 'Packages' },
+  { href: '/shopify-studio/pricing', label: 'Pricing' },
   { href: '/shopify-studio#faq', label: 'Questions' },
 ];
 const ERA_NAMES = {
@@ -246,7 +246,7 @@ export default function ShopifyStudioPage({ kind = 'studio' }) {
       nav.insertBefore(slot, nav.querySelector('.btn') || null);
     }
     setThemeSlot(slot);
-    // Desktop "Demo store" button copies the header's Free audit button exactly.
+    // Desktop "Demo store" button copies the header's Free store review button exactly.
     setAuditBtnClass(nav?.querySelector('.btn')?.className || 'btn red');
     // Phone menu: hamburger in the header with the same links
     let burger = null;
@@ -325,7 +325,7 @@ export default function ShopifyStudioPage({ kind = 'studio' }) {
           {STUDIO_MENU.map(item => <a key={item.href} href={item.href}>{item.label}</a>)}
           <small>Pick a style</small>
           <div className="ss-menu-styles">{STUDIO_ERAS.map(item => <a key={item.key} className={item.key === era ? 'on' : ''} href={`/shopify-studio/${item.key}`}>{ERA_NAMES[item.key]?.[0] || item.label}<span>{ERA_NAMES[item.key]?.[1] || ''}</span></a>)}</div>
-          <a className="ss-menu-cta" href="/shopify-studio#audit">Get a free audit</a>
+          <a className="ss-menu-cta" href="/shopify-studio#audit">Get a free store review</a>
           <a href="/">← justindematteis.com</a>
         </div>
       </div>, document.body)}

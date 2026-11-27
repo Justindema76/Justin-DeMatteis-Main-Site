@@ -1,14 +1,17 @@
 // Shopify Studio pages that aren't era pages: the main page (/shopify-studio, home.html = public home-v9.html)
-// and the Jill case study (/shopify-studio/case-study, case-study.html = public case-study-v1.html).
+// the Jill case study (/shopify-studio/case-study, case-study.html = public case-study-v1.html)
+// and pricing (/shopify-studio/pricing, pricing.html = public pricing-v1.html).
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { loadSetting } from '../../../lib/content';
 import { STUDIO_DEFAULTS, STUDIO_SETTING_KEY } from '../studioConfig';
 import { fillTokens, wireForm } from '../studioShared';
+import { renderPricing } from './pricingRender';
 import homeRaw from './home.html?raw';
 import caseRaw from './case-study.html?raw';
+import pricingRaw from './pricing.html?raw';
 
-const PAGES = { home: homeRaw, case: caseRaw };
+const PAGES = { home: homeRaw, case: caseRaw, pricing: pricingRaw };
 
 function split(html) {
   const style = (html.match(/<style>([\s\S]*?)<\/style>/) || [])[1] || '';
@@ -31,7 +34,7 @@ export default function StudioHome({ page: pageKey = 'home' }) {
     loadSetting(STUDIO_SETTING_KEY, STUDIO_DEFAULTS).then(value => { if (live) setSettings({ ...STUDIO_DEFAULTS, ...(value || {}) }); });
     return () => { live = false; };
   }, []);
-  const html = useMemo(() => fillTokens(page.body, settings), [page.body, settings]);
+  const html = useMemo(() => fillTokens(pageKey === 'pricing' ? renderPricing(page.body, settings.pricing || {}) : page.body, settings), [page.body, settings, pageKey]);
 
   useEffect(() => {
     const style = document.createElement('style');
