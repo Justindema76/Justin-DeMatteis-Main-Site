@@ -125,6 +125,10 @@ export default function SEO() {
     upsertMeta('twitter:description', meta.description);
     setCanonical(canonical);
 
+    // Meta Pixel sends the first PageView itself when it loads; later route changes are sent here.
+    if (typeof window.fbq === 'function' && window.__jdRouted) window.fbq('track', 'PageView');
+    window.__jdRouted = true;
+
     if (typeof window.gtag === 'function') {
       window.gtag('event', 'page_view', {
         page_title: meta.title,

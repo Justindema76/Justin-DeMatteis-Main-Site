@@ -21,5 +21,9 @@ export async function submitServiceRequest(payload) {
     });
   }
 
+  if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+    window.fbq('track', 'Lead', { content_category: payload?.service || '' });
+  }
+
   return data;
 }
