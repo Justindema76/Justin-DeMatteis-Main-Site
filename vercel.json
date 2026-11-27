@@ -35,12 +35,8 @@
   ],
   "rewrites": [
     {
-      "source": "/shopify-studio/blog",
-      "destination": "/index.html"
-    },
-    {
       "source": "/shopify-studio/blog/:slug",
-      "destination": "/index.html"
+      "destination": "/shopify-studio/blog"
     }
   ]
 }
