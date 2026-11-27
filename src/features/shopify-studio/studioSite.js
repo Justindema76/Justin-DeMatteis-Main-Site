@@ -44,6 +44,10 @@ export const PAGE_SEO = {
     title: 'About Shopify Studio | Canadian Shopify Developer',
     description: 'Ontario-based Shopify design and development. Custom storefronts, apps, backend solutions and digital marketing for Canadian retailers.',
   },
+  '/shopify-studio/blog': {
+    title: 'Shopify Tips for Canadian Retailers | Shopify Studio Blog',
+    description: 'Practical Shopify advice from a Hamilton, Ontario developer: store design, redesigns, backend cleanup, apps, SEO and pricing for Canadian shops.',
+  },
   '/shopify-studio/privacy': {
     title: 'Privacy Policy | Shopify Studio',
     description: 'How Shopify Studio collects, uses and protects information sent through justindematteis.com.',
@@ -60,6 +64,22 @@ export function pageSeo(path, settings = {}) {
   const o = (settings.seo?.pages || {})[path] || {};
   return { title: o.title || base.title, description: o.description || base.description };
 }
+
+// Permanent marketing rules (agreed with ChatGPT, 2026-11-26). Served to content tools through the API.
+export const BRAND_RULES = [
+  { rule: 'Location', requirement: 'Hamilton, Ontario, Canada' },
+  { rule: 'Market', requirement: 'Canadian businesses' },
+  { rule: 'Currency', requirement: 'CAD' },
+  { rule: 'Language', requirement: 'Canadian English' },
+  { rule: 'Primary selling point', requirement: 'Total customization — from storefront to backend' },
+  { rule: 'Brand statement', requirement: 'Canadian-owned. Ontario-based. Built around your business.' },
+  { rule: 'Design collection', requirement: 'Unlimited and continuously expanding — the decade designs are examples, not templates' },
+  { rule: 'Marketing claims', requirement: 'Verified facts only (no certifications, awards or numbers that are not confirmed)' },
+  { rule: 'Client work', requirement: 'Real projects and approved imagery only' },
+  { rule: 'Pricing', requirement: 'Current centralized pricing only (from the API), always in CAD' },
+  { rule: 'Social posts', requirement: 'Clearly reinforce Canadian and Ontario identity' },
+  { rule: 'Publishing', requirement: 'Drafts only through the API; Justin approves and publishes' },
+];
 
 // Design showcase. Add a design here (plus its page files) and it appears in the menu,
 // footer, sitemap and SEO automatically. Order = display order.
@@ -136,6 +156,8 @@ export function footerColumns(settings = {}, pricing = {}) {
       { label: 'Jill & The Beanstalk', href: `${STUDIO_PATH}/case-study` },
       { label: 'JustConsignIn', href: '/work/justconsignin' },
     ] },
+    // Resources appears once the Studio blog has a published article (no dead links).
+    ...(settings.__hasBlog ? [{ title: 'Resources', links: [{ label: 'Blog', href: `${STUDIO_PATH}/blog` }] }] : []),
     { title: 'Work With Us', links: [
       { label: 'Pricing & Packages', href: `${STUDIO_PATH}/pricing` },
       { label: 'Free Store Review', href: `${STUDIO_PATH}#audit` },

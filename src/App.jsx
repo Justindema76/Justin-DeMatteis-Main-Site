@@ -24,6 +24,8 @@ export default function App() {
       <Route path="/shopify-studio/about" element={<Suspense fallback={<div className="ssp-loading" />}><StudioHome page="about" /></Suspense>} />
       <Route path="/shopify-studio/privacy" element={<Suspense fallback={<div className="ssp-loading" />}><StudioHome page="privacy" /></Suspense>} />
       <Route path="/shopify-studio/terms" element={<Suspense fallback={<div className="ssp-loading" />}><StudioHome page="terms" /></Suspense>} />
+      <Route path="/shopify-studio/blog" element={<Suspense fallback={<div className="ssp-loading" />}><StudioHome page="blog" /></Suspense>} />
+      <Route path="/shopify-studio/blog/:slug" element={<Suspense fallback={<div className="ssp-loading" />}><StudioHome page="blog-post" /></Suspense>} />
       <Route path="/shopify-studio/jill-and-the-beanstalk" element={studio('case')} />
       <Route path="/shopify-studio/jill-and-the-beanstalk/:era" element={studio('case')} />
       <Route path="/shopify-studio/:era" element={studio('studio')} />

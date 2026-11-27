@@ -2,12 +2,14 @@
 // the Jill case study (/shopify-studio/case-study, case-study.html = public case-study-v1.html)
 // and pricing (/shopify-studio/pricing, pricing.html = public pricing-v1.html).
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { loadSetting } from '../../../lib/content';
 import { STUDIO_DEFAULTS, STUDIO_SETTING_KEY } from '../studioConfig';
 import { fillTokens, wireForm, wireTracking } from '../studioShared';
 import { pageSeo, wireFooter } from '../studioSite';
-import { INFO_PAGE_KEYS, infoPageHtml } from './infoPages';
+import { INFO_PAGE_KEYS, infoPageHtml, swapMiddle } from './infoPages';
+import { BLOG_STYLE, blogListHtml, blogPostHtml, loadStudioPost, loadStudioPosts } from './studioBlog';
+import { catalogue } from './pricingRender';
 import { renderPricing } from './pricingRender';
 import homeRaw from './home.html?raw';
 import caseRaw from './case-study.html?raw';
@@ -28,23 +30,37 @@ function split(html) {
 export default function StudioHome({ page: pageKey = 'home' }) {
   // About / Privacy / Terms use the main page's header, menu and footer with their own middle.
   const info = INFO_PAGE_KEYS.includes(pageKey);
+  const isBlog = pageKey === 'blog' || pageKey === 'blog-post';
+  const { slug } = useParams();
+  // Blog data: the list, or one article (undefined = still loading).
+  const [blog, setBlog] = useState(undefined);
+  useEffect(() => {
+    if (!isBlog) return undefined;
+    let live = true;
+    setBlog(undefined);
+    (pageKey === 'blog' ? loadStudioPosts() : loadStudioPost(slug)).then(data => { if (live) setBlog(data); });
+    return () => { live = false; };
+  }, [isBlog, pageKey, slug]);
   const page = useMemo(() => {
-    const parts = split(info ? homeRaw : (PAGES[pageKey] || homeRaw));
+    const parts = split((info || isBlog) ? homeRaw : (PAGES[pageKey] || homeRaw));
+    if (pageKey === 'blog') return { ...parts, title: pageSeo('/shopify-studio/blog')?.title || parts.title };
     return info ? { ...parts, title: pageSeo(`/shopify-studio/${pageKey}`)?.title || parts.title } : parts;
-  }, [pageKey, info]);
+  }, [pageKey, info, isBlog]);
   const navigate = useNavigate();
   const rootRef = useRef(null);
   // Package prices and "spots left" come from the Shopify Studio admin settings.
   const [settings, setSettings] = useState(STUDIO_DEFAULTS);
   useEffect(() => {
     let live = true;
-    Promise.all([loadSetting(STUDIO_SETTING_KEY, STUDIO_DEFAULTS), loadSetting('social_links', {})]).then(([value, social]) => { if (live) setSettings({ ...STUDIO_DEFAULTS, ...(value || {}), __social: social || {} }); });
+    Promise.all([loadSetting(STUDIO_SETTING_KEY, STUDIO_DEFAULTS), loadSetting('social_links', {}), loadStudioPosts()]).then(([value, social, posts]) => { if (live) setSettings({ ...STUDIO_DEFAULTS, ...(value || {}), __social: social || {}, __hasBlog: posts.length > 0 }); });
     return () => { live = false; };
   }, []);
   const html = useMemo(() => {
-    const body = pageKey === 'pricing' ? renderPricing(page.body, settings.pricing || {}) : info ? infoPageHtml(page.body, pageKey, settings) : page.body;
+    const blogMiddle = () => BLOG_STYLE + (blog === undefined ? '<section class="sblog"><div class="wrap"><p class="lead">Loading…</p></div></section>'
+      : pageKey === 'blog' ? blogListHtml(blog || []) : blogPostHtml(blog, catalogue(settings.pricing).services));
+    const body = pageKey === 'pricing' ? renderPricing(page.body, settings.pricing || {}) : info ? infoPageHtml(page.body, pageKey, settings) : isBlog ? swapMiddle(page.body, blogMiddle()) : page.body;
     return fillTokens(body, settings);
-  }, [page.body, settings, pageKey, info]);
+  }, [page.body, settings, pageKey, info, isBlog, blog]);
 
   useEffect(() => {
     const style = document.createElement('style');
@@ -65,6 +81,18 @@ export default function StudioHome({ page: pageKey = 'home' }) {
     else window.scrollTo(0, 0);
     return () => { style.remove(); links.forEach(l => l.remove()); document.title = oldTitle; };
   }, [page]);
+
+  // Article pages: title, description and canonical come from the post (set after it loads).
+  useEffect(() => {
+    if (pageKey !== 'blog-post' || !blog) return;
+    const extras = (blog.content_blocks && !Array.isArray(blog.content_blocks)) ? blog.content_blocks : {};
+    document.title = `${blog.seo_title || blog.title} | Shopify Studio`;
+    const set = (sel, attr, value) => { const el = document.head.querySelector(sel); if (el && value) el.setAttribute(attr, value); };
+    set('meta[name="description"]', 'content', blog.seo_description || blog.excerpt);
+    set('meta[property="og:title"]', 'content', blog.seo_title || blog.title);
+    set('meta[property="og:description"]', 'content', blog.seo_description || blog.excerpt);
+    set('link[rel="canonical"]', 'href', extras.canonical || `https://www.justindematteis.com/shopify-studio/blog/${blog.slug}`);
+  }, [pageKey, blog]);
 
   // Page scripts (the store walkthrough slider) and the free-audit form, wired to whatever markup is on the page.
   useEffect(() => {

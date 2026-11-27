@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { loadSetting } from '../../lib/content';
 import { fillTokens, track, wireForm, wireTracking } from './studioShared';
 import { wireFooter } from './studioSite';
+import { loadStudioPosts } from './home/studioBlog';
 import { HERO_DEFAULTS, STUDIO_DEFAULTS, STUDIO_ERAS, STUDIO_SETTING_KEY } from './studioConfig';
 import fonts from './fonts.json';
 import { applyLook, heroLook, lookCss, phonePicture } from './heroLook';
@@ -183,8 +184,8 @@ export default function ShopifyStudioPage({ kind = 'studio' }) {
 
   useEffect(() => {
     let live = true;
-    Promise.all([loadSetting(STUDIO_SETTING_KEY, STUDIO_DEFAULTS), loadSetting('social_links', {})]).then(([value, social]) => {
-      if (live) { setSettings({ ...STUDIO_DEFAULTS, ...value, __social: social || {} }); setLoaded(true); }
+    Promise.all([loadSetting(STUDIO_SETTING_KEY, STUDIO_DEFAULTS), loadSetting('social_links', {}), loadStudioPosts()]).then(([value, social, posts]) => {
+      if (live) { setSettings({ ...STUDIO_DEFAULTS, ...value, __social: social || {}, __hasBlog: posts.length > 0 }); setLoaded(true); }
     });
     return () => { live = false; };
   }, []);

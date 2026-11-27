@@ -113,7 +113,7 @@ export default function SEO() {
           description: 'Web, mobile, ecommerce and AI-assisted product development portfolio.',
         });
 
-    const canonicalPath = (eraMatch || pageSeo(location.pathname)) ? location.pathname : (studioPath || location.pathname);
+    const canonicalPath = (eraMatch || pageSeo(location.pathname) || location.pathname.startsWith('/shopify-studio/blog')) ? location.pathname : (studioPath || location.pathname);
     const canonical = `${BASE}${canonicalPath === '/' ? '/' : canonicalPath}`;
 
     document.title = meta.title;

@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { DESIGNS, PAGE_SEO, designSeo, pageSeo, studioSchema } from '../src/features/shopify-studio/studioSite.js';
+import { BRAND_RULES, BUSINESS_DEFAULTS, DESIGNS, PAGE_SEO, designSeo, pageSeo, studioSchema } from '../src/features/shopify-studio/studioSite.js';
 
 const ROOT = process.cwd();
 const DIST = path.join(ROOT, 'dist');
@@ -257,12 +257,33 @@ const studioGraph = (route, meta, extra = {}) => {
   return graph;
 };
 
-// Fixed Studio pages (main, pricing, case study, about, privacy, terms).
+// Shopify Studio blog (its own site_key in the admin). Scheduled posts appear once their time passes.
+const studioPosts = (await supabase('blog_posts', 'select=slug,title,excerpt,seo_title,seo_description,featured_image,author_name,published_at,updated_at,content_blocks,status&site_key=eq.shopifystudio&status=eq.published&order=published_at.desc'))
+  .filter(p => !p.published_at || new Date(p.published_at) <= new Date());
+
+// Fixed Studio pages (main, pricing, case study, about, privacy, terms, blog list once it has posts).
 for (const route of Object.keys(PAGE_SEO)) {
+  if (route === '/shopify-studio/blog' && !studioPosts.length) continue;
   const meta = pageSeo(route, studioSettings);
   const extra = route === '/shopify-studio/case-study' ? { projectName: 'Jill & The Beanstalk' } : {};
   await writeRoute(route, sourceHtml.replace(marker, seoBlock(route, meta, studioGraph(route, meta, extra))));
   sitemapEntries.push({ loc: `${BASE}${route}`, lastmod: new Date().toISOString(), priority: route === '/shopify-studio' ? '0.9' : /privacy|terms/.test(route) ? '0.3' : '0.7' });
+}
+
+for (const post of studioPosts) {
+  const route = `/shopify-studio/blog/${post.slug}`;
+  const extras = post.content_blocks && !Array.isArray(post.content_blocks) ? post.content_blocks : {};
+  const meta = { title: `${post.seo_title || post.title} | Shopify Studio`, description: post.seo_description || post.excerpt || '', ogType: 'article' };
+  const schema = studioGraph(route, meta);
+  schema['@graph'].push({
+    '@type': 'BlogPosting', '@id': `${BASE}${route}#article`, headline: post.title, description: meta.description,
+    datePublished: post.published_at, dateModified: post.updated_at || post.published_at, image: post.featured_image || undefined,
+    author: { '@type': 'Person', name: post.author_name || 'Justin DeMatteis' }, publisher: { '@id': `${BASE}/shopify-studio#business` },
+    mainEntityOfPage: { '@id': `${BASE}${route}#webpage` }, inLanguage: 'en-CA',
+  });
+  const html = sourceHtml.replace(marker, seoBlock(route, meta, schema, undefined, extras.ogImage || post.featured_image || DEFAULT_OG_IMAGE));
+  await writeRoute(route, extras.canonical ? html.replace(/<link rel="canonical" href="[^"]*" \/>/, `<link rel="canonical" href="${esc(extras.canonical)}" />`) : html);
+  sitemapEntries.push({ loc: `${BASE}${route}`, lastmod: post.updated_at || post.published_at || new Date().toISOString(), priority: '0.6' });
 }
 
 // Design showcase pages: each describes its own style; new designs are picked up from DESIGNS.
@@ -273,6 +294,17 @@ for (const design of DESIGNS) {
   await writeRoute(route, sourceHtml.replace(marker, seoBlock(route, meta, studioGraph(route, meta))));
   sitemapEntries.push({ loc: `${BASE}${route}`, lastmod: new Date().toISOString(), priority: '0.6' });
 }
+// Built-in Shopify Studio data for the ChatGPT / content API (Supabase function "studio-api"),
+// so it always matches what the website ships with. Saved admin settings take priority over this.
+await fs.mkdir(path.join(DIST, 'shopify-studio'), { recursive: true });
+await fs.writeFile(path.join(DIST, 'shopify-studio', 'studio-data.json'), JSON.stringify({
+  generatedAt: new Date().toISOString(),
+  business: BUSINESS_DEFAULTS,
+  brandRules: BRAND_RULES,
+  designs: DESIGNS.map(({ key, label, style, look, fit }) => ({ key, label, style, look, fit, url: `${BASE}/shopify-studio/${key}` })),
+  pricing: PRICING_DEFAULTS,
+}, null, 1));
+
 // Demo store (static file public/shopify-studio/store.html, served at /shopify-studio/store by cleanUrls).
 sitemapEntries.push({ loc: `${BASE}/shopify-studio/store`, lastmod: new Date().toISOString(), priority: '0.5' });
 // Old case-study addresses point at the new case study page.

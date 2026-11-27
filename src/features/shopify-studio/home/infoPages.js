@@ -128,7 +128,14 @@ function terms(b) {
 const PAGES = { about, privacy, terms };
 export const INFO_PAGE_KEYS = Object.keys(PAGES);
 
-// Turn the main Studio page into an info page: keep the <head>, header, menu and footer, swap the middle.
+// Turn the main Studio page into another page: keep the <head>, header, menu and footer, swap the middle.
+export function swapMiddle(homeHtml, middle) {
+  const start = homeHtml.indexOf('<section class="hero">');
+  const end = homeHtml.indexOf('<div class="smenu"');
+  if (start < 0 || end < 0) return homeHtml;
+  return homeHtml.slice(0, start) + middle + '\n' + homeHtml.slice(end);
+}
+
 export function infoPageHtml(homeHtml, key, settings) {
   const body = PAGES[key](businessInfo(settings));
   const start = homeHtml.indexOf('<section class="hero">');
