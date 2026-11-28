@@ -35,8 +35,20 @@
   ],
   "rewrites": [
     {
+      "source": "/shopify-studio/tips/:slug",
+      "destination": "/shopify-studio/tips"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/shopify-studio/blog",
+      "destination": "/shopify-studio/tips",
+      "permanent": true
+    },
+    {
       "source": "/shopify-studio/blog/:slug",
-      "destination": "/shopify-studio/blog"
+      "destination": "/shopify-studio/tips/:slug",
+      "permanent": true
     }
   ]
 }

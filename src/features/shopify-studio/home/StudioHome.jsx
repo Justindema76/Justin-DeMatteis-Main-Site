@@ -8,7 +8,7 @@ import { STUDIO_DEFAULTS, STUDIO_SETTING_KEY } from '../studioConfig';
 import { fillTokens, wireForm, wireTracking } from '../studioShared';
 import { pageSeo, wireFooter } from '../studioSite';
 import { INFO_PAGE_KEYS, infoPageHtml, swapMiddle } from './infoPages';
-import { BLOG_STYLE, blogListHtml, blogPostHtml, loadStudioPost, loadStudioPosts } from './studioBlog';
+import { BLOG_STYLE, blogListHtml, blogPostHtml, loadStudioPost, loadStudioPosts, loadStudioSocial } from './studioBlog';
 import { catalogue } from './pricingRender';
 import { renderPricing } from './pricingRender';
 import homeRaw from './home.html?raw';
@@ -43,7 +43,7 @@ export default function StudioHome({ page: pageKey = 'home' }) {
   }, [isBlog, pageKey, slug]);
   const page = useMemo(() => {
     const parts = split((info || isBlog) ? homeRaw : (PAGES[pageKey] || homeRaw));
-    if (pageKey === 'blog') return { ...parts, title: pageSeo('/shopify-studio/blog')?.title || parts.title };
+    if (pageKey === 'blog') return { ...parts, title: pageSeo('/shopify-studio/tips')?.title || parts.title };
     return info ? { ...parts, title: pageSeo(`/shopify-studio/${pageKey}`)?.title || parts.title } : parts;
   }, [pageKey, info, isBlog]);
   const navigate = useNavigate();
@@ -52,7 +52,7 @@ export default function StudioHome({ page: pageKey = 'home' }) {
   const [settings, setSettings] = useState(STUDIO_DEFAULTS);
   useEffect(() => {
     let live = true;
-    Promise.all([loadSetting(STUDIO_SETTING_KEY, STUDIO_DEFAULTS), loadSetting('social_links', {}), loadStudioPosts()]).then(([value, social, posts]) => { if (live) setSettings({ ...STUDIO_DEFAULTS, ...(value || {}), __social: social || {}, __hasBlog: posts.length > 0 }); });
+    Promise.all([loadSetting(STUDIO_SETTING_KEY, STUDIO_DEFAULTS), loadStudioSocial(), loadStudioPosts()]).then(([value, social, posts]) => { if (live) setSettings({ ...STUDIO_DEFAULTS, ...(value || {}), __social: social || {}, __hasBlog: posts.length > 0 }); });
     return () => { live = false; };
   }, []);
   const html = useMemo(() => {
@@ -91,7 +91,7 @@ export default function StudioHome({ page: pageKey = 'home' }) {
     set('meta[name="description"]', 'content', blog.seo_description || blog.excerpt);
     set('meta[property="og:title"]', 'content', blog.seo_title || blog.title);
     set('meta[property="og:description"]', 'content', blog.seo_description || blog.excerpt);
-    set('link[rel="canonical"]', 'href', extras.canonical || `https://www.justindematteis.com/shopify-studio/blog/${blog.slug}`);
+    set('link[rel="canonical"]', 'href', extras.canonical || `https://www.justindematteis.com/shopify-studio/tips/${blog.slug}`);
   }, [pageKey, blog]);
 
   // Page scripts (the store walkthrough slider) and the free-audit form, wired to whatever markup is on the page.

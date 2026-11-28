@@ -257,7 +257,7 @@ const studioGraph = (route, meta, extra = {}) => {
   return graph;
 };
 
-// Shopify Studio blog (its own site_key in the admin). Scheduled posts appear once their time passes.
+// Shopify Tips (Studio how-to guides; its own site_key in the admin). Scheduled posts appear once their time passes.
 const studioPosts = (await supabase('blog_posts', 'select=slug,title,excerpt,seo_title,seo_description,featured_image,author_name,published_at,updated_at,content_blocks,status&site_key=eq.shopifystudio&status=eq.published&order=published_at.desc'))
   .filter(p => !p.published_at || new Date(p.published_at) <= new Date());
 
@@ -265,7 +265,7 @@ const studioPosts = (await supabase('blog_posts', 'select=slug,title,excerpt,seo
 for (const route of Object.keys(PAGE_SEO)) {
   const meta = pageSeo(route, studioSettings);
   // Empty blog: the page still exists (no 404), but stays out of Google until the first article.
-  if (route === '/shopify-studio/blog' && !studioPosts.length) {
+  if (route === '/shopify-studio/tips' && !studioPosts.length) {
     await writeRoute(route, sourceHtml.replace(marker, seoBlock(route, meta, studioGraph(route, meta), 'noindex,follow')));
     continue;
   }
@@ -275,7 +275,7 @@ for (const route of Object.keys(PAGE_SEO)) {
 }
 
 for (const post of studioPosts) {
-  const route = `/shopify-studio/blog/${post.slug}`;
+  const route = `/shopify-studio/tips/${post.slug}`;
   const extras = post.content_blocks && !Array.isArray(post.content_blocks) ? post.content_blocks : {};
   const meta = { title: `${post.seo_title || post.title} | Shopify Studio`, description: post.seo_description || post.excerpt || '', ogType: 'article' };
   const schema = studioGraph(route, meta);
@@ -285,6 +285,8 @@ for (const post of studioPosts) {
     author: { '@type': 'Person', name: post.author_name || 'Justin DeMatteis' }, publisher: { '@id': `${BASE}/shopify-studio#business` },
     mainEntityOfPage: { '@id': `${BASE}${route}#webpage` }, inLanguage: 'en-CA',
   });
+  const faq = (Array.isArray(extras.faq) ? extras.faq : []).filter(f => f?.q && f?.a);
+  if (faq.length) schema['@graph'].push({ '@type': 'FAQPage', '@id': `${BASE}${route}#faq`, mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) });
   const html = sourceHtml.replace(marker, seoBlock(route, meta, schema, undefined, extras.ogImage || post.featured_image || DEFAULT_OG_IMAGE));
   await writeRoute(route, extras.canonical ? html.replace(/<link rel="canonical" href="[^"]*" \/>/, `<link rel="canonical" href="${esc(extras.canonical)}" />`) : html);
   sitemapEntries.push({ loc: `${BASE}${route}`, lastmod: post.updated_at || post.published_at || new Date().toISOString(), priority: '0.6' });

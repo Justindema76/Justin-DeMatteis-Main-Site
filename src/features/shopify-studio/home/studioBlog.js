@@ -1,5 +1,6 @@
-// Shopify Studio blog: /shopify-studio/blog and /shopify-studio/blog/:slug.
-// Articles come from the admin (Shopify Studio → Blog Posts, site_key "shopifystudio").
+// Shopify Tips (how-to guides): /shopify-studio/tips and /shopify-studio/tips/:slug.
+// Tips come from the admin (Shopify Studio → Shopify Tips, site_key "shopifystudio"), the same way
+// Sunwings' Moving Tips work. Each tip can have a quick answer and FAQs (content_blocks.quickAnswer / .faq).
 // A post shows once it is Published and its publish time has passed (future = scheduled).
 import { readPublic } from '../../../lib/supabase';
 
@@ -8,6 +9,17 @@ export const STUDIO_BLOG_SITE = 'shopifystudio';
 const esc = s => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const live = p => p && p.status === 'published' && (!p.published_at || new Date(p.published_at) <= new Date());
 const date = iso => (iso ? new Date(iso).toLocaleDateString('en-CA', { year: 'numeric', month: 'long', day: 'numeric' }) : '');
+
+// Studio footer social icons: their own list in the Shopify Studio dashboard (Social Links).
+let socialCache = null;
+export function loadStudioSocial() {
+  if (!socialCache) {
+    socialCache = readPublic('site_settings', `select=value&site_key=eq.${STUDIO_BLOG_SITE}&key=eq.social_links&limit=1`)
+      .then(rows => rows?.[0]?.value || {})
+      .catch(() => ({}));
+  }
+  return socialCache;
+}
 
 let listCache = null;
 export function loadStudioPosts() {
@@ -86,31 +98,42 @@ export const BLOG_STYLE = `<style>
 .sart .rel ul{list-style:none;padding:0;margin:0 0 18px;display:flex;flex-wrap:wrap;gap:8px}
 .sart .rel li a{display:inline-block;border:2px solid var(--ink);padding:6px 12px;font-weight:700;font-size:14px;background:#fff}
 .sart .back{display:inline-block;margin-bottom:22px;font-weight:700}
+.sart .quick{border:2px solid var(--line);border-left:8px solid var(--green2);background:var(--paper);padding:16px 20px;margin:0 0 30px}
+.sart .quick b{display:block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px}
+.sart .quick p{margin:0;font-size:18px;line-height:1.6}
+.sart .body ol{counter-reset:step;list-style:none;padding:0}
+.sart .body ol>li{counter-increment:step;position:relative;padding:4px 0 10px 48px}
+.sart .body ol>li::before{content:counter(step);position:absolute;left:0;top:2px;width:32px;height:32px;display:grid;place-items:center;border:2px solid var(--line);background:var(--green2);font-weight:800;font-size:15px}
+.sart .faq{margin-top:44px}.sart .faq h2{font-size:30px;margin:0 0 14px}
+.sart .faq .qa{border-top:2px solid var(--line);padding:16px 0}.sart .faq h3{font-size:20px;margin:0 0 6px}.sart .faq p{margin:0;font-size:17px;line-height:1.7}
 @media(max-width:900px){.sblog-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:640px){.sblog{padding:44px 0 60px}.sblog-grid{grid-template-columns:1fr}}
 </style>`;
 
 export function blogListHtml(posts) {
-  const cards = posts.map(p => `<a class="sblog-card" href="/shopify-studio/blog/${esc(p.slug)}">`
+  const cards = posts.map(p => `<a class="sblog-card" href="/shopify-studio/tips/${esc(p.slug)}">`
     + `<div class="im">${p.featured_image ? `<img src="${esc(p.featured_image)}" alt="" loading="lazy">` : ''}</div>`
     + `<div class="t"><small>${esc(p.category || 'Shopify Tips')} · ${esc(date(p.published_at))}</small><h2>${esc(p.title)}</h2>${p.excerpt ? `<p>${esc(p.excerpt)}</p>` : ''}</div></a>`).join('');
-  return `<section class="sblog"><div class="wrap"><span class="kick">Shopify Studio blog</span><h1>Shopify tips for Canadian retailers</h1>`
-    + `<p class="lead">Practical advice on building, redesigning and running a Shopify store — written in Hamilton, Ontario for shops across Canada.</p>`
-    + (cards ? `<div class="sblog-grid">${cards}</div>` : `<div class="sblog-empty">The first articles are on their way.</div>`)
+  return `<section class="sblog"><div class="wrap"><span class="kick">Shopify Tips</span><h1>How to do it in Shopify</h1>`
+    + `<p class="lead">Step-by-step guides for running a Shopify store — setup, shipping, taxes, speed, SEO and design. Written in Hamilton, Ontario for shops across Canada.</p>`
+    + (cards ? `<div class="sblog-grid">${cards}</div>` : `<div class="sblog-empty">The first tips are on their way.</div>`)
     + `</div></section>`;
 }
 
 export function blogPostHtml(post, services = []) {
-  if (!post) return `<section class="sblog sart"><div class="wrap"><a class="back" href="/shopify-studio/blog">← All articles</a><h1>Article not found</h1><p class="lead">It may have moved or not be published yet.</p></div></section>`;
+  if (!post) return `<section class="sblog sart"><div class="wrap"><a class="back" href="/shopify-studio/tips">← All Shopify Tips</a><h1>Tip not found</h1><p class="lead">It may have moved or not be published yet.</p></div></section>`;
   const extras = (post.content_blocks && !Array.isArray(post.content_blocks)) ? post.content_blocks : {};
   const rel = (extras.relatedServices || []).map(id => services.find(s => s.id === id)).filter(Boolean);
   const cta = { label: extras.ctaLabel || 'Get a free store review', url: extras.ctaUrl || '/shopify-studio#audit' };
-  return `<article class="sblog sart"><div class="wrap"><a class="back" href="/shopify-studio/blog">← All articles</a>`
+  const faq = (Array.isArray(extras.faq) ? extras.faq : []).filter(f => f?.q && f?.a);
+  return `<article class="sblog sart"><div class="wrap"><a class="back" href="/shopify-studio/tips">← All Shopify Tips</a>`
     + `<span class="kick" style="display:block">${esc(post.category || 'Shopify Tips')}</span><h1>${esc(post.title)}</h1>`
     + `<p class="meta">By ${esc(post.author_name || 'Justin DeMatteis')} · ${esc(date(post.published_at))}</p>`
     + (post.excerpt ? `<p class="lead">${esc(post.excerpt)}</p>` : '')
     + (post.featured_image ? `<figure class="hero"><img src="${esc(post.featured_image)}" alt="${esc(post.title)}"></figure>` : '')
+    + (extras.quickAnswer ? `<div class="quick"><b>Quick answer</b><p>${esc(extras.quickAnswer)}</p></div>` : '')
     + `<div class="body">${renderBody(post.body)}</div>`
+    + (faq.length ? `<section class="faq"><h2>Questions people ask</h2>${faq.map(f => `<div class="qa"><h3>${esc(f.q)}</h3><p>${esc(f.a)}</p></div>`).join('')}</section>` : '')
     + `<div class="rel">${rel.length ? `<h2>Related services</h2><ul>${rel.map(s => `<li><a href="/shopify-studio/pricing#${esc(s.id)}">${esc(s.name)}</a></li>`).join('')}</ul>` : '<h2>Want help with your store?</h2>'}`
     + `<a class="btn" href="${esc(cta.url)}">${esc(cta.label)}</a></div>`
     + `</div></article>`;

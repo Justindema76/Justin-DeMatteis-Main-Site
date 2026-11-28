@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { loadSetting } from '../../lib/content';
 import { fillTokens, track, wireForm, wireTracking } from './studioShared';
 import { wireFooter } from './studioSite';
-import { loadStudioPosts } from './home/studioBlog';
+import { loadStudioPosts, loadStudioSocial } from './home/studioBlog';
 import { HERO_DEFAULTS, STUDIO_DEFAULTS, STUDIO_ERAS, STUDIO_SETTING_KEY } from './studioConfig';
 import fonts from './fonts.json';
 import { applyLook, heroLook, lookCss, phonePicture } from './heroLook';
@@ -157,6 +157,7 @@ const STUDIO_MENU = [
   { href: '/shopify-studio', label: 'Home' },
   { href: '/shopify-studio/case-study', label: 'Case study: Jill & The Beanstalk' },
   { href: '/shopify-studio/pricing', label: 'Pricing' },
+  { href: '/shopify-studio/tips', label: 'Shopify Tips' },
   { href: '/shopify-studio#faq', label: 'Questions' },
 ];
 const ERA_NAMES = {
@@ -184,7 +185,7 @@ export default function ShopifyStudioPage({ kind = 'studio' }) {
 
   useEffect(() => {
     let live = true;
-    Promise.all([loadSetting(STUDIO_SETTING_KEY, STUDIO_DEFAULTS), loadSetting('social_links', {}), loadStudioPosts()]).then(([value, social, posts]) => {
+    Promise.all([loadSetting(STUDIO_SETTING_KEY, STUDIO_DEFAULTS), loadStudioSocial(), loadStudioPosts()]).then(([value, social, posts]) => {
       if (live) { setSettings({ ...STUDIO_DEFAULTS, ...value, __social: social || {}, __hasBlog: posts.length > 0 }); setLoaded(true); }
     });
     return () => { live = false; };

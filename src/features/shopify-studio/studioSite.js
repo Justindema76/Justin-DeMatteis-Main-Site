@@ -44,9 +44,9 @@ export const PAGE_SEO = {
     title: 'About Shopify Studio | Canadian Shopify Developer',
     description: 'Ontario-based Shopify design and development. Custom storefronts, apps, backend solutions and digital marketing for Canadian retailers.',
   },
-  '/shopify-studio/blog': {
-    title: 'Shopify Tips for Canadian Retailers | Shopify Studio Blog',
-    description: 'Practical Shopify advice from a Hamilton, Ontario developer: store design, redesigns, backend cleanup, apps, SEO and pricing for Canadian shops.',
+  '/shopify-studio/tips': {
+    title: 'Shopify Tips: How-To Guides for Canadian Retailers | Shopify Studio',
+    description: 'Step-by-step Shopify how-to guides from a Hamilton, Ontario developer: setup, shipping, taxes, speed, SEO and store design for Canadian shops.',
   },
   '/shopify-studio/privacy': {
     title: 'Privacy Policy | Shopify Studio',
@@ -154,10 +154,10 @@ export function footerColumns(settings = {}, pricing = {}) {
     ] },
     { title: 'Portfolio', links: [
       { label: 'Jill & The Beanstalk', href: `${STUDIO_PATH}/case-study` },
-      { label: 'JustConsignIn', href: '/work/justconsignin' },
+      { label: 'JustConsignIn', href: 'https://www.justconsignin.com', newTab: true },
     ] },
-    // Resources appears once the Studio blog has a published article (no dead links).
-    ...(settings.__hasBlog ? [{ title: 'Resources', links: [{ label: 'Blog', href: `${STUDIO_PATH}/blog` }] }] : []),
+    // Resources appears once the first Shopify Tip is published (no dead links).
+    ...(settings.__hasBlog ? [{ title: 'Resources', links: [{ label: 'Shopify Tips', href: `${STUDIO_PATH}/tips` }] }] : []),
     { title: 'Work With Us', links: [
       { label: 'Pricing & Packages', href: `${STUDIO_PATH}/pricing` },
       { label: 'Free Store Review', href: `${STUDIO_PATH}#audit` },
@@ -183,7 +183,7 @@ export function footerColumns(settings = {}, pricing = {}) {
 export function studioSocial(social = {}) {
   return SOCIAL_NETWORKS
     .map(n => ({ ...n, url: String(social?.[n.key]?.url || '').trim(), on: social?.[n.key]?.enabled !== false, sections: social?.[n.key]?.sections || {} }))
-    .filter(n => n.url && n.on && n.sections[SOCIAL_SECTION] === true);
+    .filter(n => n.url && n.on);
 }
 
 const esc = s => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -202,7 +202,7 @@ export function renderStudioFooter(settings = {}, pricing = {}, social = {}) {
   const biz = businessInfo(settings);
   const year = new Date().getFullYear();
   const icons = studioSocial(social).map(n => `<a href="${esc(n.url)}" target="_blank" rel="noopener" aria-label="${esc(n.label)}"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">${ICONS[n.key] || ''}</svg></a>`).join('');
-  const cols = footerColumns(settings, pricing).map(col => `<div class="ssf-col"><div class="ssf-h" role="button" tabindex="0" aria-expanded="true">${esc(col.title)}</div><ul>${col.links.map(l => `<li><a href="${esc(l.href)}"${l.external ? ' data-hard="1"' : ''}>${esc(l.label)}</a></li>`).join('')}</ul></div>`).join('');
+  const cols = footerColumns(settings, pricing).map(col => `<div class="ssf-col"><div class="ssf-h" role="button" tabindex="0" aria-expanded="true">${esc(col.title)}</div><ul>${col.links.map(l => `<li><a href="${esc(l.href)}"${l.external ? ' data-hard="1"' : ''}${l.newTab || /^https?:/.test(l.href) ? ' target="_blank" rel="noopener"' : ''}>${esc(l.label)}</a></li>`).join('')}</ul></div>`).join('');
   return `<footer class="ssf"><div class="wrap">`
     + `<div class="ssf-top"><div class="ssf-brand"><b>${esc(biz.name)}</b><p class="ssf-tag">${esc(biz.tagline)}</p><p>${esc(biz.description)}</p>`
     + `<p class="ssf-loc">📍 ${esc(biz.city)}, ${esc(biz.region)}, ${esc(biz.country)} · ${esc(biz.serviceArea)}</p>`
