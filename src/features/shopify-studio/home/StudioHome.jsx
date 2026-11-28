@@ -8,7 +8,7 @@ import { STUDIO_DEFAULTS, STUDIO_SETTING_KEY } from '../studioConfig';
 import { fillTokens, wireForm, wireTracking } from '../studioShared';
 import { pageSeo, wireFooter } from '../studioSite';
 import { INFO_PAGE_KEYS, infoPageHtml, swapMiddle } from './infoPages';
-import { BLOG_STYLE, blogListHtml, blogPostHtml, loadStudioPost, loadStudioPosts, loadStudioSocial } from './studioBlog';
+import { BLOG_STYLE, blogListHtml, blogPostHtml, loadStudioPost, loadStudioPosts, loadStudioSocial, wireTipFilters } from './studioBlog';
 import { catalogue } from './pricingRender';
 import { renderPricing } from './pricingRender';
 import homeRaw from './home.html?raw';
@@ -38,7 +38,7 @@ export default function StudioHome({ page: pageKey = 'home' }) {
     if (!isBlog) return undefined;
     let live = true;
     setBlog(undefined);
-    (pageKey === 'blog' ? loadStudioPosts() : loadStudioPost(slug)).then(data => { if (live) setBlog(data); });
+    (pageKey === 'blog' ? loadStudioPosts() : Promise.all([loadStudioPost(slug), loadStudioPosts()]).then(([post, list]) => (post ? { ...post, __others: list } : null))).then(data => { if (live) setBlog(data); });
     return () => { live = false; };
   }, [isBlog, pageKey, slug]);
   const page = useMemo(() => {
@@ -56,8 +56,8 @@ export default function StudioHome({ page: pageKey = 'home' }) {
     return () => { live = false; };
   }, []);
   const html = useMemo(() => {
-    const blogMiddle = () => BLOG_STYLE + (blog === undefined ? '<section class="sblog"><div class="wrap"><p class="lead">Loading…</p></div></section>'
-      : pageKey === 'blog' ? blogListHtml(blog || []) : blogPostHtml(blog, catalogue(settings.pricing).services));
+    const blogMiddle = () => BLOG_STYLE + (blog === undefined ? '<div class="tp"><section class="tp-sec"><div class="tp-wrap"><p>Loading…</p></div></section></div>'
+      : pageKey === 'blog' ? blogListHtml(blog || []) : blogPostHtml(blog, catalogue(settings.pricing).services, blog?.__others || []));
     const body = pageKey === 'pricing' ? renderPricing(page.body, settings.pricing || {}) : info ? infoPageHtml(page.body, pageKey, settings) : isBlog ? swapMiddle(page.body, blogMiddle()) : page.body;
     return fillTokens(body, settings);
   }, [page.body, settings, pageKey, info, isBlog, blog]);
@@ -100,7 +100,9 @@ export default function StudioHome({ page: pageKey = 'home' }) {
     const offForm = rootRef.current ? wireForm(rootRef.current, '') : () => {};
     const offFooter = rootRef.current ? wireFooter(rootRef.current) : () => {};
     const offTrack = wireTracking(rootRef.current);
+    const offTips = wireTipFilters(rootRef.current);
     return () => {
+      offTips();
       offFooter();
       offTrack();
       window.__studioHomeCleanup?.();
