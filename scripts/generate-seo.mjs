@@ -154,6 +154,11 @@ function baseGraph(route, meta) {
     if (route.startsWith('/work/')) {
       crumbs.push({ '@type': 'ListItem', position: 2, name: 'Work', item: `${BASE}/work` });
       crumbs.push({ '@type': 'ListItem', position: 3, name: meta.projectName || meta.title.split('|')[0].trim(), item: `${BASE}${route}` });
+    } else if (route.startsWith('/shopify-studio/')) {
+      // Home › Shopify Studio › (Shopify Tips ›) page
+      crumbs.push({ '@type': 'ListItem', position: 2, name: 'Shopify Studio', item: `${BASE}/shopify-studio` });
+      if (route.startsWith('/shopify-studio/tips/')) crumbs.push({ '@type': 'ListItem', position: 3, name: 'Shopify Tips', item: `${BASE}/shopify-studio/tips` });
+      crumbs.push({ '@type': 'ListItem', position: crumbs.length + 1, name: meta.title.split('|')[0].trim(), item: `${BASE}${route}` });
     } else {
       crumbs.push({ '@type': 'ListItem', position: 2, name: meta.title.split('|')[0].trim(), item: `${BASE}${route}` });
     }
